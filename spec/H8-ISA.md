@@ -2,9 +2,10 @@
 
 Sources: H8/300 ADE-602-025 Appendix A/B; H8/300H REJ09B0213
 §2.4–2.5; H8S REJ09B0139 §2.4–2.5; H8SX REJ09B0102 §2.4.
-This is an initial map, not a claim of complete ISA support. Semantic decode
-currently handles selected H8/300 instructions and a narrow H8SX
-control-flow/CMP.B subset; no encoder exists.
+The shared semantic codec covers recognized instructions on all five targets
+with typed operands, exact-width encoding and Renesas rendering. The H8SX
+implementation follows all 8,493 reviewed manual rows. Full exhaustive
+validation and the remaining release requirements are still in progress.
 
 ## 1. Instruction boundaries
 
@@ -12,7 +13,7 @@ Words are big-endian. `isa::insn_len` accepts a complete byte slice and an
 explicit target/mode pair. It returns `None` for truncation, an unsupported
 pair, an unrecognized encoding, or an unimplemented H8SX instruction. It does not return
 operands or prove that an instruction is safe to execute.
-For H8/300 through H8S, odd d:8 displacements in Bcc/BSR are rejected:
+For H8/300 through H8S, odd displacements in Bcc/BSR are rejected:
 H8/300 §2 says the signed displacement must be even, and the later manuals
 retain the even branch-destination requirement. H8SX separately allocates
 BRA/S with bit 0 set, so it does not use this legacy rule. H8SX BSR d:8 and
@@ -33,96 +34,32 @@ was checked for 32-bit fields: 589 rows contain two `:32` fields, and none
 contains three. The earlier cores' instruction-code tables are shorter; H8S
 §2.4 Table 2.2 ends at a tenth byte. `isa::MAX_INSN_LEN` pins the family bound.
 
-## 2. Initial opcode map
+## 2. Opcode maps
 
-The ranges below refer to the high byte of the first word. Length recognition
-lives in `src/isa/length.rs` and `src/isa/sx_length.rs`. Selected H8/300
-operation-only, byte-register, and d:8 branch rows have semantic decode;
-H8SX has selected control-flow and CMP.B semantic decode. Other rows remain
-length-only. The H8/300 decoded subset has encode support; other rows do not.
-“Later” names additions within a row, not a claim that every pattern is valid.
+Legacy lengths are implemented in src/isa/length.rs and their shared
+semantics in src/isa/legacy.rs. H8SX lengths now use src/isa/sx_table.rs
+and generated sx_table_data.rs instead of the former partial recognizer.
 
-| High byte | Family | Introduced / later additions | Length recognition |
-|---|---|---|---|
-| 00 | NOP | 300 | implemented |
-| 01 | SLEEP and extension prefixes | 300; 300H long/control; H8S register groups; 2600 MAC | implemented through H8S |
-| 02–07 | Control-register transfers and immediate logic | 300; H8S EXR; 2600 MAC registers | implemented through H8S; H8SX byte register/CCR/EXR and CCR-immediate rows |
-| 08–1f | Register arithmetic, shifts, rotates, logic | 300; 300H word/long; H8S shift by two | implemented through H8S; selected H8SX byte, word and long register/immediate rows |
-| 20–3f | Byte absolute moves | 300 | implemented, including H8SX |
-| 40–4f | Conditional branches, d:8; H8SX BRA/S | 300; H8SX delay-slot branch | implemented through H8S; H8SX d:8 rows |
-| 50–53 | Multiply/divide | 300; 300H word | implemented through H8S; H8SX unsigned register rows |
-| 54–5f | Returns, calls, jumps, traps and d:16 branches | 300; 300H extensions; H8SX PC-indexed and 32-bit absolute forms | implemented through H8S; selected H8SX branch/jump/call/return/trap rows |
-| 60–67 | Register bit operations and word logic | 300; 300H word logic | implemented through H8S; H8SX word logic and register bit rows |
-| 68–6f | Memory moves and absolute bit prefixes | 300; 300H extended addresses; H8S absolute bit operations | implemented through H8S; selected H8SX 68–6f MOV.B/W rows |
-| 70–77 | Immediate bit operations | 300 | implemented, including H8SX register rows |
-| 78 | Extended displacement prefix | 300H; H8SX EA expansion | implemented through H8S; selected H8SX ADD.B rows |
-| 79–7a | Immediate word/long operations | 300 word MOV; 300H extensions | implemented through H8S; seven H8SX register rows per width |
-| 7b | EEPMOV | 300 byte; 300H word | implemented through H8S |
-| 7c–7f | Memory bit operations | 300 | implemented through H8S |
-| 80–ff | Byte immediate operations | 300 | implemented, including H8SX |
+The H8SX table covers every one of the 8,493 printed §2.4 rows. Generation
+retains page provenance, fixed bits and field widths; explicit restrictions
+handle nonzero short arithmetic immediates, scaled short displacements,
+serial register groups and even relative destinations. The first-word index
+contains 99,079 row candidates and avoids scanning the whole table per
+instruction. Every row has constrained minimum/maximum-field witnesses and
+all truncations checked. This proves coverage of the extracted row grammar,
+not completion of the four-byte sweep.
 
-H8SX extends these spaces. Length recognition currently covers the four
-operation-only rows NOP `0000`, SLEEP `0180`, RTS `5470`, and RTE `5670`;
-Bcc d:8 and d:16, BRA/S d:8 and BSR d:8 and d:16; all eight byte-immediate
-register families in `80`–`ff`; ADD.B and MOV.B register rows `08` and `0c`;
-byte absolute moves `20`–`3f`; and the §2.4 ADD.B
-`@(d:32,ERs),<destination>` rows for register-indirect, 16/32-bit
-displacement/indexed, and 16/32-bit absolute destinations. The ADD.B rows
-are recognized at 10, 12, or 14 bytes as the destination requires. Other
-H8SX encodings are currently refused. The seven `79xx` word-immediate register
-rows are four bytes. The seven `7axx` long-immediate ER rows are four bytes
-with a 16-bit immediate (bit 3 set), or six bytes with a 32-bit immediate
-(bit 3 clear).
-The `02`–`03` H8SX rows cover direct byte transfers to and from CCR/EXR,
-selected MAC and 32-bit control-register transfers, and counted-shift
-prefixes whose second word fixes operation, size and destination.
-The `04`–`07` rows cover all eight-bit CCR immediates. Register bit
-operations occupy `60`–`63` and `67`; immediate bit operations to a register
-occupy `70`–`77`, with bit 7 fixed zero for `70`–`73`.
-The rest of the §2.4 opcode map still
-needs implementation.
+The grammar includes memory-to-memory arithmetic, all table EA extensions,
+MOV/MOVA, shifts, bit operations, control flow, register groups, multiply and
+divide forms, and control-register operations. See the reproducible
+[row map, source anomalies and oracle results](../docs/H8SX-TABLE.md).
+The shared semantic codec covers H8SX through generated typed operand
+descriptors, including nested MOVA operands. The retained separate
+H8SX subset API is described in §6.
 
-The H8SX `59`/`5d` groups distinguish `@ERn` and PC-indexed branches
-(two bytes), `@aa:32` (six bytes), and `@@vec:7` (two bytes). `5a`/`5e`
-carry a 24-bit absolute address in four bytes, while `5b`/`5f` are the
-two-byte `@@aa:8` forms (H8SX §2.4 Table 2.2, manual page 730). The
-16/24/32-bit address widths describe different targets and must remain
-distinct when semantic decoding is added.
-
-The `54`/`56` long-return rows use an encoded final ER register and a
-group size of one to four. A group is valid only when that final register
-is at least the group size minus one (H8SX §2.4, manual page 813).
-The three-bit word-immediate rows `0a`/`0f`/`1a`/`1f` allocate low-byte
-values `00`–`7f`; their three-bit long-immediate variants occupy `98`–`ff`
-with bit 3 set and a nonzero immediate. The word register-pair rows
-`09`/`0d`/`19`/`1d`/`64`–`66` allocate every
-combination of their two four-bit register fields. The long ADD/MOV/CMP/SUB
-rows `0a`/`0f`/`1a`/`1f` use three-bit ER fields and a fixed-zero bit 3.
-H8SX `0b`/`1b` ADDS/SUBS and long INC/DEC likewise use three-bit ER fields,
-while word INC/DEC uses a four-bit word-register field. Binutils accepts
-some extra `0b`/`1b` patterns with bit 3 set in an ER field; the manual's
-fixed-zero field is retained here.
-The `10`–`13` shift and rotate register rows include the manual's listed
-shift counts 1/2/4/8/16. Their byte and word registers use four bits;
-long ER destinations use three.
-The `17` register rows cover NOT/NEG/EXTU/EXTS with the manual's fixed
-bits for long ER operands. Binutils decodes additional `17` long-form
-aliases that are not allocated by the H8SX table.
-The byte register-pair rows `08`/`0c`/`0e`/`14`–`16`/`18`/`1c`/`1e`
-also allocate every combination of two four-bit byte-register fields.
-H8SX `68`/`69` and `6c`/`6d` MOV.B/W register-indirect and increment/decrement
-forms are two bytes. The `6e`/`6f` 16-bit-displacement forms are four bytes;
-all 256 first-word variants in each of these six rows are allocated.
-The `6a`/`6b` absolute MOV.B/W rows use low-byte high nibbles `0`/`8`
-for 16-bit addresses (four bytes) and `2`/`a` for 32-bit addresses (six
-bytes). Other `6a`/`6b` high nibbles require separate review.
-The `6a18`/`6a38` absolute-memory byte-immediate rows recognize selected
-ADD/SUB/CMP/OR/XOR/AND second opcode bytes after 16/32-bit address
-extensions, for lengths six/eight bytes.
-For MOV.L, the H8SX `0100` prefix followed by `69`/`6d` is four bytes,
-followed by `6f` is six bytes, and followed by selected `6b` absolute
-address rows is six or eight bytes (§2.4, manual page 752). Those second
-words are checked, and other `0100` continuations are still refused.
+BRA/BC, BRA/BS, BSR/BC, BSR/BS and MOVSD.B are explicitly refused by
+relocation and conservative reachability, preventing stale relative targets
+from being copied as position-independent instructions.
 
 ## 3. Manual boundary witnesses
 
@@ -151,12 +88,13 @@ target support table. Counts describe this probe construction only.
 | H8/300H | 9,823 | 54,344 | 1,249 | 120 | 0 | 0 | 0 | 0 |
 | H8S/2000 | 9,471 | 54,696 | 1,249 | 120 | 0 | 0 | 0 | 0 |
 | H8S/2600 | 9,438 | 54,729 | 1,249 | 120 | 0 | 0 | 0 | 0 |
-| H8SX | 8,081 | 56,060 | 1,273 | 122 | 0 | 0 | 0 | 0 |
+| H8SX | 7,859 | 56,080 | 1,392 | 204 | 1 | 0 | 0 | 0 |
 
-Zero counts for eight bytes and longer reflect the fixed suffix, not absent
-instructions. H8SX rejections reflect missing implementation, not undefined
-instructions. Full suffix/operand sweeps, semantic round trips, binutils
-conformance, and the phase-3 exhaustive audit have not been performed.
+Zero counts for ten bytes and longer reflect the fixed suffix, not absent
+instructions. Rejection in this probe does not classify every completion of
+a first word as undefined. Full suffix/operand sweeps and the phase-3 exhaustive audit have not been
+performed. Semantic round trips and independent checks cover the subsets
+described in §5.
 
 The opt-in `tests/binutils_legacy.rs` probe uses the same zero-suffix method
 for the four older targets. After enforcing the manual's even d:8 branch
@@ -173,8 +111,8 @@ Those counts cannot establish that the extra patterns belong to each target.
 binutils. It assembles all 65,536 H8SX first words with fourteen zero padding
 bytes per candidate, disassembles with `objdump -d -z -w`, and compares the
 length at each 16-byte slot with `isa::insn_len` on the same zero suffix.
-With binutils 2.47, 57,455 slots agree on a recognized length, 7,357 are
-rejected by both, and 724 are decoded only by binutils. No slot is accepted
+With binutils 2.47, 57,677 slots agree on a recognized length, 7,357 are
+rejected by both, and 502 are decoded only by binutils. No slot is accepted
 only by this crate, and no accepted slot has a length disagreement. This is
 an independent boundary check for one suffix, not full conformance.
 
@@ -198,8 +136,118 @@ length-only families.
 `tests/binutils_sx_assemble_back.rs` repeats that exact-byte check for the
 current H8SX semantic subset, translating Renesas `$` and `H'` to GNU gas
 `.` and `0x`. Using binutils 2.47 with the `h8300sxelf` linker emulation,
-all 10,369 supported two-byte words and 140 representative four-byte forms
-match. The four-byte cases include every Bcc condition, signed branch
+all 39,297 supported two-byte words, 140 representative four-byte forms,
+and 1,064 word/full-width long-immediate boundary cases match. The four-byte cases include every Bcc condition, signed branch
 boundaries, absolute-address extremes, and every byte-register code for the
 supported absolute move form. This does not establish conformance for other
 H8SX instructions or for all four-byte operand combinations.
+
+
+## 6. Retained narrow H8SX API (2026-09-26)
+
+All rows below cite REJ09B0102 §2.4 Table 2.2. Registers, immediate bits,
+and exact instruction lengths are retained by decode and encode.
+
+| Form | Operations | Encoding / field limits |
+|---|---|---|
+| Byte immediate | ADD, ADDX, CMP, SUBX, OR, XOR, AND, MOV | `8r`–`fr`, 8-bit literal, 16 byte registers |
+| Word immediate | MOV, ADD, CMP, SUB, OR, XOR, AND | `79 0r`–`79 6r`, 16-bit literal, 16 word registers |
+| Full-width long immediate | MOV, ADD, CMP, SUB, OR, XOR, AND | `7a 0r`–`7a 6r`, bit 3 clear, 32-bit literal, 8 ER registers |
+| Byte register pair | ADD, MOV, ADDX, OR, XOR, AND, SUB, CMP, SUBX | `08/0c/0e/14/15/16/18/1c/1e`, two four-bit register fields |
+| Word register pair | ADD, MOV, SUB, CMP, OR, XOR, AND | `09/0d/19/1d/64/65/66`, two four-bit register fields |
+| Long register pair | ADD, MOV, SUB, CMP | `0a/0f/1a/1f`, low-byte bit 7 set, bit 3 clear, two three-bit fields |
+
+This adds 24,576 byte-immediate words and 4,352 register-pair words to the
+previous 10,369-word semantic subset, giving 39,297. The census enumerates
+all 65,536 two-byte patterns and checks every accepted result against length
+recognition and the encoder. The external assembler checks the rendered text
+of every accepted word as well.
+
+Compact long immediates, 16-bit immediates to long registers, prefixed long
+logical operations, word/long ADDX/SUBX, and other memory forms remain
+outside this narrow API; they are supported by the shared codec. They must not be inferred from a shared opcode
+byte. The tests explicitly refuse unsupported operation/size combinations
+and out-of-range register fields. See
+[`../docs/CONFORMANCE.md`](../docs/CONFORMANCE.md) for reproduction.
+
+
+`tests/sx_operand_audit.rs` exhaustively checks the implemented word-immediate
+operand space: 7 operations × 16 registers × 65,536 literals = **7,340,032**
+four-byte patterns. Each agrees with the expected typed operation, length,
+and verified encoder. It also checks 17 branch/call forms × 65,536 raw
+16-bit displacements × 4 modes = **4,456,448** cases, accepting every even
+displacement and refusing every odd displacement. Both release-mode audits
+passed locally on 2026-09-26 and are required by the QA test matrix. These
+are internal consistency audits of the named families; the independent
+assembler still samples longer forms. The complete 2³²-pattern audit for
+every target is now recorded below.
+
+
+## Shared legacy semantics
+
+The `isa::{Insn, Operand, Reg, Ea, Size, Encoding}` vocabulary is consumed by
+`decode_insn`, `encode_insn`, and `disassemble_insn`. The original narrow
+H8/300 and H8SX APIs remain available. The shared API covers H8SX as well.
+
+Legacy semantic coverage includes CCR/EXR and MAC transfers, immediate and
+register operations, memory moves, bit operations, shifts/rotates, signed and
+unsigned multiply/divide, branches/calls/traps, register groups, TAS, and
+EEPMOV. Operand widths and the allowed long-displacement MOV.L store alias
+are retained for byte-exact encoding. Values that would be truncated or
+reinterpret fields are refused.
+
+The legacy first-word zero-suffix census is pinned, every recognized
+two-byte word assembles independently, and selected extended fields are
+enumerated. See [conformance evidence](../docs/CONFORMANCE.md) for counts and
+explicit distinctions between exact matches, aliases and GNU divergences.
+H8S LDM/STM register groups follow §2.2.36/§2.2.63 rather than H8SX's less
+restrictive serial-register rule. Recognition of ER7-containing groups from
+the generic software manual is not permission to use them on products whose
+hardware manual prohibits them.
+
+
+## Shared H8SX semantic validation
+
+All 56,080 supported two-byte encodings round-trip through the typed codec
+and independently assemble exactly. All 8,493 manual rows have five valid
+witnesses, including asymmetric field values. Their 42,465 round trips
+preserve register classes, both EA extension fields, scaled displacements,
+register-list endpoints and noncanonical forms. The independent row oracle
+reports 42,315 exact cases, 12 alternative forms and 18 disassembly-only GNU
+limitations after deduplication; see docs/CONFORMANCE.md for the distinctions.
+Adversarial operand edits check that successful encoding never silently
+truncates or changes any semantic field. This remains separate from the
+full 2³²-pattern audit.
+
+
+## Full four-byte census (2026-09-26)
+
+scripts/exhaustive.sh enumerates all 2³² four-byte patterns for each target.
+Each candidate starts at byte offset two in a guarded buffer (an odd-word
+offset), with exactly four bytes exposed. Shared semantic acceptance and
+length recognition must agree. Every four-byte instruction encodes back to
+its original bytes. Every two-byte result must equal the independently
+decoded prefix, verifying suffix independence; that prefix also round-trips.
+Unsupported/truncated candidates are counted rather than skipped. These
+are pattern counts, so a two-byte instruction appears once per 65,536 suffixes.
+
+| Target / mode | Rejected or truncated | Two-byte prefix | Four-byte instruction |
+|---|---:|---:|---:|
+| H8/300 normal | 896,617,087 | 3,367,239,680 | 31,110,529 |
+| H8/300H advanced | 652,133,790 | 3,561,488,384 | 81,345,122 |
+| H8S/2000 advanced | 629,064,042 | 3,584,557,056 | 81,346,198 |
+| H8S/2600 advanced | 626,901,290 | 3,586,719,744 | 81,346,262 |
+| H8SX maximum | 526,073,994 | 3,675,258,880 | 93,634,422 |
+
+Every row totals 4,294,967,296; all five runs passed. The census is pinned in
+examples/exhaustive.rs and the full sweep is mandatory in the QA OS/MSRV
+matrix. The other modes and longer forms remain distinct checks; these
+figures do not measure hardware behavior or independent GNU conformance.
+
+For longer H8SX instructions, scripts/compile-h8sx-table.py additionally
+generates 163,471 field witnesses. Every register/small field takes every
+value independently, with reserved values constrained as in the grammar;
+wide extensions take zero, one, two, signed midpoint boundaries and unsigned
+maximum boundaries. Every witness round-trips, and independent GNU results
+are recorded in docs/CONFORMANCE.md. This field audit is not enumeration of
+all possible combinations of large extensions.

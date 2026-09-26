@@ -5,8 +5,10 @@
 //!
 //! **Pre-alpha.** [`isa::insn_len`] recognizes lengths through H8S and selected
 //! H8SX opcode families. [`isa::decode::decode`] decodes a small H8/300 subset;
-//! [`isa::sx_semantic::decode`] covers selected H8SX control flow and CMP.B;
-//! encoding is not implemented. Every API is parameterised by
+//! [`isa::sx_semantic::decode`] covers selected H8SX control flow, register
+//! operations, immediates, and absolute byte moves. Both subsets have matching
+//! disassemblers and verified encoders. [`Asm`], [`relocate`], [`detour`],
+//! [`image`], and [`analysis`] operate on recognized instruction families. Every API is parameterised by
 //! which core the bytes were
 //! written for ([`Target`]), and which CPU operating mode it runs in
 //! ([`Mode`]). Both change what a given byte sequence means, so neither is
@@ -20,7 +22,17 @@
 #![forbid(unsafe_code)]
 #![deny(missing_docs)]
 
+pub mod analysis;
+pub mod asm;
+pub mod detour;
+pub mod image;
 pub mod isa;
+pub use image::{
+    find, find_free_space, insert, read_u16, read_u32, read_u8, write, CommandRecord, CommandTable,
+    ImageError, Needle, TableError,
+};
+pub mod relocate;
+pub use asm::Asm;
 
 /// The H8 core an image was written for.
 ///

@@ -56,6 +56,7 @@ fn h8sx_zero_suffix_first_word_sweep() {
     let mut both_reject = 0;
     let mut binutils_only = 0;
     let mut disagreements = Vec::new();
+    let mut reverse = Vec::new();
 
     for line in text.lines() {
         let (address, columns) = match line.split_once(':') {
@@ -88,15 +89,34 @@ fn h8sx_zero_suffix_first_word_sweep() {
         match (ours, recognized) {
             (Some(length), true) if length == byte_count => agree += 1,
             (None, false) => both_reject += 1,
-            (None, true) => binutils_only += 1,
+            (None, true) => {
+                binutils_only += 1;
+                reverse.push(format!(
+                    "{first:04x}\t{byte_count}\t{mnemonic}\t{}",
+                    columns.collect::<Vec<_>>().join(" ")
+                ));
+            }
             _ => disagreements.push(format!(
                 "{first:04x}: ours {ours:?}, binutils {byte_count} {mnemonic}"
             )),
         }
     }
 
+    let expected: Vec<String> = include_str!("data/sx_reverse.tsv")
+        .lines()
+        .map(|line| line.split('\t').take(3).collect::<Vec<_>>().join("\t"))
+        .collect();
+    let observed: Vec<String> = reverse
+        .iter()
+        .map(|line| line.split('\t').take(3).collect::<Vec<_>>().join("\t"))
+        .collect();
+    assert_eq!(
+        observed, expected,
+        "reviewed reverse-census allow-list changed"
+    );
     fs::remove_dir_all(&work).unwrap();
     println!("agree={agree} both_reject={both_reject} binutils_only={binutils_only}");
     assert_eq!(checked, u16::MAX as usize + 1);
+    assert_eq!((agree, both_reject, binutils_only), (57677, 7357, 502));
     assert!(disagreements.is_empty(), "{}", disagreements.join("\n"));
 }

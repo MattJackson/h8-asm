@@ -1,16 +1,29 @@
 //! Instruction boundaries in a big-endian H8 instruction stream.
 //!
-//! Length recognition covers H8/300, H8/300H and H8S, plus selected H8SX
-//! opcode families. Other H8SX encodings are refused until their extended
-//! opcode tables are implemented.
+//! Length recognition covers the legacy opcode maps and H8SX §2.4 rows.
+//! H8SX rules are generated from checked manual facts with explicit operand
+//! constraints. Semantic decoding remains narrower than length recognition.
 
+mod codec;
+mod render;
+pub use render::disassemble_insn;
 pub mod decode;
+pub mod insn;
+mod legacy;
+pub use codec::{decode_insn, encode_insn, CodecError};
+pub use insn::{Decoded, Ea, Encoding, Insn, Operand, Reg, Size};
 pub mod disasm;
 pub mod encode;
 mod length;
+mod sx_codec;
 pub mod sx_disasm;
 pub mod sx_encode;
-mod sx_length;
+mod sx_operands;
+mod sx_table;
+#[rustfmt::skip]
+mod sx_table_data;
+pub(crate) use sx_table::complex_relative as sx_complex_relative;
+pub mod sx_register;
 pub mod sx_semantic;
 
 use crate::{Mode, Target};
@@ -26,8 +39,8 @@ pub const MAX_INSN_LEN: usize = 14;
 /// Returns the length of the first complete, recognized instruction in `bytes`.
 ///
 /// Returns `None` for a truncated instruction, an undefined encoding, an
-/// unsupported target/mode pair, or an unimplemented encoding (currently most
-/// H8SX instructions). Trailing bytes are ignored. This checks encoding and
+/// unsupported target/mode pair, or a pattern outside the implemented manual
+/// row grammar. Trailing bytes are ignored. This checks encoding and
 /// length, not whether executing the instruction is safe in the current state.
 ///
 /// Unlike Thumb, H8 instruction length cannot always be determined from the
@@ -45,7 +58,7 @@ pub fn insn_len(bytes: &[u8], target: Target, mode: Mode) -> Option<usize> {
         return None;
     }
     let len = if target == Target::H8SX {
-        sx_length::recognize(bytes)?
+        usize::from(sx_table::recognize(bytes)?.len)
     } else {
         length::recognize(bytes, target)?
     };

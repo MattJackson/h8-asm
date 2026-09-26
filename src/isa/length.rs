@@ -54,10 +54,10 @@ pub(super) fn recognize(bytes: &[u8], target: Target) -> Option<usize> {
         0x52 | 0x53 => !base && lo & 8 == 0,
         0x54 | 0x56 => lo == 0x70,
         0x57 => !base && lo & 0xcf == 0,
-        0x58 if !base && lo & 15 == 0 => return Some(4),
+        0x58 if !base && lo & 15 == 0 => return branch16(bytes),
         0x59 | 0x5d => lo & 0x8f == 0,
         0x5a | 0x5e if !base || lo == 0 => return Some(4),
-        0x5c if !base && lo == 0 => return Some(4),
+        0x5c if !base && lo == 0 => return branch16(bytes),
         0x60..=0x63 | 0x67 | 0x68 | 0x6c => true,
         0x64..=0x66 => !base,
         0x69 | 0x6d => !base || lo & 8 == 0,
@@ -83,6 +83,16 @@ pub(super) fn recognize(bytes: &[u8], target: Target) -> Option<usize> {
     };
     if valid {
         Some(2)
+    } else {
+        None
+    }
+}
+
+// H8/300H §1.6 PC-relative addressing and H8S §1.8: the resulting
+// branch address must be even. The opcode begins at an even PC.
+fn branch16(bytes: &[u8]) -> Option<usize> {
+    if word(bytes, 2)? & 1 == 0 {
+        Some(4)
     } else {
         None
     }
@@ -176,11 +186,23 @@ fn prefix(bytes: &[u8], target: Target, p: u16) -> Option<usize> {
             }
             return prefixed_move(bytes, target, w, true);
         }
-        // H8S §2.2.36 / §2.2.62: serial register groups, no wrap.
+        // H8S §2.2.36/§2.2.63 list aligned groups, unlike H8SX's
+        // arbitrary serial ranges: 2 registers start at 0/2/4/6;
+        // 3 or 4 registers start at 0/4.
         0x0110 | 0x0120 | 0x0130 if s => {
             let count = (p >> 4) & 3;
-            (w & 0xfff8 == 0x6d70 && w & 7 >= count)
-                || (w & 0xfff8 == 0x6df0 && (w & 7) + count <= 7)
+            let register = w & 7;
+            let first = if w & 0xfff8 == 0x6d70 && register >= count {
+                Some(register - count)
+            } else if w & 0xfff8 == 0x6df0 && register + count <= 7 {
+                Some(register)
+            } else {
+                None
+            };
+            match first {
+                Some(first) => first % if count == 1 { 2 } else { 4 } == 0,
+                None => false,
+            }
         }
         0x0160 if target == Target::H8S2600 => w & 0xff88 == 0x6d00,
         0x01c0 => w >> 8 == 0x50 || w & 0xff08 == 0x5200,

@@ -18,7 +18,8 @@ fn mac_and_long_control_registers() {
 
 #[test]
 fn five_bit_shift_counts() {
-    for count in 1..=31u8 {
+    // H8SX §2.2.99 [8] explicitly lists execution states for a zero count.
+    for count in 0..=31u8 {
         for opcode in [0x10, 0x11] {
             for register in 0..16u8 {
                 for size in [0x00, 0x10] {
@@ -37,7 +38,7 @@ fn five_bit_shift_counts() {
     }
     assert_eq!(
         insn_len(&[0x03, 0x80, 0x10, 0x00], Target::H8SX, Mode::Normal),
-        None
+        Some(4)
     );
     assert_eq!(
         insn_len(&[0x03, 0x81, 0x10, 0x38], Target::H8SX, Mode::Normal),

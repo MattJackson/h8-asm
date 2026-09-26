@@ -21,5 +21,5 @@ fn every_two_byte_semantic_decode_agrees_with_length_and_encoder() {
             decoded_words += 1;
         }
     }
-    assert_eq!(decoded_words, 10369);
+    assert_eq!(decoded_words, 39297);
 }

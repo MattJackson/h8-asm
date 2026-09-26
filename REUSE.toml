@@ -13,8 +13,15 @@ path = [
     ".gitignore",
     "README.md",
     "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "GOVERNANCE.md",
+    "ROADMAP.md",
     "KICKOFF.md",
     "docs/**",
+    "scripts/**",
+    "spec/*.json",
+    "spec/*.jsonl",
     ".github/**",
 ]
 precedence = "aggregate"

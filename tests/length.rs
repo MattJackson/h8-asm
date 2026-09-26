@@ -21,7 +21,7 @@ fn first_word_zero_suffix_census() {
         [9823, 54344, 1249, 120, 0, 0, 0, 0],
         [9471, 54696, 1249, 120, 0, 0, 0, 0],
         [9438, 54729, 1249, 120, 0, 0, 0, 0],
-        [8081, 56060, 1273, 122, 0, 0, 0, 0],
+        [7859, 56080, 1392, 204, 1, 0, 0, 0],
     ]) {
         let mut counts = [0usize; 8];
         for first in 0..=u16::MAX {
@@ -189,7 +189,7 @@ fn h8sx_unary_register_space() {
     for low in 0..=u8::MAX {
         let group = low >> 4;
         let expected = matches!(group, 0 | 1 | 5 | 8 | 9 | 13)
-            || matches!(group, 3 | 7 | 11 | 15) && low & 8 == 0;
+            || matches!(group, 3 | 6 | 7 | 11 | 14 | 15) && low & 8 == 0;
         assert_eq!(
             insn_len(&[0x17, low], Target::H8SX, Mode::Normal),
             if expected { Some(2) } else { None },
@@ -241,7 +241,14 @@ fn h8sx_word_and_long_immediate_register_space() {
         for low in 0x70..=0xff {
             assert_eq!(
                 insn_len(&[high, low, 0, 0, 0, 0], Target::H8SX, Mode::Normal),
-                None
+                // §2.4: immediate-to-memory MOV and MOVA index rows.
+                if (high == 0x79 && low == 0x74) || (high == 0x7a && low == 0x7c) {
+                    Some(6)
+                } else if high == 0x7a && (0x80..=0xdf).contains(&low) {
+                    Some(if low & 8 == 0 { 6 } else { 4 })
+                } else {
+                    None
+                }
             );
         }
     }
@@ -386,7 +393,14 @@ fn h8sx_absolute_byte_and_word_moves() {
         ] {
             assert_eq!(
                 insn_len(&[high, field, 0, 0, 0, 0], Target::H8SX, Mode::Maximum),
-                None
+                // MOVFPE/TPE and short-immediate absolute MOV rows.
+                if field == 0xd0 || high == 0x6a && matches!(field, 0x40 | 0xc0) {
+                    Some(4)
+                } else if field == 0xf0 {
+                    Some(6)
+                } else {
+                    None
+                }
             );
         }
     }
@@ -555,7 +569,11 @@ fn h8sx_two_32_bit_displacements() {
     for (at, replacement) in [(1, 0x05), (2, 0x6b), (3, 0x2d), (8, 0x58), (9, 0x11)] {
         let old = bytes[at];
         bytes[at] = replacement;
-        assert_eq!(insn_len(&bytes, Target::H8SX, Mode::Normal), None);
+        assert_eq!(
+            insn_len(&bytes, Target::H8SX, Mode::Normal),
+            // Source byte indexing and word-size operations are now supported.
+            if at == 1 || at == 2 { Some(14) } else { None }
+        );
         bytes[at] = old;
     }
 }
@@ -710,11 +728,19 @@ fn prefixed_move_and_register_group_fields() {
             let store = [0x01, count << 4, 0x6d, 0xf0 | reg];
             assert_eq!(
                 insn_len(&load, Target::H8S2000, Mode::Normal),
-                if reg >= count { Some(4) } else { None }
+                if reg >= count && (reg - count) % (if count == 1 { 2 } else { 4 }) == 0 {
+                    Some(4)
+                } else {
+                    None
+                }
             );
             assert_eq!(
                 insn_len(&store, Target::H8S2000, Mode::Normal),
-                if reg + count <= 7 { Some(4) } else { None }
+                if reg + count <= 7 && reg % (if count == 1 { 2 } else { 4 }) == 0 {
+                    Some(4)
+                } else {
+                    None
+                }
             );
         }
     }

@@ -3,3 +3,5 @@ Cargo.lock
 .DS_Store
 /mutants.out
 /mutants.out.old
+
+__pycache__/

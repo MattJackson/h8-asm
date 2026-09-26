@@ -134,6 +134,11 @@ jobs:
       # is only that it builds and passes.
       - run: cargo build --all-targets
       - run: cargo test --all-targets
+      - name: exhaustive implemented operand fields
+        run: cargo test --release --test sx_operand_audit -- --ignored --nocapture
+      - name: all four-byte patterns on all five targets
+        shell: bash
+        run: scripts/exhaustive.sh
       - name: doctests
         # `--all-targets` skips doctests entirely — they are the examples every
         # downstream reader copies, so they get tested on every cell, including
@@ -315,9 +320,26 @@ jobs:
         # 0.1.x -> 0.2.0).
         run: cargo semver-checks --all-features
 
+  conformance:
+    name: GNU binutils exact-byte conformance
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # master, 2026-09-12
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2
+      - name: build the checksum-pinned H8 oracle
+        env:
+          H8_BUILD_JOBS: '2'
+        run: scripts/build-binutils.sh
+      - name: run all mandatory oracle probes
+        run: scripts/conformance.sh
+
   gate:
     name: qa gate
-    needs: [manifest, lint, test, docs, package, coverage, semver]
+    needs: [manifest, lint, test, docs, package, coverage, semver, conformance]
     # `always()` plus an explicit results check, rather than a bare `needs:`,
     # so that a cancelled or skipped upstream job reports as a red gate instead
     # of a green-looking skip. This is the one job to mark as required in

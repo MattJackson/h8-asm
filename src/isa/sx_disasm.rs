@@ -28,6 +28,14 @@ fn byte_register(register: u8) -> String {
     }
 }
 
+fn word_register(register: u8) -> String {
+    if register < 8 {
+        format!("R{register}")
+    } else {
+        format!("E{}", register - 8)
+    }
+}
+
 fn branch_mnemonic(condition: u8) -> &'static str {
     CONDITIONS
         .get(usize::from(condition))
@@ -44,6 +52,93 @@ fn branch_mnemonic(condition: u8) -> &'static str {
 /// isolation.
 pub fn disassemble(instruction: SxInstruction) -> String {
     match instruction {
+        SxInstruction::RegisterBinary {
+            operation,
+            size,
+            source,
+            destination,
+        } => super::sx_register::disassemble(operation, size, source, destination),
+        SxInstruction::AddByteImmediate {
+            register,
+            immediate,
+        } => format!("ADD.B #H'{immediate:02X}:8,{}", byte_register(register)),
+        SxInstruction::AddCarryByteImmediate {
+            register,
+            immediate,
+        } => format!("ADDX.B #H'{immediate:02X}:8,{}", byte_register(register)),
+        SxInstruction::SubtractCarryByteImmediate {
+            register,
+            immediate,
+        } => format!("SUBX.B #H'{immediate:02X}:8,{}", byte_register(register)),
+        SxInstruction::OrByteImmediate {
+            register,
+            immediate,
+        } => format!("OR.B #H'{immediate:02X}:8,{}", byte_register(register)),
+        SxInstruction::XorByteImmediate {
+            register,
+            immediate,
+        } => format!("XOR.B #H'{immediate:02X}:8,{}", byte_register(register)),
+        SxInstruction::AndByteImmediate {
+            register,
+            immediate,
+        } => format!("AND.B #H'{immediate:02X}:8,{}", byte_register(register)),
+        SxInstruction::MoveWordImmediate {
+            register,
+            immediate,
+        } => format!("MOV.W #H'{immediate:04X}:16,{}", word_register(register)),
+        SxInstruction::MoveLongImmediate {
+            register,
+            immediate,
+        } => format!("MOV.L #H'{immediate:08X}:32,ER{register}"),
+        SxInstruction::AddWordImmediate {
+            register,
+            immediate,
+        } => format!("ADD.W #H'{immediate:04X}:16,{}", word_register(register)),
+        SxInstruction::AddLongImmediate {
+            register,
+            immediate,
+        } => format!("ADD.L #H'{immediate:08X}:32,ER{register}"),
+        SxInstruction::CompareWordImmediate {
+            register,
+            immediate,
+        } => format!("CMP.W #H'{immediate:04X}:16,{}", word_register(register)),
+        SxInstruction::SubtractWordImmediate {
+            register,
+            immediate,
+        } => format!("SUB.W #H'{immediate:04X}:16,{}", word_register(register)),
+        SxInstruction::SubtractLongImmediate {
+            register,
+            immediate,
+        } => format!("SUB.L #H'{immediate:08X}:32,ER{register}"),
+        SxInstruction::OrWordImmediate {
+            register,
+            immediate,
+        } => format!("OR.W #H'{immediate:04X}:16,{}", word_register(register)),
+        SxInstruction::OrLongImmediate {
+            register,
+            immediate,
+        } => format!("OR.L #H'{immediate:08X}:32,ER{register}"),
+        SxInstruction::XorWordImmediate {
+            register,
+            immediate,
+        } => format!("XOR.W #H'{immediate:04X}:16,{}", word_register(register)),
+        SxInstruction::XorLongImmediate {
+            register,
+            immediate,
+        } => format!("XOR.L #H'{immediate:08X}:32,ER{register}"),
+        SxInstruction::AndWordImmediate {
+            register,
+            immediate,
+        } => format!("AND.W #H'{immediate:04X}:16,{}", word_register(register)),
+        SxInstruction::AndLongImmediate {
+            register,
+            immediate,
+        } => format!("AND.L #H'{immediate:08X}:32,ER{register}"),
+
+        SxInstruction::CompareLongImmediate {
+            register,
+            immediate,
+        } => format!("CMP.L #H'{immediate:08X}:32,ER{register}"),
         SxInstruction::MoveByteImmediate {
             register,
             immediate,

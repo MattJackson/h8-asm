@@ -1,0 +1,1227 @@
+{
+  "counts": {
+    "same_length_and_mnemonic": 16865,
+    "needs_review": 121
+  },
+  "classifications": {
+    "printed_opcode_inconsistency": 2,
+    "reserved_zero_short_immediate": 17,
+    "gnu_size_suffix_spelling": 78,
+    "odd_branch_displacement": 16,
+    "stack_move_alias": 8
+  },
+  "inferred_and_assemble_back": 2,
+  "corrected_add_assemble_back": 2,
+  "mismatches": [
+    {
+      "classification": "printed_opcode_inconsistency",
+      "row": 246,
+      "page": 642,
+      "syntax": "ADD.B @(d:32,Rs.W),@ERd+",
+      "fill": 0,
+      "bytes": "78066a24000000000010",
+      "actual_length": 2,
+      "actual": ".word\tH'78,H'6"
+    },
+    {
+      "classification": "printed_opcode_inconsistency",
+      "row": 246,
+      "page": 642,
+      "syntax": "ADD.B @(d:32,Rs.W),@ERd+",
+      "fill": 255,
+      "bytes": "78766a24ffffffff0710",
+      "actual_length": 2,
+      "actual": ".word\tH'78,H'76"
+    },
+    {
+      "classification": "reserved_zero_short_immediate",
+      "row": 309,
+      "page": 645,
+      "syntax": "ADD.W #xx:3,Rd",
+      "fill": 0,
+      "bytes": "0a00",
+      "actual_length": 2,
+      "actual": "inc\tr0h"
+    },
+    {
+      "classification": "reserved_zero_short_immediate",
+      "row": 311,
+      "page": 645,
+      "syntax": "ADD.W #xx:3,@ERd",
+      "fill": 0,
+      "bytes": "7d800a00",
+      "actual_length": 2,
+      "actual": ".word\tH'7d,H'80"
+    },
+    {
+      "classification": "reserved_zero_short_immediate",
+      "row": 312,
+      "page": 645,
+      "syntax": "ADD.W #xx:3,@aa:16",
+      "fill": 0,
+      "bytes": "6b1800000a00",
+      "actual_length": 2,
+      "actual": ".word\tH'6b,H'18"
+    },
+    {
+      "classification": "reserved_zero_short_immediate",
+      "row": 313,
+      "page": 645,
+      "syntax": "ADD.W #xx:3,@aa:32",
+      "fill": 0,
+      "bytes": "6b38000000000a00",
+      "actual_length": 2,
+      "actual": ".word\tH'6b,H'38"
+    },
+    {
+      "classification": "reserved_zero_short_immediate",
+      "row": 619,
+      "page": 654,
+      "syntax": "ADD.L #xx:3,ERd",
+      "fill": 0,
+      "bytes": "0a88",
+      "actual_length": 2,
+      "actual": ".word\tH'a,H'88"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 946,
+      "page": 664,
+      "syntax": "ADDX.B #xx:8,Rd",
+      "fill": 0,
+      "bytes": "9000",
+      "actual_length": 2,
+      "actual": "addx\t#0x0,r0h"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 946,
+      "page": 664,
+      "syntax": "ADDX.B #xx:8,Rd",
+      "fill": 255,
+      "bytes": "9fff",
+      "actual_length": 2,
+      "actual": "addx\t#0xff,r7l"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 949,
+      "page": 664,
+      "syntax": "ADDX.B Rs,Rd",
+      "fill": 0,
+      "bytes": "0e00",
+      "actual_length": 2,
+      "actual": "addx\tr0h,r0h"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 949,
+      "page": 664,
+      "syntax": "ADDX.B Rs,Rd",
+      "fill": 255,
+      "bytes": "0eff",
+      "actual_length": 2,
+      "actual": "addx\tr7l,r7l"
+    },
+    {
+      "classification": "odd_branch_displacement",
+      "row": 1922,
+      "page": 692,
+      "syntax": "BRA d:16(BTd:16)",
+      "fill": 255,
+      "bytes": "5800ffff",
+      "actual_length": 2,
+      "actual": ".word\tH'58,H'0"
+    },
+    {
+      "classification": "odd_branch_displacement",
+      "row": 1924,
+      "page": 692,
+      "syntax": "BRN d:16(BFd:16)",
+      "fill": 255,
+      "bytes": "5810ffff",
+      "actual_length": 2,
+      "actual": ".word\tH'58,H'10"
+    },
+    {
+      "classification": "odd_branch_displacement",
+      "row": 1926,
+      "page": 693,
+      "syntax": "BHI d:16",
+      "fill": 255,
+      "bytes": "5820ffff",
+      "actual_length": 2,
+      "actual": ".word\tH'58,H'20"
+    },
+    {
+      "classification": "odd_branch_displacement",
+      "row": 1928,
+      "page": 693,
+      "syntax": "BLS d:16",
+      "fill": 255,
+      "bytes": "5830ffff",
+      "actual_length": 2,
+      "actual": ".word\tH'58,H'30"
+    },
+    {
+      "classification": "odd_branch_displacement",
+      "row": 1930,
+      "page": 693,
+      "syntax": "BCC d:16(BHSd:16)",
+      "fill": 255,
+      "bytes": "5840ffff",
+      "actual_length": 2,
+      "actual": ".word\tH'58,H'40"
+    },
+    {
+      "classification": "odd_branch_displacement",
+      "row": 1932,
+      "page": 693,
+      "syntax": "BCS d:16(BLOd:16)",
+      "fill": 255,
+      "bytes": "5850ffff",
+      "actual_length": 2,
+      "actual": ".word\tH'58,H'50"
+    },
+    {
+      "classification": "odd_branch_displacement",
+      "row": 1934,
+      "page": 693,
+      "syntax": "BNE d:16",
+      "fill": 255,
+      "bytes": "5860ffff",
+      "actual_length": 2,
+      "actual": ".word\tH'58,H'60"
+    },
+    {
+      "classification": "odd_branch_displacement",
+      "row": 1936,
+      "page": 693,
+      "syntax": "BEQ d:16",
+      "fill": 255,
+      "bytes": "5870ffff",
+      "actual_length": 2,
+      "actual": ".word\tH'58,H'70"
+    },
+    {
+      "classification": "odd_branch_displacement",
+      "row": 1938,
+      "page": 693,
+      "syntax": "BVC d:16",
+      "fill": 255,
+      "bytes": "5880ffff",
+      "actual_length": 2,
+      "actual": ".word\tH'58,H'80"
+    },
+    {
+      "classification": "odd_branch_displacement",
+      "row": 1940,
+      "page": 693,
+      "syntax": "BVS d:16",
+      "fill": 255,
+      "bytes": "5890ffff",
+      "actual_length": 2,
+      "actual": ".word\tH'58,H'90"
+    },
+    {
+      "classification": "odd_branch_displacement",
+      "row": 1942,
+      "page": 693,
+      "syntax": "BPL d:16",
+      "fill": 255,
+      "bytes": "58a0ffff",
+      "actual_length": 2,
+      "actual": ".word\tH'58,H'a0"
+    },
+    {
+      "classification": "odd_branch_displacement",
+      "row": 1944,
+      "page": 693,
+      "syntax": "BMI d:16",
+      "fill": 255,
+      "bytes": "58b0ffff",
+      "actual_length": 2,
+      "actual": ".word\tH'58,H'b0"
+    },
+    {
+      "classification": "odd_branch_displacement",
+      "row": 1946,
+      "page": 693,
+      "syntax": "BGE d:16",
+      "fill": 255,
+      "bytes": "58c0ffff",
+      "actual_length": 2,
+      "actual": ".word\tH'58,H'c0"
+    },
+    {
+      "classification": "odd_branch_displacement",
+      "row": 1948,
+      "page": 693,
+      "syntax": "BLT d:16",
+      "fill": 255,
+      "bytes": "58d0ffff",
+      "actual_length": 2,
+      "actual": ".word\tH'58,H'd0"
+    },
+    {
+      "classification": "odd_branch_displacement",
+      "row": 1950,
+      "page": 693,
+      "syntax": "BGT d:16",
+      "fill": 255,
+      "bytes": "58e0ffff",
+      "actual_length": 2,
+      "actual": ".word\tH'58,H'e0"
+    },
+    {
+      "classification": "odd_branch_displacement",
+      "row": 1952,
+      "page": 693,
+      "syntax": "BLE d:16",
+      "fill": 255,
+      "bytes": "58f0ffff",
+      "actual_length": 2,
+      "actual": ".word\tH'58,H'f0"
+    },
+    {
+      "classification": "reserved_zero_short_immediate",
+      "row": 2429,
+      "page": 707,
+      "syntax": "CMP.W #xx:3,Rd",
+      "fill": 0,
+      "bytes": "1f00",
+      "actual_length": 2,
+      "actual": "das\tr0h"
+    },
+    {
+      "classification": "reserved_zero_short_immediate",
+      "row": 2431,
+      "page": 707,
+      "syntax": "CMP.W #xx:3,@ERd",
+      "fill": 0,
+      "bytes": "7d801f00",
+      "actual_length": 2,
+      "actual": ".word\tH'7d,H'80"
+    },
+    {
+      "classification": "reserved_zero_short_immediate",
+      "row": 2432,
+      "page": 707,
+      "syntax": "CMP.W #xx:3,@aa:16",
+      "fill": 0,
+      "bytes": "6b1800001f00",
+      "actual_length": 2,
+      "actual": ".word\tH'6b,H'18"
+    },
+    {
+      "classification": "reserved_zero_short_immediate",
+      "row": 2433,
+      "page": 707,
+      "syntax": "CMP.W #xx:3,@aa:32",
+      "fill": 0,
+      "bytes": "6b38000000001f00",
+      "actual_length": 2,
+      "actual": ".word\tH'6b,H'38"
+    },
+    {
+      "classification": "reserved_zero_short_immediate",
+      "row": 2739,
+      "page": 717,
+      "syntax": "CMP.L #xx:3,ERd",
+      "fill": 0,
+      "bytes": "1f88",
+      "actual_length": 2,
+      "actual": ".word\tH'1f,H'88"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3190,
+      "page": 730,
+      "syntax": "INC.B Rd",
+      "fill": 0,
+      "bytes": "0a00",
+      "actual_length": 2,
+      "actual": "inc\tr0h"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3190,
+      "page": 730,
+      "syntax": "INC.B Rd",
+      "fill": 255,
+      "bytes": "0a0f",
+      "actual_length": 2,
+      "actual": "inc\tr7l"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3205,
+      "page": 730,
+      "syntax": "LDC.B #xx:8,CCR",
+      "fill": 0,
+      "bytes": "0700",
+      "actual_length": 2,
+      "actual": "ldc\t#0x0,ccr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3205,
+      "page": 730,
+      "syntax": "LDC.B #xx:8,CCR",
+      "fill": 255,
+      "bytes": "07ff",
+      "actual_length": 2,
+      "actual": "ldc\t#0xff,ccr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3206,
+      "page": 730,
+      "syntax": "LDC.B Rs,CCR",
+      "fill": 0,
+      "bytes": "0300",
+      "actual_length": 2,
+      "actual": "ldc\tr0h,ccr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3206,
+      "page": 730,
+      "syntax": "LDC.B Rs,CCR",
+      "fill": 255,
+      "bytes": "030f",
+      "actual_length": 2,
+      "actual": "ldc\tr7l,ccr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3207,
+      "page": 730,
+      "syntax": "LDC.W @ERs,CCR",
+      "fill": 0,
+      "bytes": "01406900",
+      "actual_length": 4,
+      "actual": "ldc\t@er0,ccr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3207,
+      "page": 730,
+      "syntax": "LDC.W @ERs,CCR",
+      "fill": 255,
+      "bytes": "01406970",
+      "actual_length": 4,
+      "actual": "ldc\t@er7,ccr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3208,
+      "page": 730,
+      "syntax": "LDC.W @ERs+,CCR",
+      "fill": 0,
+      "bytes": "01406d00",
+      "actual_length": 4,
+      "actual": "ldc\t@er0+,ccr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3208,
+      "page": 730,
+      "syntax": "LDC.W @ERs+,CCR",
+      "fill": 255,
+      "bytes": "01406d70",
+      "actual_length": 4,
+      "actual": "ldc\t@er7+,ccr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3209,
+      "page": 730,
+      "syntax": "LDC.W @(d:16,ERs),CCR",
+      "fill": 0,
+      "bytes": "01406f000000",
+      "actual_length": 6,
+      "actual": "ldc\t@(0x0:16,er0),ccr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3209,
+      "page": 730,
+      "syntax": "LDC.W @(d:16,ERs),CCR",
+      "fill": 255,
+      "bytes": "01406f70ffff",
+      "actual_length": 6,
+      "actual": "ldc\t@(0xffff:16,er7),ccr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3210,
+      "page": 730,
+      "syntax": "LDC.W @(d:32,ERs),CCR",
+      "fill": 0,
+      "bytes": "014078006b2000000000",
+      "actual_length": 10,
+      "actual": "ldc\t@(0x0:32,er0),ccr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3210,
+      "page": 730,
+      "syntax": "LDC.W @(d:32,ERs),CCR",
+      "fill": 255,
+      "bytes": "014078706b20ffffffff",
+      "actual_length": 10,
+      "actual": "ldc\t@(0xffffffff:32,er7),ccr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3211,
+      "page": 730,
+      "syntax": "LDC.W @aa:16,CCR",
+      "fill": 0,
+      "bytes": "01406b000000",
+      "actual_length": 6,
+      "actual": "ldc\t@0x0:16,ccr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3211,
+      "page": 730,
+      "syntax": "LDC.W @aa:16,CCR",
+      "fill": 255,
+      "bytes": "01406b00ffff",
+      "actual_length": 6,
+      "actual": "ldc\t@0xffff:16,ccr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3212,
+      "page": 730,
+      "syntax": "LDC.W @aa:32,CCR",
+      "fill": 0,
+      "bytes": "01406b2000000000",
+      "actual_length": 8,
+      "actual": "ldc\t@0x0:32,ccr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3212,
+      "page": 730,
+      "syntax": "LDC.W @aa:32,CCR",
+      "fill": 255,
+      "bytes": "01406b20ffffffff",
+      "actual_length": 8,
+      "actual": "ldc\t@0xffffffff:32,ccr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3213,
+      "page": 731,
+      "syntax": "LDC.B #xx:8,EXR",
+      "fill": 0,
+      "bytes": "01410700",
+      "actual_length": 4,
+      "actual": "ldc\t#0x0,exr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3213,
+      "page": 731,
+      "syntax": "LDC.B #xx:8,EXR",
+      "fill": 255,
+      "bytes": "014107ff",
+      "actual_length": 4,
+      "actual": "ldc\t#0xff,exr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3214,
+      "page": 731,
+      "syntax": "LDC.B Rs,EXR",
+      "fill": 0,
+      "bytes": "0310",
+      "actual_length": 2,
+      "actual": "ldc\tr0h,exr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3214,
+      "page": 731,
+      "syntax": "LDC.B Rs,EXR",
+      "fill": 255,
+      "bytes": "031f",
+      "actual_length": 2,
+      "actual": "ldc\tr7l,exr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3215,
+      "page": 731,
+      "syntax": "LDC.W @ERs,EXR",
+      "fill": 0,
+      "bytes": "01416900",
+      "actual_length": 4,
+      "actual": "ldc\t@er0,exr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3215,
+      "page": 731,
+      "syntax": "LDC.W @ERs,EXR",
+      "fill": 255,
+      "bytes": "01416970",
+      "actual_length": 4,
+      "actual": "ldc\t@er7,exr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3216,
+      "page": 731,
+      "syntax": "LDC.W @ERs+,EXR",
+      "fill": 0,
+      "bytes": "01416d00",
+      "actual_length": 4,
+      "actual": "ldc\t@er0+,exr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3216,
+      "page": 731,
+      "syntax": "LDC.W @ERs+,EXR",
+      "fill": 255,
+      "bytes": "01416d70",
+      "actual_length": 4,
+      "actual": "ldc\t@er7+,exr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3217,
+      "page": 731,
+      "syntax": "LDC.W @(d:16,ERs),EXR",
+      "fill": 0,
+      "bytes": "01416f000000",
+      "actual_length": 6,
+      "actual": "ldc\t@(0x0:16,er0),exr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3217,
+      "page": 731,
+      "syntax": "LDC.W @(d:16,ERs),EXR",
+      "fill": 255,
+      "bytes": "01416f70ffff",
+      "actual_length": 6,
+      "actual": "ldc\t@(0xffff:16,er7),exr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3218,
+      "page": 731,
+      "syntax": "LDC.W @(d:32,ERs),EXR",
+      "fill": 0,
+      "bytes": "014178006b2000000000",
+      "actual_length": 10,
+      "actual": "ldc\t@(0x0:32,er0),exr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3218,
+      "page": 731,
+      "syntax": "LDC.W @(d:32,ERs),EXR",
+      "fill": 255,
+      "bytes": "014178706b20ffffffff",
+      "actual_length": 10,
+      "actual": "ldc\t@(0xffffffff:32,er7),exr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3219,
+      "page": 731,
+      "syntax": "LDC.W @aa:16,EXR",
+      "fill": 0,
+      "bytes": "01416b000000",
+      "actual_length": 6,
+      "actual": "ldc\t@0x0:16,exr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3219,
+      "page": 731,
+      "syntax": "LDC.W @aa:16,EXR",
+      "fill": 255,
+      "bytes": "01416b00ffff",
+      "actual_length": 6,
+      "actual": "ldc\t@0xffff:16,exr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3220,
+      "page": 731,
+      "syntax": "LDC.W @aa:32,EXR",
+      "fill": 0,
+      "bytes": "01416b2000000000",
+      "actual_length": 8,
+      "actual": "ldc\t@0x0:32,exr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3220,
+      "page": 731,
+      "syntax": "LDC.W @aa:32,EXR",
+      "fill": 255,
+      "bytes": "01416b20ffffffff",
+      "actual_length": 8,
+      "actual": "ldc\t@0xffffffff:32,exr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3221,
+      "page": 731,
+      "syntax": "LDC.L ERs,SBR",
+      "fill": 0,
+      "bytes": "0370",
+      "actual_length": 2,
+      "actual": "ldc\ter0,sbr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3221,
+      "page": 731,
+      "syntax": "LDC.L ERs,SBR",
+      "fill": 255,
+      "bytes": "0377",
+      "actual_length": 2,
+      "actual": "ldc\ter7,sbr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3222,
+      "page": 731,
+      "syntax": "LDC.L ERs,VBR",
+      "fill": 0,
+      "bytes": "0360",
+      "actual_length": 2,
+      "actual": "ldc\ter0,vbr"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 3222,
+      "page": 731,
+      "syntax": "LDC.L ERs,VBR",
+      "fill": 255,
+      "bytes": "0367",
+      "actual_length": 2,
+      "actual": "ldc\ter7,vbr"
+    },
+    {
+      "classification": "reserved_zero_short_immediate",
+      "row": 3539,
+      "page": 740,
+      "syntax": "MOV.W #xx:3,Rd",
+      "fill": 0,
+      "bytes": "0f00",
+      "actual_length": 2,
+      "actual": "daa\tr0h"
+    },
+    {
+      "classification": "reserved_zero_short_immediate",
+      "row": 3864,
+      "page": 750,
+      "syntax": "MOV.L #xx:3,ERd",
+      "fill": 0,
+      "bytes": "0f88",
+      "actual_length": 2,
+      "actual": ".word\tH'f,H'88"
+    },
+    {
+      "classification": "stack_move_alias",
+      "row": 5490,
+      "page": 800,
+      "syntax": "POP.W Rn",
+      "fill": 0,
+      "bytes": "6d70",
+      "actual_length": 2,
+      "actual": "mov.w\t@er7+,r0"
+    },
+    {
+      "classification": "stack_move_alias",
+      "row": 5490,
+      "page": 800,
+      "syntax": "POP.W Rn",
+      "fill": 255,
+      "bytes": "6d7f",
+      "actual_length": 2,
+      "actual": "mov.w\t@er7+,e7"
+    },
+    {
+      "classification": "stack_move_alias",
+      "row": 5491,
+      "page": 800,
+      "syntax": "POP.L ERn",
+      "fill": 0,
+      "bytes": "01006d70",
+      "actual_length": 4,
+      "actual": "mov.l\t@er7+,er0"
+    },
+    {
+      "classification": "stack_move_alias",
+      "row": 5491,
+      "page": 800,
+      "syntax": "POP.L ERn",
+      "fill": 255,
+      "bytes": "01006d77",
+      "actual_length": 4,
+      "actual": "mov.l\t@er7+,er7"
+    },
+    {
+      "classification": "stack_move_alias",
+      "row": 5492,
+      "page": 800,
+      "syntax": "PUSH.W Rn",
+      "fill": 0,
+      "bytes": "6df0",
+      "actual_length": 2,
+      "actual": "mov.w\tr0,@-er7"
+    },
+    {
+      "classification": "stack_move_alias",
+      "row": 5492,
+      "page": 800,
+      "syntax": "PUSH.W Rn",
+      "fill": 255,
+      "bytes": "6dff",
+      "actual_length": 2,
+      "actual": "mov.w\te7,@-er7"
+    },
+    {
+      "classification": "stack_move_alias",
+      "row": 5493,
+      "page": 800,
+      "syntax": "PUSH.L ERn",
+      "fill": 0,
+      "bytes": "01006df0",
+      "actual_length": 4,
+      "actual": "mov.l\ter0,@-er7"
+    },
+    {
+      "classification": "stack_move_alias",
+      "row": 5493,
+      "page": 800,
+      "syntax": "PUSH.L ERn",
+      "fill": 255,
+      "bytes": "01006df7",
+      "actual_length": 4,
+      "actual": "mov.l\ter7,@-er7"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6555,
+      "page": 832,
+      "syntax": "STC.B CCR,Rd",
+      "fill": 0,
+      "bytes": "0200",
+      "actual_length": 2,
+      "actual": "stc\tccr,r0h"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6555,
+      "page": 832,
+      "syntax": "STC.B CCR,Rd",
+      "fill": 255,
+      "bytes": "020f",
+      "actual_length": 2,
+      "actual": "stc\tccr,r7l"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6556,
+      "page": 832,
+      "syntax": "STC.W CCR,@ERd",
+      "fill": 0,
+      "bytes": "01406980",
+      "actual_length": 4,
+      "actual": "stc\tccr,@er0"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6556,
+      "page": 832,
+      "syntax": "STC.W CCR,@ERd",
+      "fill": 255,
+      "bytes": "014069f0",
+      "actual_length": 4,
+      "actual": "stc\tccr,@er7"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6557,
+      "page": 832,
+      "syntax": "STC.W CCR,@-ERd",
+      "fill": 0,
+      "bytes": "01406d80",
+      "actual_length": 4,
+      "actual": "stc\tccr,@-er0"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6557,
+      "page": 832,
+      "syntax": "STC.W CCR,@-ERd",
+      "fill": 255,
+      "bytes": "01406df0",
+      "actual_length": 4,
+      "actual": "stc\tccr,@-er7"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6558,
+      "page": 832,
+      "syntax": "STC.W CCR,@(d:16,ERd)",
+      "fill": 0,
+      "bytes": "01406f800000",
+      "actual_length": 6,
+      "actual": "stc\tccr,@(0x0:16,er0)"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6558,
+      "page": 832,
+      "syntax": "STC.W CCR,@(d:16,ERd)",
+      "fill": 255,
+      "bytes": "01406ff0ffff",
+      "actual_length": 6,
+      "actual": "stc\tccr,@(0xffff:16,er7)"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6559,
+      "page": 832,
+      "syntax": "STC.W CCR,@(d:32,ERd)",
+      "fill": 0,
+      "bytes": "014078006ba000000000",
+      "actual_length": 10,
+      "actual": "stc\tccr,@(0x0:32,er0)"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6559,
+      "page": 832,
+      "syntax": "STC.W CCR,@(d:32,ERd)",
+      "fill": 255,
+      "bytes": "014078706ba0ffffffff",
+      "actual_length": 10,
+      "actual": "stc\tccr,@(0xffffffff:32,er7)"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6560,
+      "page": 832,
+      "syntax": "STC.W CCR,@aa:16",
+      "fill": 0,
+      "bytes": "01406b800000",
+      "actual_length": 6,
+      "actual": "stc\tccr,@0x0:16"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6560,
+      "page": 832,
+      "syntax": "STC.W CCR,@aa:16",
+      "fill": 255,
+      "bytes": "01406b80ffff",
+      "actual_length": 6,
+      "actual": "stc\tccr,@0xffff:16"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6561,
+      "page": 832,
+      "syntax": "STC.W CCR,@aa:32",
+      "fill": 0,
+      "bytes": "01406ba000000000",
+      "actual_length": 8,
+      "actual": "stc\tccr,@0x0:32"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6561,
+      "page": 832,
+      "syntax": "STC.W CCR,@aa:32",
+      "fill": 255,
+      "bytes": "01406ba0ffffffff",
+      "actual_length": 8,
+      "actual": "stc\tccr,@0xffffffff:32"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6562,
+      "page": 832,
+      "syntax": "STC.B EXR,Rd",
+      "fill": 0,
+      "bytes": "0210",
+      "actual_length": 2,
+      "actual": "stc\texr,r0h"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6562,
+      "page": 832,
+      "syntax": "STC.B EXR,Rd",
+      "fill": 255,
+      "bytes": "021f",
+      "actual_length": 2,
+      "actual": "stc\texr,r7l"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6563,
+      "page": 832,
+      "syntax": "STC.W EXR,@ERd",
+      "fill": 0,
+      "bytes": "01416980",
+      "actual_length": 4,
+      "actual": "stc\texr,@er0"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6563,
+      "page": 832,
+      "syntax": "STC.W EXR,@ERd",
+      "fill": 255,
+      "bytes": "014169f0",
+      "actual_length": 4,
+      "actual": "stc\texr,@er7"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6564,
+      "page": 832,
+      "syntax": "STC.W EXR,@-ERd",
+      "fill": 0,
+      "bytes": "01416d80",
+      "actual_length": 4,
+      "actual": "stc\texr,@-er0"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6564,
+      "page": 832,
+      "syntax": "STC.W EXR,@-ERd",
+      "fill": 255,
+      "bytes": "01416df0",
+      "actual_length": 4,
+      "actual": "stc\texr,@-er7"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6565,
+      "page": 832,
+      "syntax": "STC.W EXR,@(d:16,ERd)",
+      "fill": 0,
+      "bytes": "01416f800000",
+      "actual_length": 6,
+      "actual": "stc\texr,@(0x0:16,er0)"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6565,
+      "page": 832,
+      "syntax": "STC.W EXR,@(d:16,ERd)",
+      "fill": 255,
+      "bytes": "01416ff0ffff",
+      "actual_length": 6,
+      "actual": "stc\texr,@(0xffff:16,er7)"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6566,
+      "page": 832,
+      "syntax": "STC.W EXR,@(d:32,ERd)",
+      "fill": 0,
+      "bytes": "014178006ba000000000",
+      "actual_length": 10,
+      "actual": "stc\texr,@(0x0:32,er0)"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6566,
+      "page": 832,
+      "syntax": "STC.W EXR,@(d:32,ERd)",
+      "fill": 255,
+      "bytes": "014178706ba0ffffffff",
+      "actual_length": 10,
+      "actual": "stc\texr,@(0xffffffff:32,er7)"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6567,
+      "page": 832,
+      "syntax": "STC.W EXR,@aa:16",
+      "fill": 0,
+      "bytes": "01416b800000",
+      "actual_length": 6,
+      "actual": "stc\texr,@0x0:16"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6567,
+      "page": 832,
+      "syntax": "STC.W EXR,@aa:16",
+      "fill": 255,
+      "bytes": "01416b80ffff",
+      "actual_length": 6,
+      "actual": "stc\texr,@0xffff:16"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6568,
+      "page": 832,
+      "syntax": "STC.W EXR,@aa:32",
+      "fill": 0,
+      "bytes": "01416ba000000000",
+      "actual_length": 8,
+      "actual": "stc\texr,@0x0:32"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6568,
+      "page": 832,
+      "syntax": "STC.W EXR,@aa:32",
+      "fill": 255,
+      "bytes": "01416ba0ffffffff",
+      "actual_length": 8,
+      "actual": "stc\texr,@0xffffffff:32"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6569,
+      "page": 832,
+      "syntax": "STC.L SBR,ERd",
+      "fill": 0,
+      "bytes": "0270",
+      "actual_length": 2,
+      "actual": "stc\tsbr,er0"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6569,
+      "page": 832,
+      "syntax": "STC.L SBR,ERd",
+      "fill": 255,
+      "bytes": "0277",
+      "actual_length": 2,
+      "actual": "stc\tsbr,er7"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6570,
+      "page": 832,
+      "syntax": "STC.L VBR,ERd",
+      "fill": 0,
+      "bytes": "0260",
+      "actual_length": 2,
+      "actual": "stc\tvbr,er0"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 6570,
+      "page": 832,
+      "syntax": "STC.L VBR,ERd",
+      "fill": 255,
+      "bytes": "0267",
+      "actual_length": 2,
+      "actual": "stc\tvbr,er7"
+    },
+    {
+      "classification": "reserved_zero_short_immediate",
+      "row": 6884,
+      "page": 841,
+      "syntax": "SUB.W #xx:3,Rd",
+      "fill": 0,
+      "bytes": "1a00",
+      "actual_length": 2,
+      "actual": "dec.b\tr0h"
+    },
+    {
+      "classification": "reserved_zero_short_immediate",
+      "row": 6886,
+      "page": 841,
+      "syntax": "SUB.W #xx:3,@ERd",
+      "fill": 0,
+      "bytes": "7d801a00",
+      "actual_length": 2,
+      "actual": ".word\tH'7d,H'80"
+    },
+    {
+      "classification": "reserved_zero_short_immediate",
+      "row": 6887,
+      "page": 841,
+      "syntax": "SUB.W #xx:3,@aa:16",
+      "fill": 0,
+      "bytes": "6b1800001a00",
+      "actual_length": 2,
+      "actual": ".word\tH'6b,H'18"
+    },
+    {
+      "classification": "reserved_zero_short_immediate",
+      "row": 6888,
+      "page": 841,
+      "syntax": "SUB.W #xx:3,@aa:32",
+      "fill": 0,
+      "bytes": "6b38000000001a00",
+      "actual_length": 2,
+      "actual": ".word\tH'6b,H'38"
+    },
+    {
+      "classification": "reserved_zero_short_immediate",
+      "row": 7194,
+      "page": 851,
+      "syntax": "SUB.L #xx:3,ERd",
+      "fill": 0,
+      "bytes": "1a88",
+      "actual_length": 2,
+      "actual": ".word\tH'1a,H'88"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 7521,
+      "page": 860,
+      "syntax": "SUBX.B #xx:8,Rd",
+      "fill": 0,
+      "bytes": "b000",
+      "actual_length": 2,
+      "actual": "subx\t#0x0,r0h"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 7521,
+      "page": 860,
+      "syntax": "SUBX.B #xx:8,Rd",
+      "fill": 255,
+      "bytes": "bfff",
+      "actual_length": 2,
+      "actual": "subx\t#0xff,r7l"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 7524,
+      "page": 860,
+      "syntax": "SUBX.B Rs,Rd",
+      "fill": 0,
+      "bytes": "1e00",
+      "actual_length": 2,
+      "actual": "subx\tr0h,r0h"
+    },
+    {
+      "classification": "gnu_size_suffix_spelling",
+      "row": 7524,
+      "page": 860,
+      "syntax": "SUBX.B Rs,Rd",
+      "fill": 255,
+      "bytes": "1eff",
+      "actual_length": 2,
+      "actual": "subx\tr7l,r7l"
+    }
+  ]
+}

@@ -21,6 +21,8 @@ pub enum EncodeError {
 ///
 /// Branch displacements are signed offsets from the next instruction; callers
 /// converting from an absolute target address must subtract `PC + 2` first.
+/// An internal encoder/decoder disagreement panics before returning bytes;
+/// invalid user operands return [`EncodeError`].
 ///
 /// ```
 /// use h8_asm::{isa::{decode::Instruction, encode::encode}, Mode, Target};
@@ -77,5 +79,13 @@ pub fn encode(
             [0x55, displacement as u8]
         }
     };
+    assert_eq!(
+        super::decode::decode(&bytes, target, mode),
+        Ok(super::decode::DecodedInstruction {
+            instruction,
+            len: bytes.len()
+        }),
+        "encoder/decoder disagreement"
+    );
     Ok(bytes)
 }

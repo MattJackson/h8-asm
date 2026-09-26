@@ -90,7 +90,35 @@ fn h8sx_semantic_assemble_back() {
             }
         }
     }
-    assert_eq!(two_byte_cases, 10369);
+    let mut extended_cases = 0;
+    for opcode in 0..7u8 {
+        for register in 0..16u8 {
+            for immediate in [0u16, 1, 0x7fff, 0x8000, 0xffff] {
+                let [a, b] = immediate.to_be_bytes();
+                append_case(
+                    &mut assembly,
+                    &mut expected,
+                    &[0x79, opcode << 4 | register, a, b],
+                );
+                extended_cases += 1;
+            }
+        }
+        for register in 0..8u8 {
+            for immediate in [
+                0u32, 1, 0x7fff, 0x8000, 0xffff, 0x10000, 0x7fffffff, 0x80000000, 0xffffffff,
+            ] {
+                let [a, b, c, d] = immediate.to_be_bytes();
+                append_case(
+                    &mut assembly,
+                    &mut expected,
+                    &[0x7a, opcode << 4 | register, a, b, c, d],
+                );
+                extended_cases += 1;
+            }
+        }
+    }
+    assert_eq!(extended_cases, 1064);
+    assert_eq!(two_byte_cases, 39297);
     assert_eq!(four_byte_cases, 140);
     fs::write(&source, assembly).unwrap();
 
@@ -131,6 +159,6 @@ fn h8sx_semantic_assemble_back() {
     let actual = fs::read(&binary).unwrap();
     assert_eq!(actual.len(), expected.len(), "assembled length changed");
     assert_eq!(actual, expected, "GNU assembled bytes differ");
-    println!("checked {two_byte_cases} two-byte and {four_byte_cases} four-byte forms");
+    println!("checked {two_byte_cases} two-byte and {four_byte_cases} four-byte forms; {extended_cases} word/long immediate cases");
     fs::remove_dir_all(&work).unwrap();
 }

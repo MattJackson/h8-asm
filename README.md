@@ -14,23 +14,37 @@ dependencies beyond `std`.
 
 ## Status
 
-**Pre-alpha.** `isa::insn_len` recognizes instruction lengths through H8S and
-selected H8SX families. A typed H8/300 decoder, disassembler and encoder
-cover 2,692 two-byte encodings; a separate H8SX decoder, disassembler, and
-encoder cover selected control flow, byte immediates, and absolute byte moves.
-Relocation and detour installation are
-not implemented. The coverage map and limits are in
+**Pre-alpha.** `isa::insn_len` uses the legacy opcode maps and a generated
+H8SX grammar covering all 8,493 printed §2.4 rows, with explicit field
+restrictions and reviewed source anomalies. The shared typed vocabulary and
+`decode_insn`/`encode_insn`/`disassemble_insn` cover all five targets, including
+memory operands, register groups, control registers and H8SX MOVA's nested
+indexed operands. The original H8/300 and H8SX subset APIs are retained.
+`Asm`, relocation, transactional detours, big-endian image helpers, command
+tables, and conservative control-flow analysis now operate on recognized
+instruction families. Delayed/PC-indexed relocation and other named unsafe
+cases are refused; see [`docs/PATCHING.md`](docs/PATCHING.md). The coverage map and limits are in
 [`spec/H8-ISA.md`](spec/H8-ISA.md). The build-out plan is in
 [`KICKOFF.md`](KICKOFF.md), and the manuals every encoding will be checked
 against are in [`spec/`](spec/README.md).
 
-The H8/300 semantic subset has an independent assemble-back check: its 2,692
-decoded words render as Renesas assembly, are assembled and linked with GNU
-binutils 2.47, and reproduce the original bytes exactly. Opt-in tests also
-compare all 65,536 first words per target against binutils with a zero-filled
-suffix. A second assemble-back test matches all 10,369 semantically decoded
-H8SX two-byte words and 140 selected four-byte forms against binutils 2.47.
-Those probes are narrower than full ISA conformance.
+The shared legacy codec independently assembles all 215,149 supported
+two-byte words back to exact bytes across its four cores. Extended operand
+probes also pass, with narrowly identified alias choices and GNU divergences
+reported separately. The shared H8SX codec assembles all 56,080 supported
+two-byte words exactly. Five constrained witnesses per manual row yield
+42,315 additional exact results, 12 verified alternative forms and 18
+GNU limitations checked independently through disassembly.
+First-word length probes compare all 65,536 words per target with a zero suffix.
+Those probes are narrower than full ISA conformance. Reproduce them with
+`scripts/build-binutils.sh` followed by `scripts/conformance.sh`; QA requires
+the same checks. See [`docs/CONFORMANCE.md`](docs/CONFORMANCE.md).
+
+The encoders decode their output and assert the same instruction and length
+before returning bytes. This detects internal disagreement, but is not an
+independent proof of an encoding. The normal suite passes on Rust 1.58 and
+has a 100% line/region/function coverage gate. Source coverage measures the
+implemented code, not completion of the instruction set.
 
 ## Say what you are patching
 

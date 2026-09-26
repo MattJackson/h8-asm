@@ -66,7 +66,11 @@ fn ud04_absolute_byte_accesses() {
             register: 8,
         }
     );
-    assert!(decode(&[0x6a, 0x08, 0x2c], target, mode).is_none());
+    for bytes in [[0x6a, 0x08, 0x2c, 0x24], [0x6a, 0x88, 0x2c, 0x24]] {
+        for end in 0..4 {
+            assert!(decode(&bytes[..end], target, mode).is_none());
+        }
+    }
     assert!(decode(&[0x6a, 0x18, 0x2c, 0x24], target, mode).is_none());
     assert_eq!(
         decode(&[0xf8, 0xf1], target, mode).unwrap().instruction,
@@ -75,6 +79,26 @@ fn ud04_absolute_byte_accesses() {
             immediate: 0xf1,
         }
     );
+}
+
+#[test]
+fn ud04_oem_control_word_compares() {
+    let target = Target::H8SX;
+    let mode = Mode::Maximum;
+    for (bytes, immediate) in [
+        ([0x7a, 0x20, 0x42, 0x66, 0x23, 0xfd], 0x4266_23fd),
+        ([0x7a, 0x20, 0x9a, 0x78, 0x23, 0x61], 0x9a78_2361),
+    ] {
+        assert_eq!(
+            decode(&bytes, target, mode).unwrap().instruction,
+            SxInstruction::CompareLongImmediate {
+                register: 0,
+                immediate,
+            }
+        );
+    }
+    assert!(decode(&[0x7a, 0x20, 0x42, 0x66, 0x23], target, mode).is_none());
+    assert!(decode(&[0x7a, 0x28, 0x42, 0x66, 0x23, 0xfd], target, mode).is_none());
 }
 
 #[test]
