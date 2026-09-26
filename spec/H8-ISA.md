@@ -85,6 +85,10 @@ all 256 first-word variants in each of these six rows are allocated.
 The `6a`/`6b` absolute MOV.B/W rows use low-byte high nibbles `0`/`8`
 for 16-bit addresses (four bytes) and `2`/`a` for 32-bit addresses (six
 bytes). Other `6a`/`6b` high nibbles require separate review.
+For MOV.L, the H8SX `0100` prefix followed by `69`/`6d` is four bytes,
+followed by `6f` is six bytes, and followed by selected `6b` absolute
+address rows is six or eight bytes (§2.4, manual page 752). Those second
+words are checked, and other `0100` continuations are still refused.
 
 ## 3. Manual boundary witnesses
 

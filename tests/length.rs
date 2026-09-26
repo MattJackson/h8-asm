@@ -243,6 +243,45 @@ fn h8sx_absolute_byte_and_word_moves() {
     }
 }
 
+#[test]
+fn h8sx_prefixed_long_moves() {
+    // H8SX §2.4 MOV.L single-memory-operand rows, manual page 752.
+    for second_high in [0x69u8, 0x6d, 0x6f] {
+        for second_low in 0..=u8::MAX {
+            let bytes = [0x01, 0x00, second_high, second_low, 0x12, 0x34];
+            let expected = if second_low & 8 == 0 {
+                Some(if second_high == 0x6f { 6 } else { 4 })
+            } else {
+                None
+            };
+            assert_eq!(insn_len(&bytes, Target::H8SX, Mode::Normal), expected);
+            if let Some(len) = expected {
+                for end in 0..len {
+                    assert_eq!(insn_len(&bytes[..end], Target::H8SX, Mode::Normal), None);
+                }
+            }
+        }
+    }
+    for second_low in 0..=u8::MAX {
+        let bytes = [0x01, 0x00, 0x6b, second_low, 0x12, 0x34, 0x56, 0x78];
+        let expected = match second_low & 0xf8 {
+            0x00 | 0x80 => Some(6),
+            0x20 | 0xa0 => Some(8),
+            _ => None,
+        };
+        assert_eq!(insn_len(&bytes, Target::H8SX, Mode::Maximum), expected);
+        if let Some(len) = expected {
+            for end in 0..len {
+                assert_eq!(insn_len(&bytes[..end], Target::H8SX, Mode::Maximum), None);
+            }
+        }
+    }
+    assert_eq!(
+        insn_len(&[0x01, 0x00, 0x00, 0x00], Target::H8SX, Mode::Normal),
+        None
+    );
+}
+
 // H8SX REJ09B0102 §2.4, operation-only rows (NOP, SLEEP, RTS, RTE).
 #[test]
 fn h8sx_fixed_opcodes_and_refusal() {

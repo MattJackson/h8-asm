@@ -13,6 +13,19 @@ pub(super) fn recognize(bytes: &[u8]) -> Option<usize> {
     match first {
         // Operation-only rows: NOP, SLEEP, RTS, RTE.
         0x0000 | 0x0180 | 0x5470 | 0x5670 => Some(2),
+        // MOV.L single-memory-operand forms (H8SX §2.4 MOV rows).
+        // The 0100 prefix is followed by a second opcode word. Only
+        // the exact register/EA families below are recognized here.
+        0x0100 => {
+            let second = word(bytes, 2)?;
+            match second {
+                word if matches!(word >> 8, 0x69 | 0x6d) && word & 8 == 0 => Some(4),
+                word if word >> 8 == 0x6f && word & 8 == 0 => Some(6),
+                word if matches!(word & 0xfff8, 0x6b00 | 0x6b80) => Some(6),
+                word if matches!(word & 0xfff8, 0x6b20 | 0x6ba0) => Some(8),
+                _ => None,
+            }
+        }
         // ADD.B Rs,Rd and MOV.B Rs,Rd; both register fields occupy a
         // nibble. MOV.B @aa:8,Rd and MOV.B Rs,@aa:8 use one nibble for
         // the byte register and one byte for the address (H8SX §2.4).
