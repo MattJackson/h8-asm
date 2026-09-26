@@ -45,3 +45,17 @@ Deliberate current limitations:
 Future work may add hardware/emulator execution checks, more safe relocation
 forms with explicit preconditions, and product-level instruction restrictions.
 Those additions must preserve exact encodings and existing safety refusals.
+
+## Planning horizon: September 2026–September 2027
+
+Over the next year, the intended maintenance priorities are regression fixes,
+keeping the independent oracle/tool versions reviewed, preserving Rust 1.58
+compatibility, and keeping the automated release path and public documentation
+current. New instruction or relocation support needs manual evidence and
+independent checks before it can replace a refusal.
+
+Hardware/emulator comparisons and explicit product restrictions are possible
+follow-up investigations, not promised deliveries. There is no plan to add
+device access, execute firmware, infer a CPU/mode from bytes, add runtime
+dependencies, or guess the safety of dynamic/delayed control flow. Schedule
+and scope depend on maintainer capacity and concrete consumer requirements.

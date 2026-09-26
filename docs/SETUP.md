@@ -73,6 +73,25 @@ release creation after the authenticated bootstrap without republishing the
 crate. Its dry-run mode performs verification without publishing. A non-main
 dispatch runs verification only. No successful publication is claimed yet.
 
+## Verifying release artifacts
+
+Each completed release includes the crate archive, a Sigstore bundle,
+detached signature/certificate, and SLSA provenance. For version 0.5.0:
+
+```sh
+gh release download v0.5.0 --repo MattJackson/h8-asm --pattern 'h8-asm-0.5.0.crate*'
+gh attestation verify h8-asm-0.5.0.crate --repo MattJackson/h8-asm
+cosign verify-blob --bundle h8-asm-0.5.0.crate.cosign.bundle \
+  --certificate-identity-regexp '^https://github.com/MattJackson/h8-asm/' \
+  --certificate-oidc-issuer 'https://token.actions.githubusercontent.com' \
+  h8-asm-0.5.0.crate
+```
+
+Keyless verification checks the certificate identity and issuer in the bundle;
+there is no long-lived project signing key on the download server. Compare the
+crate archive with the registry download when establishing artifact identity.
+Annotated git tags are not themselves claimed to be cryptographically signed.
+
 ## Codecov
 
 Codecov is active. The first OIDC upload succeeded in QA run 36263344962

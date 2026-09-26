@@ -12,6 +12,24 @@ bundled Renesas software manuals. H8SX's 8,493 source rows preserve page
 provenance, fixed bits, fields and separately reviewed source anomalies.
 Generated data has a reproducibility check; field constraints supplement masks.
 
+The threat model includes malformed or attacker-influenced firmware bytes,
+invalid typed operands and incorrect patch coordinates. The trust boundary
+is the public API: caller bytes and operands must pass target/mode, length,
+field and bounds checks before becoming recognized instructions or edits.
+Encoding also crosses an internal boundary from candidate bytes back to
+validated semantics. Detour planning completes before either write occurs.
+The caller is trusted to know the actual CPU/mode, genuine instruction
+boundaries and hook behavior, and to bound input sizes and resource use.
+
+Economy of mechanism is supported by a small, dependency-free safe-Rust
+library with no runtime authority over files, networks or devices. Fail-safe
+defaults refuse unknown instructions and unsupported relocation. Bounds and
+integer checks, full semantic comparisons and transactional edits counter
+truncation, overflow, mistaken instruction interpretation and partial writes.
+The implementation and verification are public; correctness does not depend
+on hiding the encoding rules. CI privileges are confined to the jobs that
+need them, and account credentials remain outside source artifacts.
+
 Evidence includes:
 
 - All two-byte patterns and all 4,294,967,296 four-byte patterns for each of

@@ -1,15 +1,26 @@
 # OpenSSF Best Practices evidence
 
-Registration and a project identifier are pending. No passing badge is claimed.
-This is the evidence checklist for completing the questionnaire after the
-first release and account setup; it must reflect actual results at submission.
+The real project is [14963](https://www.bestpractices.dev/projects/14963).
+The target is a 198% tiered score: passing complete, silver 98%. On 2026-09-26
+the passing form was submitted and the service reported 97%; the two personal
+security-knowledge declarations were left unconfirmed. The silver form and
+release-dependent evidence are still being completed. No passing badge is yet
+claimed.
+
+[The prepared answers](openssf-best-practices.json) contain 115 distinct
+passing/silver criteria and their evidence, not a copy of the reference
+project's attestations. They are a dated working assessment; the service's
+actual saved result is authoritative. A single maintainer does not establish
+one-week access continuity, so that criterion is explicitly Unmet. The bus
+factor and unsigned git tags are also stated honestly. Workflow security
+analysis uses Zizmor; release signatures remain pending until verified.
 
 | Area | Repository evidence | Current limit |
 |---|---|---|
 | Purpose and interface | README.md, public rustdoc, docs/PATCHING.md | Pre-release; not hardware execution validation |
 | Licensing | LICENSES/, REUSE.toml, REUSE lint | Renesas manuals retain their separate license |
 | Contribution process | CONTRIBUTING.md, CODE_OF_CONDUCT.md, GOVERNANCE.md | One maintainer |
-| Public development | GitHub repository, dev → qa PRs | main/release promotion pending |
+| Public development | GitHub repository, dev → qa PRs | Automatic promotion configured; full chain verification pending |
 | Change history | CHANGELOG.md and git | 0.5.0 release candidate; not published yet |
 | Security reports | SECURITY.md, enabled private vulnerability reporting | No guaranteed response-time commitment |
 | Automated tests | Dev/QA workflows, required QA gate | Completed mutation audit: docs/MUTATION-AUDIT.md |
@@ -23,6 +34,5 @@ first release and account setup; it must reflect actual results at submission.
 
 Use the actual repository URL and real maintainer account when registering.
 Do not copy another project's ID, mutation counts, badge state or release
-claims. Record the assigned project ID and questionnaire completion date here
-only after the service confirms them. Required evidence URLs should reference
+claims. Record questionnaire completion here only after the service confirms it. Required evidence URLs should reference
 the released main branch once that branch exists.

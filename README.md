@@ -49,7 +49,7 @@ follow [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Status
 
-**0.5.0 release candidate.** `isa::insn_len` uses the legacy opcode maps and a generated
+**0.5.0.** `isa::insn_len` uses the legacy opcode maps and a generated
 H8SX grammar covering all 8,493 printed §2.4 rows, with explicit field
 restrictions and reviewed source anomalies. The shared typed vocabulary and
 `decode_insn`/`encode_insn`/`disassemble_insn` cover all five targets, including

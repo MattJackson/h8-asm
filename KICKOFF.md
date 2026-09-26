@@ -593,3 +593,25 @@ filtered per target, plus the shared 502 reviewed GNU-only refusals. Each
 entry carries a manual citation; all four target probes pass on Rust 1.58.
 Contradictory historical pending statements were removed from current spec/
 and conformance documentation. Source code did not change in this follow-up.
+
+
+CI/OpenSSF completion steering (2026-09-26): the maintainer requested automatic
+reference-style dev → qa → main promotion, direct submission of OpenSSF project
+14963, and a 198% tiered score (thumb-asm has passing 100%, silver 98%).
+promote.yml verifies the current source SHA and successful known workflow,
+fast-forwards without force, and explicitly dispatches the next stage.
+qa now requires the dev check; main has an active required-QA ruleset before
+creation. The old promotion PR was closed in favor of this exact-SHA path.
+Codecov now uses only the requested CODECOV_TOKEN repository secret; OIDC is
+disabled for coverage. Credentials remain outside source and were checked
+against all 27 tracked revisions without exposing values.
+
+Zizmor 1.30.1 is mandatory in dev and QA; its initial workflow injection and
+credential-persistence findings were fixed. Only the validated API-only
+workflow_run trigger has a documented finding exception. The library overview
+and quick start now describe the shared codec rather than the retired subset
+status. Two clean same-toolchain release library builds have identical hashes,
+recorded in the assurance case. The OpenSSF passing form is saved at 97%, with
+two personal knowledge declarations awaiting maintainer confirmation. Silver
+answers are prepared with continuity and unsigned tags honestly identified.
+The release and final exact-commit pipeline are not yet claimed complete.
