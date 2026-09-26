@@ -1,0 +1,122 @@
+# Promote the exact successful commit; no checkout or execution of source code
+# occurs in this privileged workflow. GITHUB_TOKEN pushes do not trigger another
+# workflow, so the next stage is dispatched explicitly after the fast-forward.
+name: promote verified branches
+
+on:
+  # No source checkout/artifacts; verify repository, event, workflow and current SHA.
+  workflow_run: # zizmor: ignore[dangerous-triggers]
+    workflows: [dev fast gate, qa full gate]
+    types: [completed]
+    branches: [dev, qa]
+  workflow_dispatch:
+    inputs:
+      destination:
+        description: Resume a checked promotion and dispatch its next stage
+        type: choice
+        options: [qa, main]
+        required: true
+
+concurrency:
+  group: verified-branch-promotion
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  promote:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: verify source, fast-forward, and dispatch the next gate
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import urllib.error
+          import urllib.parse
+          import urllib.request
+
+          repo = os.environ['GITHUB_REPOSITORY']
+          event = json.load(open(os.environ['GITHUB_EVENT_PATH']))
+          base = 'https://api.github.com/repos/' + repo
+
+          def api(method, path, data=None, missing=False):
+              request = urllib.request.Request(
+                  base + path,
+                  data=None if data is None else json.dumps(data).encode(),
+                  headers={'Authorization': 'Bearer ' + os.environ['GH_TOKEN'],
+                           'Accept': 'application/vnd.github+json',
+                           'Content-Type': 'application/json',
+                           'X-GitHub-Api-Version': '2022-11-28'},
+                  method=method)
+              try:
+                  with urllib.request.urlopen(request, timeout=60) as response:
+                      body = response.read()
+                      return json.loads(body) if body else None
+              except urllib.error.HTTPError as error:
+                  if missing and error.code == 404:
+                      return None
+                  raise RuntimeError(f'{method} {path}: HTTP {error.code}: '
+                                     + error.read().decode()) from None
+
+          def skip(message):
+              print(message)
+              raise SystemExit(0)
+
+          automatic = os.environ['GITHUB_EVENT_NAME'] == 'workflow_run'
+          if automatic:
+              run = event['workflow_run']
+              if run['head_repository']['full_name'].lower() != repo.lower():
+                  skip('Ignore a run from another repository')
+              source = run['head_branch']
+              if source not in ('dev', 'qa'):
+                  skip('Ignore a run outside the promotion branches')
+              destination = {'dev': 'qa', 'qa': 'main'}[source]
+          else:
+              destination = event['inputs']['destination']
+              source = {'qa': 'dev', 'main': 'qa'}[destination]
+
+          workflow = {'dev': 'dev.yml', 'qa': 'qa.yml'}[source]
+          allowed_events = ('push',) if source == 'dev' else ('push', 'workflow_dispatch')
+          if automatic and run['event'] not in allowed_events:
+              skip('Ignore a run from the wrong event')
+          sha = api('GET', '/git/ref/heads/' + source)['object']['sha']
+          if automatic and run['head_sha'] != sha:
+              skip('Ignore a superseded source commit')
+
+          # Query the known workflow, not an arbitrary check with the same name.
+          query = urllib.parse.urlencode({'branch': source, 'head_sha': sha,
+                                         'status': 'success', 'per_page': 100})
+          runs = api('GET', '/actions/workflows/' + workflow + '/runs?' + query)['workflow_runs']
+          if not any(r['head_sha'] == sha and r['event'] in allowed_events
+                     and r['conclusion'] == 'success' for r in runs):
+              raise SystemExit('No successful source-stage run for the current commit')
+          if automatic and (run['event'] not in allowed_events
+                            or run['workflow_id'] != api('GET', '/actions/workflows/' + workflow)['id']):
+              skip('Ignore a run from the wrong workflow or event')
+
+          target = api('GET', '/git/ref/heads/' + destination, missing=True)
+          if target is None:
+              api('POST', '/git/refs', {'ref': 'refs/heads/' + destination, 'sha': sha})
+          elif target['object']['sha'] != sha:
+              comparison = api('GET', '/compare/' + target['object']['sha'] + '...' + sha)
+              if comparison['status'] != 'ahead':
+                  raise SystemExit('Refuse a non-fast-forward promotion')
+              api('PATCH', '/git/refs/heads/' + destination, {'sha': sha, 'force': False})
+
+          next_workflow = 'qa.yml' if destination == 'qa' else 'release.yml'
+          dispatch = {'ref': destination}
+          if destination == 'main':
+              dispatch['inputs'] = {'dry_run': 'false'}
+          api('POST', '/actions/workflows/' + next_workflow + '/dispatches', dispatch)
+          message = f'Promoted {sha}: {source} → {destination}; dispatched {next_workflow}.'
+          print(message)
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+              summary.write(message + '\n')
+          PY

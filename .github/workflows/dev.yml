@@ -40,6 +40,8 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # master, 2026-09-12
         with:
@@ -50,6 +52,11 @@ jobs:
       # is why no cargo invocation in any of these workflows passes `--locked`:
       # on a fresh checkout there is no lockfile to be locked to and cargo
       # refuses outright. The cache still pays for itself on the build itself.
+      - uses: taiki-e/install-action@dfae9bf3d6f6c6f20ef4ebb3486c01a51341ff12 # v2
+        with:
+          tool: zizmor@1.30.1
+      - name: workflow security analysis
+        run: zizmor --min-severity medium --min-confidence medium .github/workflows
       - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2
       - name: rustfmt
         run: cargo fmt --all --check

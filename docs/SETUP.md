@@ -16,14 +16,22 @@ Completed configuration:
   private advisory route and the maintainer email.
 - dev rejects deletion and force pushes and requires linear history, including
   for administrators.
-- qa requires a pull request and the successful qa gate, with strict status
-  checks, resolved conversations, linear history, and no deletion/force pushes.
-  Zero extra approving reviewers are required for this single-maintainer project.
+- qa requires the successful dev check (`fmt, clippy, test`), linear history,
+  and no deletion/force pushes. Direct fast-forward promotion preserves the SHA.
+- An active main ruleset requires the Actions `qa gate` check, linear history,
+  and no deletion/force pushes, including before main is first created.
 - Workflow default permissions are read-only; workflows cannot approve PRs.
 - The release environment accepts deployments from main only, without an
-  additional manual reviewer gate. main protection is to match qa before release.
+  additional manual reviewer gate.
 - The OpenSSF Scorecard workflow ran successfully on dev. It publishes against
   the current default branch and runs weekly or by manual dispatch.
+
+promote.yml advances the exact current successful dev commit to qa and dispatches
+QA, then advances the exact successful qa commit to main and dispatches release.
+It validates repository/workflow/event/ref identity, rejects non-fast-forwards,
+and never checks out code in its privileged job. Explicit dispatch is necessary
+because a GITHUB_TOKEN ref update does not itself trigger another workflow.
+The first complete automatic chain still needs live verification.
 
 The REUSE badge service can scan the public repository. Local REUSE lint passes;
 the badge's refresh schedule is external. Dev, QA, Scorecard and REUSE badges
@@ -73,29 +81,28 @@ Its processed report shows 100% coverage (2,801/2,801 Codecov-counted lines);
 these service counts are distinct from LLVM's source line/region/function
 counts. The public API confirms active=true and activated=true.
 
-Uploads use the supported [Codecov OIDC flow](https://github.com/codecov/codecov-action#using-oidc),
-with id-token permission limited to the coverage job and its reusable-workflow
-caller. CODECOV_TOKEN remains an optional alternative. The source coverage gate
-runs first; an attempted upload must succeed. The README badge links to the
-verified service and currently displays dev while main is being established.
+Uploads now use the GitHub repository secret CODECOV_TOKEN, as requested by
+the maintainer. Coverage OIDC is disabled. The release workflow forwards only
+this named secret to its reusable QA workflow. The source gate runs first and
+an attempted upload must succeed. The initial OIDC success above records the
+activation history; subsequent token uploads are verified separately.
 
 ## OpenSSF Best Practices
 
-Registration and questionnaire submission require the maintainer's account
-at https://www.bestpractices.dev. Use the actual repository URL and the evidence
-in openssf-best-practices.md. That document is an evidence checklist, not a
+The maintainer registered [project 14963](https://www.bestpractices.dev/projects/14963)
+and authorized direct form submission. The target is 198% tiered (passing
+100%, silver 98%), matching the reference project. Use the actual repository
+URL and the evidence in openssf-best-practices.md. That document is an evidence checklist, not a
 completed 67-answer questionnaire or a claim of a passing badge. Personal
 self-assessments and unmet criteria must be answered honestly.
 
-Record the real project ID and completion state after submission, then add the
-assigned badge. No project ID or passing status has been invented. This is
+Record the verified completion state after submission. Registration alone is
+not a passing badge. This is
 separate from the already completed Scorecard run.
 
 ## Remaining authenticated access
 
 GitHub setup is accessible through the authenticated CLI. A local token is
-available for crates.io first publication; Best Practices registration still
-needs its authenticated account. A browser integration was suggested for this work but is not
-confirmed connected. Continue implementation and verification independently;
-these account steps must not be confused with requests for routine coding
-permission.
+available for crates.io first publication. The supplied Best Practices session
+is held outside the repository while completing its forms. Trusted Publishing
+configuration still requires an owner session or a token with that scope.

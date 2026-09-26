@@ -26,14 +26,14 @@ on:
     secrets:
       CODECOV_TOKEN:
         description: >-
-          Codecov upload token. Optional: the coverage gate below is enforced
-          locally in this workflow and does not depend on Codecov, so a caller
-          that does not pass this uses OIDC authentication. It is declared here
+          Codecov repository upload token. The source coverage gate runs locally;
+          callers also pass this token for the required authenticated upload.
+          It is declared here
           rather than relying on `secrets: inherit` in the caller because
           `inherit` hands the called workflow *every* secret the repository
           has, and the release path that calls this file is the one place that
           most needs a short list.
-        required: false
+        required: true
     outputs:
       version:
         description: "The [package].version this run verified, read from Cargo.toml"
@@ -65,6 +65,8 @@ jobs:
       toolchains: ${{ steps.read.outputs.toolchains }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # master, 2026-09-12
         with:
           toolchain: stable
@@ -98,10 +100,17 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # master, 2026-09-12
         with:
           toolchain: stable
           components: rustfmt, clippy
+      - uses: taiki-e/install-action@dfae9bf3d6f6c6f20ef4ebb3486c01a51341ff12 # v2
+        with:
+          tool: zizmor@1.30.1
+      - name: workflow security analysis
+        run: zizmor --min-severity medium --min-confidence medium .github/workflows
       - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2
       - run: cargo fmt --all --check
       - run: cargo clippy --all-targets --all-features -- -D warnings
@@ -125,6 +134,8 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # master, 2026-09-12
         with:
           toolchain: ${{ matrix.rust }}
@@ -160,6 +171,8 @@ jobs:
       RUSTDOCFLAGS: -D warnings -D rustdoc::broken_intra_doc_links -D rustdoc::private_intra_doc_links
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # master, 2026-09-12
         with:
           toolchain: stable
@@ -172,6 +185,8 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # master, 2026-09-12
         with:
           toolchain: stable
@@ -202,9 +217,10 @@ jobs:
     timeout-minutes: 30
     permissions:
       contents: read
-      id-token: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # master, 2026-09-12
         with:
           toolchain: stable
@@ -231,13 +247,11 @@ jobs:
             --fail-under-regions 100 \
             --fail-under-functions 100
 
-      # The source coverage gate above is independent. Uploads authenticate
-      # with the job's short-lived OIDC identity unless an explicit repository
-      # token is configured; an attempted upload must succeed.
+      # Authenticate with the repository's CODECOV_TOKEN secret. The source
+      # coverage gate runs first and the upload must also succeed.
       - name: upload coverage to Codecov
         uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
         with:
-          use_oidc: ${{ secrets.CODECOV_TOKEN == '' }}
           token: ${{ secrets.CODECOV_TOKEN }}
           files: lcov.info
           disable_search: true
@@ -250,6 +264,8 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # master, 2026-09-12
         with:
           toolchain: stable
@@ -291,6 +307,8 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # master, 2026-09-12
         with:
           toolchain: stable

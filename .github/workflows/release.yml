@@ -14,13 +14,10 @@
 # ---------------------------------------------------------------------------
 # ONE-TIME SETUP THE MAINTAINER MUST DO (this half cannot be done from a repo)
 # ---------------------------------------------------------------------------
-# Authentication is crates.io Trusted Publishing: GitHub mints a short-lived
-# OIDC token for this specific workflow, crates.io exchanges it for a ~30
-# minute publish token, and no long-lived secret ever sits in this repository.
-# Bootstrap: crates.io requires an authenticated first publication before
-# a Trusted Publisher can be attached. See docs/SETUP.md. This workflow
-# handles subsequent OIDC publication and idempotent tag/release completion.
-# After the first package exists, configure trust as follows:
+# The first release uses CARGO_REGISTRY_TOKEN from the main-only release
+# environment. After registering a Trusted Publisher, set the environment
+# variable CRATES_IO_TRUSTED_PUBLISHING=true to select short-lived OIDC tokens.
+# Configure trust after the first publication as follows:
 #
 #   1. Sign in to https://crates.io as an owner of the `h8-asm` crate.
 #   2. Go to https://crates.io/crates/h8-asm/settings
@@ -97,10 +94,15 @@ jobs:
     environment: release
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: dtolnay/rust-toolchain@stable
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # master, 2026-09-12
+        with:
+          toolchain: stable
       - name: cargo yank
         env:
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+          YANK_VERSION: ${{ inputs.yank }}
         run: |
           set -euo pipefail
           if [ -z "${CARGO_REGISTRY_TOKEN:-}" ]; then
@@ -111,8 +113,8 @@ jobs:
             echo "as the CARGO_REGISTRY_TOKEN repository secret." >&2
             exit 1
           fi
-          cargo yank --version '${{ inputs.yank }}' h8-asm
-          echo "yanked h8-asm ${{ inputs.yank }}" >> "$GITHUB_STEP_SUMMARY"
+          cargo yank --version "$YANK_VERSION" h8-asm
+          echo "yanked h8-asm $YANK_VERSION" >> "$GITHUB_STEP_SUMMARY"
 
   verify:
     if: inputs.yank == '' || inputs.yank == null
@@ -125,9 +127,7 @@ jobs:
     uses: ./.github/workflows/qa.yml
     permissions:
       contents: read
-      id-token: write
-    # Forward only the optional coverage token. Without it, the called
-    # coverage job uses its scoped OIDC identity.
+    # Forward only the coverage upload token.
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
@@ -147,8 +147,8 @@ jobs:
       contents: write
       # Record the SLSA build-provenance attestation against the packaged crate.
       attestations: write
-      # Mint the OIDC token crates.io exchanges for a short-lived publish
-      # token. This is the whole reason no CARGO_REGISTRY_TOKEN is needed.
+      # Mint OIDC identities for attestations/keyless signing and, once
+      # configured, short-lived crates.io Trusted Publishing tokens.
       id-token: write
     env:
       CARGO_TERM_COLOR: always
@@ -159,6 +159,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          persist-credentials: false
           # Full history and tags: the tag-existence check and the CHANGELOG
           # read both need more than a shallow tip.
           fetch-depth: 0
@@ -295,7 +296,8 @@ jobs:
           set -euo pipefail
           git -c user.name="h8-asm release" -c user.email="dev4@getbusbar.com" \
             tag -a "v${VERSION}" -m "v${VERSION}"
-          git push origin "refs/tags/v${VERSION}"
+          git -c credential.helper= -c 'credential.helper=!gh auth git-credential' \
+            push origin "refs/tags/v${VERSION}"
 
       # ---- Signed, attested release artifacts --------------------------------
       #
@@ -341,13 +343,15 @@ jobs:
           subject-path: ${{ env.CRATE_PATH }}
 
       - name: stage the provenance as a release asset
+        env:
+          ATTESTATION_BUNDLE: ${{ steps.attest.outputs.bundle-path }}
         if: env.DRY_RUN != 'true' && steps.state.outputs.complete != 'true'
         run: |
           set -euo pipefail
           # An `.intoto.jsonl` asset on the release is what OpenSSF Scorecard's
           # Signed-Releases check looks for; the attestation store alone is
           # invisible to it.
-          cp "${{ steps.attest.outputs.bundle-path }}" "h8-asm-${VERSION}.crate.intoto.jsonl"
+          cp "$ATTESTATION_BUNDLE" "h8-asm-${VERSION}.crate.intoto.jsonl"
           echo "PROVENANCE_PATH=h8-asm-${VERSION}.crate.intoto.jsonl" >> "$GITHUB_ENV"
 
       - name: install cosign
@@ -403,15 +407,20 @@ jobs:
           fi
 
       - name: what this run actually did
+        env:
+          WAS_PUBLISHED: ${{ steps.state.outputs.published }}
+          WAS_TAGGED: ${{ steps.state.outputs.tagged }}
+          WAS_RELEASED: ${{ steps.state.outputs.released }}
+          CRATE_NAME: ${{ steps.state.outputs.crate }}
         run: |
           set -euo pipefail
           if [ "${DRY_RUN}" = "true" ]; then
             echo "Dry run: the full qa gate passed and every check ran, nothing was published." >> "$GITHUB_STEP_SUMMARY"
-          elif [ "${{ steps.state.outputs.published }}" = "true" ] \
-            && [ "${{ steps.state.outputs.tagged }}" = "true" ] \
-            && [ "${{ steps.state.outputs.released }}" = "true" ]; then
+          elif [ "$WAS_PUBLISHED" = "true" ] \
+            && [ "$WAS_TAGGED" = "true" ] \
+            && [ "$WAS_RELEASED" = "true" ]; then
             echo "v${VERSION} was already published, tagged and released: nothing to do." >> "$GITHUB_STEP_SUMMARY"
             echo "Bump [package].version in Cargo.toml (and add its CHANGELOG section) to release the next one." >> "$GITHUB_STEP_SUMMARY"
           else
-            echo "Released v${VERSION}: https://crates.io/crates/${{ steps.state.outputs.crate }}/${VERSION}" >> "$GITHUB_STEP_SUMMARY"
+            echo "Released v${VERSION}: https://crates.io/crates/${CRATE_NAME}/${VERSION}" >> "$GITHUB_STEP_SUMMARY"
           fi

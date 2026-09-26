@@ -3,17 +3,29 @@
 //! big-endian `&[u8]` image where file offset and load address are the same
 //! number.
 //!
-//! **Pre-alpha.** [`isa::insn_len`] recognizes lengths through H8S and selected
-//! H8SX opcode families. [`isa::decode::decode`] decodes a small H8/300 subset;
-//! [`isa::sx_semantic::decode`] covers selected H8SX control flow, register
-//! operations, immediates, and absolute byte moves. Both subsets have matching
-//! disassemblers and verified encoders. [`Asm`], [`relocate`], [`detour`],
-//! [`image`], and [`analysis`] operate on recognized instruction families. Every API is parameterised by
-//! which core the bytes were
-//! written for ([`Target`]), and which CPU operating mode it runs in
-//! ([`Mode`]). Both change what a given byte sequence means, so neither is
-//! optional context that can be defaulted away later. See `KICKOFF.md` for
-//! the build-out plan.
+//! [`isa::insn_len`], [`isa::decode_insn`], [`isa::encode_insn`] and
+//! [`isa::disassemble_insn`] cover all five targets through the legacy opcode
+//! maps and all 8,493 reviewed H8SX manual rows. The original narrow H8/300 and
+//! H8SX APIs remain available. [`Asm`], [`relocate`], [`detour`], [`image`] and
+//! [`analysis`] provide checked assembly, patch planning and conservative
+//! control-flow analysis. Delayed, PC-indexed and compound relative relocation
+//! is explicitly refused where safe rewriting cannot be established.
+//!
+//! Instruction-aware APIs require the core ([`Target`]) and operating mode
+//! ([`Mode`]). Both change what bytes mean and must come from the caller's
+//! knowledge of the firmware, not a guess from its byte patterns.
+//!
+//! ```
+//! use h8_asm::{isa, Mode, Target};
+//!
+//! let bytes = [0x0c, 0x89]; // MOV.B R0L,R1L
+//! let decoded = isa::decode_insn(&bytes, Target::H8_300, Mode::Normal).unwrap();
+//! assert_eq!(decoded.len, 2);
+//! assert_eq!(
+//!     isa::encode_insn(decoded.insn, Target::H8_300, Mode::Normal).unwrap(),
+//!     bytes
+//! );
+//! ```
 //!
 //! Every encoding claim in this crate cites its section in Renesas' software
 //! manuals under `spec/` (H8/300 ADE-602-025, H8/300H REJ09B0213, H8S

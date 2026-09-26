@@ -46,3 +46,21 @@ entry points. The caller must establish real instruction boundaries, prevent
 other entry paths into overwritten bytes, choose the correct CPU/mode and
 validate hook semantics. These preconditions cannot be inferred from a flat
 image. See PATCHING.md and ../SECURITY.md.
+
+
+Build-environment security analysis uses Zizmor 1.30.1 for workflow injection,
+credential handling and related GitHub Actions risks, in both dev and QA.
+Medium-or-higher findings with medium-or-higher confidence fail the gate.
+The promotion workflow's workflow_run trigger is a reviewed exception: it
+performs no source checkout or artifact execution and validates repository,
+workflow, event, current branch SHA and fast-forward ancestry before API writes.
+Checkout credentials are not persisted. Release input values enter scripts
+through environment variables instead of executable template interpolation.
+
+Repeatability was checked with two clean release library builds on the same
+Rust toolchain and source path using separate CARGO_TARGET_DIR directories.
+Both libh8_asm.rlib files had SHA-256
+7d87b23bf078ba46de29e23da6a54caa7bf70f3ff75814a4a86b147634ea20af.
+This is same-environment build repeatability, not cross-toolchain or
+cross-platform reproducibility. The release job separately compares its crate
+archive byte-for-byte with the registry artifact before signing it.

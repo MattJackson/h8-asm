@@ -12,6 +12,17 @@ requests must return errors; patch failures must leave the image unchanged.
 The library must remain safe Rust, dependency-free, documented, and compatible
 with Rust 1.58. Follow CODE_OF_CONDUCT.md in project discussions.
 
+New behavior requires tests. Every bug fix must add a regression assertion
+that fails before the fix and passes afterward, unless the PR explains why
+the failure cannot be reproduced. Use rustfmt formatting and Clippy's checks;
+do not suppress a finding merely to pass CI. Keep public documentation and
+CHANGELOG.md current with behavioral changes.
+
+Contributions certify the [Developer Certificate of Origin 1.1](https://developercertificate.org/).
+Use `git commit -s` to record that certification on new commits. This is a
+statement that you have the right to submit the contribution under the project's
+license, not a transfer of copyright.
+
 Run the following checks for substantive changes:
 
 - cargo fmt --check
@@ -38,3 +49,11 @@ Submit changes against dev with the problem, resulting behavior and validation
 in the PR description. Promotion to qa runs the complete gate; main is the
 release branch. Do not bypass checks or publish a version to repair a CI failure.
 Report security issues through SECURITY.md rather than a public issue.
+
+Promotion preserves the exact commit by fast-forwarding dev → qa → main.
+The promotion workflow validates the source repository, branch, workflow,
+event and current SHA, then dispatches the next stage. dev must pass the fast
+gate (including workflow security analysis); qa must pass the complete gate
+before main advances. Release re-runs the full gate before publishing.
+PR checks do not promote branches, and superseded runs cannot promote old code.
+An interrupted promotion can be resumed through promote.yml's dispatch input.
