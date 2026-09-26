@@ -1,6 +1,11 @@
 # h8-asm
 
-An in-progress **Renesas H8 family decoder, instruction builder and detour
+[![Development checks](https://github.com/MattJackson/h8-asm/actions/workflows/dev.yml/badge.svg?branch=dev)](https://github.com/MattJackson/h8-asm/actions/workflows/dev.yml)
+[![QA](https://github.com/MattJackson/h8-asm/actions/workflows/qa.yml/badge.svg?branch=qa)](https://github.com/MattJackson/h8-asm/actions/workflows/qa.yml)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/MattJackson/h8-asm/badge)](https://securityscorecards.dev/viewer/?uri=github.com/MattJackson/h8-asm)
+[![REUSE](https://api.reuse.software/badge/github.com/MattJackson/h8-asm)](https://api.reuse.software/info/github.com/MattJackson/h8-asm)
+
+A **Renesas H8 family decoder, instruction builder and detour
 installer** for Rust: H8/300, H8/300H, H8S/2000, H8S/2600 and H8SX.
 
 It is the sibling of [thumb-asm](https://github.com/MattJackson/thumb-asm) and
@@ -14,7 +19,7 @@ dependencies beyond `std`.
 
 ## Status
 
-**Pre-alpha.** `isa::insn_len` uses the legacy opcode maps and a generated
+**0.5.0 release candidate.** `isa::insn_len` uses the legacy opcode maps and a generated
 H8SX grammar covering all 8,493 printed §2.4 rows, with explicit field
 restrictions and reviewed source anomalies. The shared typed vocabulary and
 `decode_insn`/`encode_insn`/`disassemble_insn` cover all five targets, including
@@ -24,9 +29,8 @@ indexed operands. The original H8/300 and H8SX subset APIs are retained.
 tables, and conservative control-flow analysis now operate on recognized
 instruction families. Delayed/PC-indexed relocation and other named unsafe
 cases are refused; see [`docs/PATCHING.md`](docs/PATCHING.md). The coverage map and limits are in
-[`spec/H8-ISA.md`](spec/H8-ISA.md). The build-out plan is in
-[`KICKOFF.md`](KICKOFF.md), and the manuals every encoding will be checked
-against are in [`spec/`](spec/README.md).
+[`spec/H8-ISA.md`](spec/H8-ISA.md). Remaining release work is in
+[`ROADMAP.md`](ROADMAP.md), and the encoding reference manuals are in [`spec/`](spec/README.md).
 
 The shared legacy codec independently assembles all 215,149 supported
 two-byte words back to exact bytes across its four cores. Extended operand
@@ -48,8 +52,8 @@ implemented code, not completion of the instruction set.
 
 ## Say what you are patching
 
-Every API will take a `Target` (which core) and a `Mode` (which CPU operating
-mode). Neither can be recovered from the bytes, and both change what the bytes
+Instruction-aware APIs take a `Target` (which core) and a `Mode` (which CPU
+operating mode). Neither can be recovered from the bytes, and both change what the bytes
 mean: absolute-address widths, branch and call targets, vector-table entries,
 and which instructions exist at all.
 

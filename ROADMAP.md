@@ -7,23 +7,28 @@ The H8SX table includes all 8,493 reviewed source rows. The complete
 four-byte sweeps pass for all five targets; mandatory GNU checks and the
 reviewed reverse census are documented in docs/CONFORMANCE.md.
 
-Before the first release:
+Before the first release (now 0.5.0, as requested by the maintainer):
 
-- Finish the active EC2 mutation audit, assess every survivor, add missing
-  behavioral tests, and record the tested revision and reproduction command.
-- Finish the longer legacy operand audit and final OS/MSRV/package/source
-  coverage checks after all changes.
-- Configure GitHub branches and release protection, trusted publishing,
-  Codecov and OpenSSF; record any account steps still requiring interactive
-  authentication in docs/SETUP.md. No first release has been published yet.
+- Run the final release candidate through hosted QA, including the new vector
+  alignment regression, mutation assertions, and authenticated Codecov upload.
+- Promote dev → qa → main with required checks and release protection; publish
+  the verified crate and signed/attested release artifacts.
+- Finish Trusted Publishing and OpenSSF account setup; record actual service
+  state in docs/SETUP.md. A publishing token is saved locally and in the release
+  environment, so unattended token publication is configured as a fallback.
 
-The current mutation run uses cargo-mutants 27.1.0 on an isolated c7i.8xlarge
-Ubuntu 24.04 worker, release profile, 16 jobs and a 32-task jobserver. It
-includes 1,801 generated mutations. Source snapshot SHA-256:
-e2a21690d16097fe824f14ad078251194f1471da591f1c0c108693cc4caa3c6c.
-Command: cargo mutants --profile release -j 16 --jobserver-tasks 32
---timeout 180 --build-timeout 180. It is still running; no full result is
-claimed. Later regression tests must be audited separately from that snapshot.
+The full EC2 mutation audit and all survivor rechecks are complete. The combined
+result is 1,808 mutations: 1,698 caught, 67 surviving, five timeouts and 38
+unviable. Every survivor has a documented equivalence assessment; none is
+silently excluded. See [the audit report](docs/MUTATION-AUDIT.md) and its complete
+machine-readable outcomes for commands, source hashes, reconciliation and
+regression fixes. The temporary EC2 instance, security group and key pair were
+removed after collecting results.
+
+Longer legacy operand audits are complete. Both initial hosted QA runs passed
+all six Linux/macOS/Windows × stable/Rust 1.58 cells, including all five full
+four-byte sweeps in each cell. The final candidate must pass again after the
+last source/test changes; those earlier runs do not certify newer changes.
 
 Deliberate current limitations:
 

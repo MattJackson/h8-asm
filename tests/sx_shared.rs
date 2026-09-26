@@ -178,3 +178,65 @@ fn immediate_spelling_distinguishes_implicit_counts_and_encoded_widths() {
         );
     }
 }
+
+#[test]
+fn every_decoded_meaning_can_be_constructed_with_the_standard_encoding() {
+    use h8_asm::isa::Encoding;
+    // Callers construct typed instructions directly. A decoder must not hide
+    // broken canonical selection by marking everything as an alternative.
+    for record in ROWS.chunks_exact(71) {
+        for start in [1, 15, 29, 43, 57] {
+            let bytes = &record[start..start + usize::from(record[0])];
+            let mut insn = decode_insn(bytes, Target::H8SX, Mode::Maximum)
+                .unwrap()
+                .insn;
+            insn.encoding = Encoding::Standard;
+            let canonical = encode_insn(insn, Target::H8SX, Mode::Maximum).unwrap();
+            assert_eq!(
+                decode_insn(&canonical, Target::H8SX, Mode::Maximum)
+                    .unwrap()
+                    .insn,
+                insn
+            );
+        }
+    }
+}
+
+#[test]
+fn signed_offsets_and_serial_register_endpoints_have_manual_meaning() {
+    use h8_asm::isa::{Ea, Operand};
+    for (bytes, expected) in [
+        (&[0x40, 0xfe][..], Ea::PcRelative { value: -2, bits: 8 }),
+        (
+            &[0x58, 0, 0xff, 0xfe][..],
+            Ea::PcRelative {
+                value: -2,
+                bits: 16,
+            },
+        ),
+    ] {
+        assert_eq!(
+            decode_insn(bytes, Target::H8SX, Mode::Maximum)
+                .unwrap()
+                .insn
+                .operands[0],
+            Operand::Address(expected)
+        );
+    }
+    // §2.2.62/94/96: load/return encode the last register; STM encodes
+    // the first. The fields represent serial lists, not independent ends.
+    for (bytes, first, last) in [
+        (&[0x54, 0x13][..], 2, 3),
+        (&[0x56, 0x13][..], 2, 3),
+        (&[1, 0x10, 0x6d, 0x73][..], 2, 3),
+        (&[1, 0x10, 0x6d, 0xf2][..], 2, 3),
+    ] {
+        let insn = decode_insn(bytes, Target::H8SX, Mode::Maximum)
+            .unwrap()
+            .insn;
+        assert!(
+            insn.operands.contains(&Operand::Registers { first, last }),
+            "{insn:?}"
+        );
+    }
+}

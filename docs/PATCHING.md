@@ -89,3 +89,9 @@ error atomicity, vector widths/endian order, malformed tables, and overlapping
 control-flow paths. GNU assemble-back separately verifies planned H8SX hooks,
 trampolines, and a label layout requiring repeated widening. These are encoding
 and consistency checks, not execution tests on H8 hardware.
+
+Legacy memory-indirect vector accesses ignore the table address's low bit,
+matching their word-access rules. H8SX §1.6.2 requires branch-table accesses
+to be even despite allowing unaligned ordinary data; an odd encoded H8SX
+table address remains unresolved. All resolved destinations ignore PC bit
+zero. The codec still preserves the originally encoded operand bits.

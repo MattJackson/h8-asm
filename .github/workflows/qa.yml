@@ -28,7 +28,7 @@ on:
         description: >-
           Codecov upload token. Optional: the coverage gate below is enforced
           locally in this workflow and does not depend on Codecov, so a caller
-          that does not pass this simply gets no upload. It is declared here
+          that does not pass this uses OIDC authentication. It is declared here
           rather than relying on `secrets: inherit` in the caller because
           `inherit` hands the called workflow *every* secret the repository
           has, and the release path that calls this file is the one place that
@@ -200,12 +200,9 @@ jobs:
     name: coverage (100% gate)
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    env:
-      # Lifted out of `secrets` because step-level `if:` cannot read the
-      # `secrets` context at all — `env` is the only context available there
-      # that a secret can be routed through. This is what lets the upload step
-      # below ask "does this token exist yet?" instead of assuming it does.
-      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # master, 2026-09-12
@@ -234,52 +231,17 @@ jobs:
             --fail-under-regions 100 \
             --fail-under-functions 100
 
-      # Codecov is a second opinion and a place to see *which* lines moved
-      # between commits; it is not the gate. The gate is the step above, which
-      # runs whether or not Codecov is configured, so this repository's coverage
-      # guarantee never depends on a third-party service being reachable.
-      #
-      # Tokenless uploads from public repos have worked historically but Codecov
-      # has been steadily tightening that, so a token is passed. Until the
-      # maintainer adds the CODECOV_TOKEN secret (see docs/SETUP.md) the
-      # expression below is the empty string and the upload is skipped with the
-      # note in the next step. Deliberately an `if:` and not `continue-on-error`:
-      # "this is not configured yet" and "this failed and we ignored it" must not
-      # look the same in the run log. Once the secret exists this starts working
-      # on the next push with no edit to this file.
-      #
-      # Note the release path: release.yml calls this workflow and passes
-      # CODECOV_TOKEN through explicitly, so pushes to main upload too — which
-      # is what makes the badge (which reports the *default* branch) resolve
-      # rather than sitting on data that only ever came from qa.
+      # The source coverage gate above is independent. Uploads authenticate
+      # with the job's short-lived OIDC identity unless an explicit repository
+      # token is configured; an attempted upload must succeed.
       - name: upload coverage to Codecov
-        if: env.CODECOV_TOKEN != ''
         uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
         with:
+          use_oidc: ${{ secrets.CODECOV_TOKEN == '' }}
           token: ${{ secrets.CODECOV_TOKEN }}
           files: lcov.info
-          # The lcov file is named explicitly, so searching the tree for other
-          # coverage reports can only find something unintended.
           disable_search: true
-          # If an upload is attempted at all, it has to succeed. A silently
-          # dropped report is how a coverage badge ends up months stale while
-          # every run still shows green.
           fail_ci_if_error: true
-
-      - name: Codecov upload skipped (no CODECOV_TOKEN)
-        if: env.CODECOV_TOKEN == ''
-        run: |
-          set -euo pipefail
-          {
-            echo "### Codecov upload skipped"
-            echo ""
-            echo "The 100% coverage gate ran and passed; only the upload to codecov.io was skipped,"
-            echo "because the repository has no \`CODECOV_TOKEN\` secret."
-            echo ""
-            echo "To enable it: activate the repo at https://app.codecov.io/gh/MattJackson/h8-asm,"
-            echo "copy the upload token, and add it as the repository secret \`CODECOV_TOKEN\`."
-            echo "See docs/SETUP.md. No change to this workflow is needed."
-          } >> "$GITHUB_STEP_SUMMARY"
 
   semver:
     name: cargo-semver-checks vs the published crate

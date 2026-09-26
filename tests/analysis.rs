@@ -246,3 +246,39 @@ fn a_complete_instruction_can_end_exactly_at_the_normal_mode_limit() {
         .unwrap()
         .is_empty());
 }
+
+#[test]
+fn vector_table_alignment_is_target_specific() {
+    for target in [
+        Target::H8_300,
+        Target::H8_300H,
+        Target::H8S2000,
+        Target::H8S2600,
+        Target::H8SX,
+    ] {
+        for mode in [Mode::Normal, Mode::Advanced] {
+            if !target.supports(mode) {
+                continue;
+            }
+            let mut image = vec![0; 32];
+            image[..2].copy_from_slice(&[0x5b, 17]);
+            if mode == Mode::Normal {
+                image[17] = 7;
+            } else {
+                image[19] = 7;
+            }
+            let reference = xrefs(&image, 0..2, target, mode).unwrap()[0];
+            if target == Target::H8SX {
+                assert_eq!(reference.vector, Some(17));
+                assert_eq!(reference.to, None);
+                assert_eq!(
+                    reachable(&image, 0, target, mode),
+                    Err(E::UnresolvedBranch(0))
+                );
+            } else {
+                assert_eq!(reference.vector, Some(16));
+                assert_eq!(reference.to, Some(6));
+            }
+        }
+    }
+}

@@ -150,7 +150,10 @@ fn checked(bytes: &[u8], target: Target) {
 
 #[test]
 fn every_legacy_prefix_second_word_has_semantics_and_round_trips() {
-    for target in [Target::H8_300H, Target::H8S2000, Target::H8S2600] {
+    for (target, expected) in [Target::H8_300H, Target::H8S2000, Target::H8S2600]
+        .into_iter()
+        .zip([1910, 3006, 3070])
+    {
         let mut count = 0u32;
         for first in [
             0x0100u16, 0x0110, 0x0120, 0x0130, 0x0140, 0x0141, 0x0160, 0x01c0, 0x01d0, 0x01e0,
@@ -166,7 +169,7 @@ fn every_legacy_prefix_second_word_has_semantics_and_round_trips() {
                 }
             }
         }
-        println!("{target:?} prefixed: {count}");
+        assert_eq!(count, expected, "{target:?} prefixed census");
     }
 }
 

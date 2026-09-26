@@ -745,3 +745,88 @@ fn prefixed_move_and_register_group_fields() {
         }
     }
 }
+
+#[test]
+fn legacy_register_widths_and_memory_bit_prefixes_follow_manual_masks() {
+    for opcode in [0x50, 0x51, 0x69, 0x6d] {
+        assert_eq!(
+            insn_len(&[opcode, 0], Target::H8_300, Mode::Normal),
+            Some(2)
+        );
+        assert_eq!(insn_len(&[opcode, 8], Target::H8_300, Mode::Normal), None);
+        assert_eq!(
+            insn_len(&[opcode, 8], Target::H8_300H, Mode::Advanced),
+            Some(2)
+        );
+    }
+    for target in [
+        Target::H8_300,
+        Target::H8_300H,
+        Target::H8S2000,
+        Target::H8S2600,
+    ] {
+        for low in 0..=255u8 {
+            let eepmov = [0x7b, low, 0x59, 0x8f];
+            let valid = low == 0x5c || (low == 0xd4 && target != Target::H8_300);
+            assert_eq!(
+                insn_len(&eepmov, target, Mode::Normal),
+                if valid { Some(4) } else { None }
+            );
+            assert_eq!(
+                insn_len(&[0x7c, low, 0x73, 0], target, Mode::Normal),
+                if [0x00, 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70].contains(&low) {
+                    Some(4)
+                } else {
+                    None
+                }
+            );
+            assert_eq!(
+                insn_len(&[0x7d, low, 0x70, 0], target, Mode::Normal),
+                if [0x00, 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70].contains(&low) {
+                    Some(4)
+                } else {
+                    None
+                }
+            );
+            assert_eq!(
+                insn_len(&[0x7e, low, 0x73, 0], target, Mode::Normal),
+                Some(4)
+            );
+            assert_eq!(
+                insn_len(&[0x7f, low, 0x70, 0], target, Mode::Normal),
+                Some(4)
+            );
+        }
+    }
+    let extended = [0x78, 0, 0x6a, 0x20, 0, 0, 0, 0];
+    assert_eq!(insn_len(&extended, Target::H8_300, Mode::Normal), None);
+    assert_eq!(insn_len(&extended, Target::H8_300H, Mode::Normal), Some(8));
+}
+
+#[test]
+fn extended_absolute_bit_operations_require_h8s_and_reserved_zero_fields() {
+    let bit = [0x6a, 0x10, 0, 0, 0x73, 0];
+    for target in [Target::H8_300, Target::H8_300H] {
+        assert_eq!(insn_len(&bit, target, Mode::Normal), None);
+    }
+    for target in [Target::H8S2000, Target::H8S2600] {
+        assert_eq!(insn_len(&bit, target, Mode::Normal), Some(6));
+        for prefix in [[0x6a, 0x11], [0x6a, 0x12], [0x6a, 0x14], [0x6b, 0x10]] {
+            let mut invalid = bit;
+            invalid[..2].copy_from_slice(&prefix);
+            assert_eq!(insn_len(&invalid, target, Mode::Normal), None);
+        }
+    }
+    assert_eq!(
+        insn_len(&[0x6f, 0, 0, 0], Target::H8_300, Mode::Normal),
+        Some(4)
+    );
+    assert_eq!(
+        insn_len(&[0x6f, 8, 0, 0], Target::H8_300, Mode::Normal),
+        None
+    );
+    assert_eq!(
+        insn_len(&[0x6f, 8, 0, 0], Target::H8_300H, Mode::Normal),
+        Some(4)
+    );
+}

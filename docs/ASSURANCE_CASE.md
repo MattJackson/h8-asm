@@ -27,10 +27,12 @@ Evidence includes:
   warning-free rustdoc, package verification and generated-data checks.
 
 Mutation testing deliberately changes expressions and behavior to find gaps
-that coverage alone misses. The first complete EC2 audit is in progress;
-its outcome must be recorded honestly before release. A surviving equivalent
-mutation and a missing behavioral assertion are different findings. Do not
-claim that a pending or partial run passed.
+that coverage alone misses. The completed EC2 audit plus regression
+rechecks records 1,808 mutations: 1,698 caught, 67 surviving, five timeouts
+and 38 unviable. [MUTATION-AUDIT.md](MUTATION-AUDIT.md) documents every survivor
+category, added behavioral assertions, tested source hashes and run reconciliation.
+Equivalent survivors, detected nontermination and compilation failures are
+reported separately; this is not a zero-survivor claim.
 
 The principal limitations are independent of source coverage. A software
 manual may contain errors; oracle implementations also have bugs. Long operand

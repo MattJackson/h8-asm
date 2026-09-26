@@ -164,7 +164,7 @@ LLVM→binutils as you go, rather than copying and "fixing later".
 - Port `ASSURANCE_CASE.md`, `SECURITY.md`, `CONTRIBUTING.md`, `GOVERNANCE.md`
   and `ENCODING-STABILITY.md`, with every claim now true.
 - Complete `docs/SETUP.md` (trusted publishing, codecov, OpenSSF), add the
-  README badges, then do the first `0.1.0` release via dev → qa → main.
+  README badges, then do the first `0.5.0` release (maintainer override, 2026-09-26) via dev → qa → main.
 
 ## Open questions
 
@@ -556,3 +556,27 @@ release/account setup. No crates.io token or local cargo credential store is
 present. Searched integrations using the plugin-management skill and suggested
 TinyFish for authenticated browser setup; it is NOT confirmed connected.
 Continue independent work; do not ask routine permissions or pause the goal.
+
+
+Final audit/release-candidate checkpoint (2026-09-26):
+
+The preceding ACTIVE EC2 note is historical: the full audit completed, results
+were downloaded, and the instance, security group and key pair were deleted.
+All original survivors were reassessed/rechecked; the changed analysis module
+received a complete rerun. Combined results: 1808 mutations, 1698 caught,
+67 surviving equivalents, five timeouts, 38 unviable. docs/MUTATION-AUDIT.md
+and docs/mutation-audit.json preserve the review and exact source/test hashes.
+
+Both hosted QA runs 36261711662 and 36261807894 passed the full six-cell
+OS/MSRV matrix and exhaustive sweeps. GitHub dev/qa protections and the main-only
+release environment are configured. Source coverage for the final vector fix
+is 4840 regions / 2835 lines / 144 functions, all 100%; this is source coverage,
+not completion of release/account work. Current changes still need final QA.
+
+The maintainer requested version 0.5.0 and provided a local crates.io token;
+it is saved in Cargo credentials and the GitHub release environment secret.
+The release workflow supports token bootstrap and explicit OIDC selection.
+No token value belongs in this repository or its logs. No publication is yet
+claimed. Codecov's first OIDC upload and OpenSSF registration remain pending.
+ROADMAP.md is the current remaining-work list; older checkpoints above are
+historical evidence, not current state. The six-phase goal remains active.

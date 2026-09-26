@@ -110,7 +110,9 @@ fn flow(bytes: &[u8], at: u32, target: Target, mode: Mode) -> Result<Flow, Analy
             XrefKind::Branch
         };
         let vector = if matches!(hi, 0x5b | 0x5f) {
-            Some(u32::from(lo))
+            // Legacy word/longword accesses ignore address bit zero:
+            // H8/300 §1 memory formats, H8/300H §1.6, H8S §1.8.
+            Some(u32::from(if target == Target::H8SX { lo } else { lo & !1 }))
         } else if target == Target::H8SX && matches!(hi, 0x59 | 0x5d) && lo & 0x80 != 0 {
             Some(u32::from(lo) * if mode == Mode::Normal { 2 } else { 4 })
         } else {
@@ -130,7 +132,10 @@ fn flow(bytes: &[u8], at: u32, target: Target, mode: Mode) -> Result<Flow, Analy
 fn resolve(flow: Flow, image: &[u8], mode: Mode) -> Flow {
     match flow {
         Flow::Transfer(mut reference) => {
-            if let Some(vector) = reference.vector {
+            // H8SX §1.6.2 requires even branch-table accesses despite
+            // supporting unaligned ordinary data. An odd SX table entry
+            // remains unresolved; legacy entries were normalized in flow.
+            if let Some(vector) = reference.vector.filter(|value| value & 1 == 0) {
                 reference.to = if mode == Mode::Normal {
                     read_u16(image, vector as usize).map(|value| u32::from(value) & !1)
                 } else {

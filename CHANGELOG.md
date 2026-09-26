@@ -5,6 +5,8 @@ versioning; before 1.0, incompatible public changes increase the minor version.
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-09-26
+
 ### Added
 
 - Shared typed decoding, verified encoding and Renesas rendering for H8/300,
@@ -33,3 +35,7 @@ versioning; before 1.0, incompatible public changes increase the minor version.
   relocation detects the resulting effective target inside an overwritten block.
 - H8SX MOVA retains RnH versus RnL and En versus Rn register identity despite
   GNU assembler shortening defects.
+- Legacy vector-table addresses ignore bit zero; odd H8SX vector-table
+  addresses remain unresolved because its branch table requires alignment.
+- Mutation-audit regressions assert exact image boundaries, operand widths,
+  signed SX offsets, register groups and canonical encoding selection.
