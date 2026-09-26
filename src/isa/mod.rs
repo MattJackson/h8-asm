@@ -5,6 +5,7 @@
 //! opcode tables are implemented.
 
 mod length;
+mod sx_length;
 
 use crate::{Mode, Target};
 
@@ -30,13 +31,7 @@ pub fn insn_len(bytes: &[u8], target: Target, mode: Mode) -> Option<usize> {
         return None;
     }
     let len = if target == Target::H8SX {
-        // H8SX §2.4: exact, operation-only opcode rows. These four words
-        // carry no register or EA extension fields. Other H8SX forms are
-        // not inferred from the older cores because their maps overlap.
-        match bytes.get(..2)? {
-            [0x00, 0x00] | [0x01, 0x80] | [0x54, 0x70] | [0x56, 0x70] => 2,
-            _ => return None,
-        }
+        sx_length::recognize(bytes)?
     } else {
         length::recognize(bytes, target)?
     };

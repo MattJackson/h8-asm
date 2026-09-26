@@ -15,7 +15,7 @@ dependencies beyond `std`.
 ## Status
 
 **Pre-alpha.** `isa::insn_len` recognizes instruction lengths for H8/300,
-H8/300H and H8S, plus four fixed H8SX opcodes. Semantic decoding, encoding and
+H8/300H and H8S, plus selected H8SX branches, byte operations, and ADD.B forms. Semantic decoding, encoding and
 patching are not implemented. The length tests and their limits are recorded in
 [`spec/H8-ISA.md`](spec/H8-ISA.md). The build-out plan is in
 [`KICKOFF.md`](KICKOFF.md), and the manuals every encoding will be checked

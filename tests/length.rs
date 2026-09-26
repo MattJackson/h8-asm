@@ -14,15 +14,15 @@ const MODES: [Mode; 4] = [Mode::Normal, Mode::Middle, Mode::Advanced, Mode::Maxi
 #[test]
 fn first_word_zero_suffix_census() {
     for (target, expected) in TARGETS.into_iter().zip([
-        [11506, 53556, 474, 0, 0, 0],
-        [7647, 56520, 1249, 120, 0, 0],
-        [7295, 56872, 1249, 120, 0, 0],
-        [7262, 56905, 1249, 120, 0, 0],
-        [65532, 4, 0, 0, 0, 0],
+        [11506, 53556, 474, 0, 0, 0, 0, 0],
+        [7647, 56520, 1249, 120, 0, 0, 0, 0],
+        [7295, 56872, 1249, 120, 0, 0, 0, 0],
+        [7262, 56905, 1249, 120, 0, 0, 0, 0],
+        [21611, 43908, 17, 0, 0, 0, 0, 0],
     ]) {
-        let mut counts = [0usize; 6];
+        let mut counts = [0usize; 8];
         for first in 0..=u16::MAX {
-            let mut bytes = [0; 10];
+            let mut bytes = [0; 14];
             bytes[..2].copy_from_slice(&first.to_be_bytes());
             let len = insn_len(&bytes, target, Mode::Normal);
             counts[len.unwrap_or(0) / 2] += 1;
@@ -40,6 +40,29 @@ fn first_word_zero_suffix_census() {
             }
         }
         assert_eq!(counts, expected, "{target:?}");
+    }
+}
+
+#[test]
+fn h8sx_byte_immediate_register_space() {
+    // H8SX §2.4 rows ADD/ADDX/CMP/SUBX/OR/XOR/AND/MOV .B #xx:8,Rd.
+    // Each high nibble 8..f includes every byte register and immediate.
+    for first in 0x8000u16..=0xffff {
+        let bytes = first.to_be_bytes();
+        assert_eq!(insn_len(&bytes, Target::H8SX, Mode::Normal), Some(2));
+        assert_eq!(insn_len(&bytes[..1], Target::H8SX, Mode::Normal), None);
+    }
+}
+
+#[test]
+fn h8sx_byte_register_and_absolute_space() {
+    // H8SX §2.4: ADD.B Rs,Rd (08), MOV.B Rs,Rd (0c), and
+    // MOV.B to/from @aa:8 (20..3f). All low-byte fields are allocated.
+    for high in [0x08u8, 0x0c].into_iter().chain(0x20..=0x3f) {
+        for low in 0..=u8::MAX {
+            let bytes = [high, low];
+            assert_eq!(insn_len(&bytes, Target::H8SX, Mode::Normal), Some(2));
+        }
     }
 }
 
@@ -68,6 +91,150 @@ fn h8sx_fixed_opcodes_and_refusal() {
         insn_len(&[0x78, 0x04, 0x6a, 0x2c], Target::H8SX, Mode::Maximum),
         None
     );
+}
+
+#[test]
+fn h8sx_branch_lengths_and_reserved_bits() {
+    // H8SX §2.4 Bcc, BRA/S, BSR. BRA/S has a delay slot (§2.2.24),
+    // which the future relocator must treat as a pair with this instruction.
+    for condition in 0..=15u8 {
+        for displacement in [0x00, 0x7e, 0x80, 0xfe] {
+            let bytes = [0x40 | condition, displacement];
+            assert_eq!(insn_len(&bytes, Target::H8SX, Mode::Normal), Some(2));
+        }
+        let bytes = [0x58, condition << 4, 0x12, 0x34];
+        assert_eq!(insn_len(&bytes, Target::H8SX, Mode::Maximum), Some(4));
+        assert_eq!(insn_len(&bytes[..3], Target::H8SX, Mode::Maximum), None);
+        let reserved = [0x58, (condition << 4) | 1, 0x12, 0x34];
+        assert_eq!(insn_len(&reserved, Target::H8SX, Mode::Normal), None);
+    }
+    for bytes in [[0x40, 0x01], [0x40, 0x7f], [0x40, 0xff]] {
+        assert_eq!(insn_len(&bytes, Target::H8SX, Mode::Normal), Some(2));
+    }
+    for condition in 1..=15u8 {
+        assert_eq!(
+            insn_len(&[0x40 | condition, 1], Target::H8SX, Mode::Normal),
+            None
+        );
+    }
+    for displacement in [0, 1, 0x7f, 0xff] {
+        assert_eq!(
+            insn_len(&[0x55, displacement], Target::H8SX, Mode::Normal),
+            Some(2)
+        );
+    }
+    assert_eq!(
+        insn_len(&[0x5c, 0x00, 0xff, 0xfe], Target::H8SX, Mode::Normal),
+        Some(4)
+    );
+    assert_eq!(
+        insn_len(&[0x5c, 0x01, 0xff, 0xfe], Target::H8SX, Mode::Normal),
+        None
+    );
+}
+
+// H8SX REJ09B0102 §2.4 Table 2.2, ADD.B
+// @(d:32,ERs),@(d:32,ERd), manual page 640 / PDF page 658.
+#[test]
+fn h8sx_two_32_bit_displacements() {
+    for source in 0..8 {
+        for destination in 0..8 {
+            let bytes = [
+                0x78,
+                (source << 4) | 0x04,
+                0x6a,
+                0x2c,
+                0x12,
+                0x34,
+                0x56,
+                0x78,
+                0xc8 | destination,
+                0x10,
+                0x9a,
+                0xbc,
+                0xde,
+                0xf0,
+            ];
+            for end in 0..bytes.len() {
+                assert_eq!(
+                    insn_len(&bytes[..end], Target::H8SX, Mode::Maximum),
+                    None,
+                    "source {source}, destination {destination}, end {end}"
+                );
+            }
+            for mode in MODES {
+                assert_eq!(
+                    insn_len(&bytes, Target::H8SX, mode),
+                    Some(14),
+                    "source {source}, destination {destination}, {mode:?}"
+                );
+            }
+        }
+    }
+
+    let mut bytes = [
+        0x78, 0x04, 0x6a, 0x2c, 0x12, 0x34, 0x56, 0x78, 0xc8, 0x10, 0x9a, 0xbc, 0xde, 0xf0,
+    ];
+    for (at, replacement) in [(1, 0x05), (2, 0x6b), (3, 0x2d), (8, 0x58), (9, 0x11)] {
+        let old = bytes[at];
+        bytes[at] = replacement;
+        assert_eq!(insn_len(&bytes, Target::H8SX, Mode::Normal), None);
+        bytes[at] = old;
+    }
+}
+
+#[test]
+fn h8sx_add_byte_destination_ea_lengths() {
+    // H8SX §2.4 Table 2.2, manual page 640. Third opcode word encodes
+    // destination mode; 0/16/32-bit EA extensions follow it.
+    for (third, len) in [
+        (0x0010u16, 10), // @ER0
+        (0x8010, 10),    // @ER0+
+        (0x9010, 10),    // @+ER0
+        (0xa010, 10),    // @ER0-
+        (0xb010, 10),    // @-ER0
+        (0xc010, 12),    // @(d:16,ER0)
+        (0xd010, 12),    // @(d:16,R0L.B)
+        (0xe010, 12),    // @(d:16,R0.W)
+        (0xf010, 12),    // @(d:16,ER0.L)
+        (0xc810, 14),    // @(d:32,ER0)
+        (0xd810, 14),    // @(d:32,R0L.B)
+        (0xe810, 14),    // @(d:32,R0.W)
+        (0xf810, 14),    // @(d:32,ER0.L)
+        (0x4010, 12),    // @aa:16
+        (0x4810, 14),    // @aa:32
+    ] {
+        let mut bytes = [0u8; 14];
+        bytes[..4].copy_from_slice(&[0x78, 0x04, 0x6a, 0x2c]);
+        bytes[8..10].copy_from_slice(&third.to_be_bytes());
+        for end in 0..len {
+            assert_eq!(
+                insn_len(&bytes[..end], Target::H8SX, Mode::Maximum),
+                None,
+                "{third:04x} / {end}"
+            );
+        }
+        for mode in MODES {
+            assert_eq!(
+                insn_len(&bytes, Target::H8SX, mode),
+                Some(len),
+                "{third:04x} / {mode:?}"
+            );
+        }
+        if third != 0x4010 && third != 0x4810 {
+            for destination in 0..8 {
+                bytes[8] = (third >> 8) as u8 | destination;
+                assert_eq!(insn_len(&bytes, Target::H8SX, Mode::Maximum), Some(len));
+            }
+        }
+    }
+    // The two absolute-address rows have a fixed destination field.
+    for third in [0x4110u16, 0x4910] {
+        let mut bytes = [0u8; 14];
+        bytes[..4].copy_from_slice(&[0x78, 0x04, 0x6a, 0x2c]);
+        bytes[8..10].copy_from_slice(&third.to_be_bytes());
+        assert_eq!(insn_len(&bytes, Target::H8SX, Mode::Maximum), None);
+    }
 }
 
 // Manual witnesses: H8/300 Appendix B; H8/300H §2.4 Table 2.3;

@@ -3,8 +3,8 @@
 //! big-endian `&[u8]` image where file offset and load address are the same
 //! number.
 //!
-//! **Pre-alpha.** [`isa::insn_len`] recognizes lengths through H8S and four
-//! fixed H8SX opcodes; semantic
+//! **Pre-alpha.** [`isa::insn_len`] recognizes lengths through H8S and selected
+//! H8SX branch and byte-operation forms; semantic
 //! decoding and encoding are not implemented. Every API is parameterised by
 //! which core the bytes were
 //! written for ([`Target`]), and which CPU operating mode it runs in

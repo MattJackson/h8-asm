@@ -181,8 +181,12 @@ LLVM→binutils as you go, rather than copying and "fixing later".
 ## Resume checkpoint (2026-09-25)
 
 Phase 1 remains in progress. `src/isa/length.rs` recognizes lengths through
-H8S; `src/isa/mod.rs` additionally recognizes four fixed H8SX opcodes (NOP,
-SLEEP, RTS, RTE). `tests/length.rs` pins zero-suffix first-word censuses for
+H8S; `src/isa/sx_length.rs` recognizes H8SX NOP/SLEEP/RTS/RTE, selected
+direct branches (including BRA/S), all byte-immediate register and byte
+absolute-move rows, and the ADD.B 32-bit source displacement
+family with several destination addressing modes. The 14-byte ADD.B form
+establishes a lower bound on H8SX's maximum instruction length, but the exact
+maximum is still unverified. `tests/length.rs` pins zero-suffix first-word censuses for
 all five targets and checks modes, truncation, and selected manual prefix,
 extension and register boundaries. `spec/H8-ISA.md` records the initial map
 and the limits of those counts. No semantic decoder or encoder exists yet.
