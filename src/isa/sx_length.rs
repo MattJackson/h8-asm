@@ -32,6 +32,14 @@ pub(super) fn recognize(bytes: &[u8]) -> Option<usize> {
         // the remaining nibbles are register fields (H8SX §2.4).
         first if matches!(first >> 8, 0x68 | 0x69 | 0x6c | 0x6d) => Some(2),
         first if matches!(first >> 8, 0x6e | 0x6f) => Some(4),
+        // MOV.B/W @aa:16/@aa:32 load and store. The high nibble of
+        // the low byte selects transfer direction and address width;
+        // the low nibble names the data register (H8SX §2.4 MOV rows).
+        first if matches!(first >> 8, 0x6a | 0x6b) => match first & 0x00f0 {
+            0x00 | 0x80 => Some(4),
+            0x20 | 0xa0 => Some(6),
+            _ => None,
+        },
         // H8SX §2.4 Bcc: d:8 occupies seven bits and bit 0 is zero.
         // 40xx with bit 0 set is instead BRA/S, which has a delay slot
         // (§2.2.24) but is still one two-byte instruction.

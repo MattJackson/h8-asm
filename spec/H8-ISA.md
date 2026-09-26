@@ -43,7 +43,7 @@ lives in `src/isa/length.rs`. Every row still lacks semantic decode/encode.
 | 50–53 | Multiply/divide | 300; 300H word | implemented through H8S |
 | 54–5f | Returns, calls, jumps, traps and d:16 branches | 300; 300H extensions; H8SX PC-indexed and 32-bit absolute forms | implemented through H8S; selected H8SX branch/jump/call/return rows |
 | 60–67 | Register bit operations and word logic | 300; 300H word logic | implemented through H8S; H8SX word logic register pairs |
-| 68–6f | Memory moves and absolute bit prefixes | 300; 300H extended addresses; H8S absolute bit operations | implemented through H8S; H8SX 68/69/6c–6f MOV.B/W rows |
+| 68–6f | Memory moves and absolute bit prefixes | 300; 300H extended addresses; H8S absolute bit operations | implemented through H8S; selected H8SX 68–6f MOV.B/W rows |
 | 70–77 | Immediate bit operations | 300 | implemented |
 | 78 | Extended displacement prefix | 300H; H8SX EA expansion | implemented through H8S; selected H8SX ADD.B rows |
 | 79–7a | Immediate word/long operations | 300 word MOV; 300H extensions | implemented through H8S; seven H8SX register rows per width |
@@ -82,6 +82,9 @@ also allocate every combination of two four-bit byte-register fields.
 H8SX `68`/`69` and `6c`/`6d` MOV.B/W register-indirect and increment/decrement
 forms are two bytes. The `6e`/`6f` 16-bit-displacement forms are four bytes;
 all 256 first-word variants in each of these six rows are allocated.
+The `6a`/`6b` absolute MOV.B/W rows use low-byte high nibbles `0`/`8`
+for 16-bit addresses (four bytes) and `2`/`a` for 32-bit addresses (six
+bytes). Other `6a`/`6b` high nibbles require separate review.
 
 ## 3. Manual boundary witnesses
 
@@ -110,7 +113,7 @@ target support table. Counts describe this probe construction only.
 | H8/300H | 7,647 | 56,520 | 1,249 | 120 | 0 | 0 | 0 | 0 |
 | H8S/2000 | 7,295 | 56,872 | 1,249 | 120 | 0 | 0 | 0 | 0 |
 | H8S/2600 | 7,262 | 56,905 | 1,249 | 120 | 0 | 0 | 0 | 0 |
-| H8SX | 14,669 | 49,656 | 1,153 | 58 | 0 | 0 | 0 | 0 |
+| H8SX | 14,541 | 49,656 | 1,217 | 122 | 0 | 0 | 0 | 0 |
 
 Zero counts for eight bytes and longer reflect the fixed suffix, not absent
 instructions. H8SX rejections reflect missing implementation, not undefined

@@ -21,7 +21,7 @@ fn first_word_zero_suffix_census() {
         [7647, 56520, 1249, 120, 0, 0, 0, 0],
         [7295, 56872, 1249, 120, 0, 0, 0, 0],
         [7262, 56905, 1249, 120, 0, 0, 0, 0],
-        [14669, 49656, 1153, 58, 0, 0, 0, 0],
+        [14541, 49656, 1217, 122, 0, 0, 0, 0],
     ]) {
         let mut counts = [0usize; 8];
         for first in 0..=u16::MAX {
@@ -214,6 +214,31 @@ fn h8sx_register_indirect_and_displacement_moves() {
             for end in 0..4 {
                 assert_eq!(insn_len(&bytes[..end], Target::H8SX, Mode::Normal), None);
             }
+        }
+    }
+}
+
+#[test]
+fn h8sx_absolute_byte_and_word_moves() {
+    // H8SX §2.4 MOV.B/W @aa:16/@aa:32 rows, manual pages 752–760.
+    for high in [0x6au8, 0x6b] {
+        for field in [0x00u8, 0x20, 0x80, 0xa0] {
+            let len = if field & 0x20 == 0 { 4 } else { 6 };
+            for reg in 0..=15u8 {
+                let bytes = [high, field | reg, 0x12, 0x34, 0x56, 0x78];
+                assert_eq!(insn_len(&bytes, Target::H8SX, Mode::Maximum), Some(len));
+                for end in 0..len {
+                    assert_eq!(insn_len(&bytes[..end], Target::H8SX, Mode::Maximum), None);
+                }
+            }
+        }
+        for field in [
+            0x10u8, 0x30, 0x40, 0x50, 0x60, 0x70, 0x90, 0xb0, 0xc0, 0xd0, 0xe0, 0xf0,
+        ] {
+            assert_eq!(
+                insn_len(&[high, field, 0, 0, 0, 0], Target::H8SX, Mode::Maximum),
+                None
+            );
         }
     }
 }
