@@ -37,7 +37,7 @@ lives in `src/isa/length.rs`. Every row still lacks semantic decode/encode.
 | 00 | NOP | 300 | implemented |
 | 01 | SLEEP and extension prefixes | 300; 300H long/control; H8S register groups; 2600 MAC | implemented through H8S |
 | 02–07 | Control-register transfers and immediate logic | 300; H8S EXR; 2600 MAC registers | implemented through H8S; H8SX byte register/CCR/EXR and CCR-immediate rows |
-| 08–1f | Register arithmetic, shifts, rotates, logic | 300; 300H word/long; H8S shift by two | implemented through H8S; selected H8SX byte, word and long register rows |
+| 08–1f | Register arithmetic, shifts, rotates, logic | 300; 300H word/long; H8S shift by two | implemented through H8S; selected H8SX byte, word and long register/immediate rows |
 | 20–3f | Byte absolute moves | 300 | implemented, including H8SX |
 | 40–4f | Conditional branches, d:8; H8SX BRA/S | 300; H8SX delay-slot branch | implemented through H8S; H8SX d:8 rows |
 | 50–53 | Multiply/divide | 300; 300H word | implemented through H8S; H8SX unsigned register rows |
@@ -60,7 +60,9 @@ byte absolute moves `20`–`3f`; and the §2.4 ADD.B
 displacement/indexed, and 16/32-bit absolute destinations. The ADD.B rows
 are recognized at 10, 12, or 14 bytes as the destination requires. Other
 H8SX encodings are currently refused. The seven `79xx` word-immediate register
-rows are four bytes; the seven `7axx` long-immediate ER rows are six bytes.
+rows are four bytes. The seven `7axx` long-immediate ER rows are four bytes
+with a 16-bit immediate (bit 3 set), or six bytes with a 32-bit immediate
+(bit 3 clear).
 The `02`–`03` H8SX rows cover direct byte transfers to and from CCR/EXR.
 The `04`–`07` rows cover all eight-bit CCR immediates. Register bit
 operations occupy `60`–`63` and `67`; immediate bit operations to a register
@@ -79,9 +81,15 @@ The `54`/`56` long-return rows use an encoded final ER register and a
 group size of one to four. A group is valid only when that final register
 is at least the group size minus one (H8SX §2.4, manual page 813).
 The three-bit word-immediate rows `0a`/`0f`/`1a`/`1f` allocate low-byte
-values `00`–`7f`. The word register-pair rows `09`/`0d`/`19`/`1d`/`64`–`66` allocate every
+values `00`–`7f`; their three-bit long-immediate variants occupy `98`–`ff`
+with bit 3 set and a nonzero immediate. The word register-pair rows
+`09`/`0d`/`19`/`1d`/`64`–`66` allocate every
 combination of their two four-bit register fields. The long ADD/MOV/CMP/SUB
 rows `0a`/`0f`/`1a`/`1f` use three-bit ER fields and a fixed-zero bit 3.
+H8SX `0b`/`1b` ADDS/SUBS and long INC/DEC likewise use three-bit ER fields,
+while word INC/DEC uses a four-bit word-register field. Binutils accepts
+some extra `0b`/`1b` patterns with bit 3 set in an ER field; the manual's
+fixed-zero field is retained here.
 The byte register-pair rows `08`/`0c`/`0e`/`14`–`16`/`18`/`1c`/`1e`
 also allocate every combination of two four-bit byte-register fields.
 H8SX `68`/`69` and `6c`/`6d` MOV.B/W register-indirect and increment/decrement
@@ -122,9 +130,27 @@ target support table. Counts describe this probe construction only.
 | H8/300H | 7,647 | 56,520 | 1,249 | 120 | 0 | 0 | 0 | 0 |
 | H8S/2000 | 7,295 | 56,872 | 1,249 | 120 | 0 | 0 | 0 | 0 |
 | H8S/2600 | 7,262 | 56,905 | 1,249 | 120 | 0 | 0 | 0 | 0 |
-| H8SX | 9,353 | 54,844 | 1,217 | 122 | 0 | 0 | 0 | 0 |
+| H8SX | 8,929 | 55,212 | 1,273 | 122 | 0 | 0 | 0 | 0 |
 
 Zero counts for eight bytes and longer reflect the fixed suffix, not absent
 instructions. H8SX rejections reflect missing implementation, not undefined
 instructions. Full suffix/operand sweeps, semantic round trips, binutils
 conformance, and the phase-3 exhaustive audit have not been performed.
+
+## 5. Independent first-word probe
+
+`tests/binutils_first_word.rs` is an ignored, opt-in comparison against GNU
+binutils. It assembles all 65,536 H8SX first words with fourteen zero padding
+bytes per candidate, disassembles with `objdump -d -z -w`, and compares the
+length at each 16-byte slot with `isa::insn_len` on the same zero suffix.
+With binutils 2.47, 56,607 slots agree on a recognized length, 7,357 are
+rejected by both, and 1,572 are decoded only by binutils. No slot is accepted
+only by this crate, and no accepted slot has a length disagreement. This is
+an independent boundary check for one suffix, not full conformance.
+
+Some binutils-only slots are aliases the manual does not allocate. For
+example, binutils decodes `57 40` as `TRAPA #0`, although the H8SX §2.4
+TRAPA row fixes bit 6 to zero. It also accepts `0b 08` as `ADDS #1,ER0`
+despite the fixed-zero bit before the three-bit ER field. Those patterns
+remain rejected here. The other binutils-only slots need manual review;
+their count is not a missing-instruction count.

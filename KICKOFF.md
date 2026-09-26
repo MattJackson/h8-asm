@@ -224,6 +224,18 @@ forms. This is a smoke check, not the phase-4 conformance sweep. The build is
 temporary and must be reproduced if `/tmp` is cleared. Tests, Clippy, and the
 100% coverage gate passed after these additions.
 
+Next checkpoint (2026-09-25): `7axx` H8SX long-register immediates now
+distinguish 16-bit (four-byte instruction) from 32-bit (six-byte instruction)
+extensions. The `0a`/`0f`/`1a`/`1f` compact long immediates and the `0b`/`1b`
+ADDS/SUBS/INC/DEC rows are recognized with manual-defined register widths.
+The H8SX zero-suffix census is 8,929 rejected, 55,212 two-byte, 1,273
+four-byte, and 122 six-byte first words. An ignored opt-in integration test
+now reproduces a complete first-word comparison with binutils 2.47:
+56,607 matching recognized lengths, 7,357 rejected by both, 1,572
+binutils-only decodes, and zero accepted-length disagreements. Some
+binutils-only decodes are manual-forbidden aliases, so this is a diagnostic
+probe rather than a completeness score. See §5 of `spec/H8-ISA.md`.
+
 Planning estimate, made at this checkpoint: 1–3 weeks of focused work for
 reliable length recognition across all five targets, and 8–16 weeks for the
 full six-phase scope. These are rough effort estimates, not release dates.

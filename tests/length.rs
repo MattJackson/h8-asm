@@ -21,7 +21,7 @@ fn first_word_zero_suffix_census() {
         [7647, 56520, 1249, 120, 0, 0, 0, 0],
         [7295, 56872, 1249, 120, 0, 0, 0, 0],
         [7262, 56905, 1249, 120, 0, 0, 0, 0],
-        [9353, 54844, 1217, 122, 0, 0, 0, 0],
+        [8929, 55212, 1273, 122, 0, 0, 0, 0],
     ]) {
         let mut counts = [0usize; 8];
         for first in 0..=u16::MAX {
@@ -123,6 +123,23 @@ fn h8sx_trap_vectors() {
 }
 
 #[test]
+fn h8sx_adds_subs_and_increment_decrement() {
+    // H8SX §2.4: three-bit ER fields for ADDS/SUBS and long INC/DEC;
+    // four-bit word-register fields for word INC/DEC.
+    for high in [0x0bu8, 0x1b] {
+        for low in 0..=u8::MAX {
+            let expected = matches!(low & 0xf8, 0x00 | 0x80 | 0x90 | 0x70 | 0xf0)
+                || matches!(low & 0xf8, 0x50 | 0x58 | 0xd0 | 0xd8);
+            assert_eq!(
+                insn_len(&[high, low], Target::H8SX, Mode::Normal),
+                if expected { Some(2) } else { None },
+                "{high:02x}{low:02x}"
+            );
+        }
+    }
+}
+
+#[test]
 fn h8sx_byte_register_and_absolute_space() {
     // H8SX §2.4: ADD.B Rs,Rd (08), MOV.B Rs,Rd (0c), and
     // MOV.B to/from @aa:8 (20..3f). All low-byte fields are allocated.
@@ -148,10 +165,14 @@ fn h8sx_word_and_long_immediate_register_space() {
             let long = [0x7a, (operation << 4) | register, 0x12, 0x34, 0x56, 0x78];
             assert_eq!(
                 insn_len(&long, Target::H8SX, Mode::Maximum),
-                if register < 8 { Some(6) } else { None }
+                Some(if register < 8 { 6 } else { 4 })
             );
             if register < 8 {
                 for end in 0..long.len() {
+                    assert_eq!(insn_len(&long[..end], Target::H8SX, Mode::Maximum), None);
+                }
+            } else {
+                for end in 0..4 {
                     assert_eq!(insn_len(&long[..end], Target::H8SX, Mode::Maximum), None);
                 }
             }
@@ -247,7 +268,7 @@ fn h8sx_word_and_long_register_pairs() {
         for low in 0..=u8::MAX {
             assert_eq!(
                 insn_len(&[high, low], Target::H8SX, Mode::Normal),
-                if low & 0x80 == 0 || low & 0x88 == 0x80 {
+                if low & 0x80 == 0 || low & 0x88 == 0x80 || low & 0x88 == 0x88 && low & 0x70 != 0 {
                     Some(2)
                 } else {
                     None

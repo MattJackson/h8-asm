@@ -1,7 +1,7 @@
 //! Instruction boundaries in a big-endian H8 instruction stream.
 //!
-//! Length recognition covers H8/300, H8/300H and H8S, and a small set of
-//! fixed H8SX opcodes. Other H8SX encodings are refused until their extended
+//! Length recognition covers H8/300, H8/300H and H8S, plus selected H8SX
+//! opcode families. Other H8SX encodings are refused until their extended
 //! opcode tables are implemented.
 
 mod length;

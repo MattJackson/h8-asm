@@ -50,13 +50,24 @@ pub(super) fn recognize(bytes: &[u8]) -> Option<usize> {
         first if matches!(first >> 8, 0x74..=0x77) => Some(2),
         // ADD/MOV/SUB/CMP .W #xx:3,Rd use low-byte bits 6–4 for the
         // immediate and bits 3–0 for Rd. The .L register-pair forms
-        // instead set bit 7 and require bit 3 to be zero (§2.4).
+        // set bit 7 and clear bit 3; .L #xx:3,ERd sets both bits and
+        // reserves immediate zero (§2.4 arithmetic/move rows).
         first
             if matches!(first >> 8, 0x0a | 0x0f | 0x1a | 0x1f)
-                && (first & 0x0080 == 0 || first & 0x0088 == 0x0080) =>
+                && (first & 0x0080 == 0
+                    || first & 0x0088 == 0x0080
+                    || first & 0x0088 == 0x0088 && first & 0x0070 != 0) =>
         {
             Some(2)
         }
+        // ADDS/SUBS #1/#2/#4,ERd and INC/DEC .W/.L #1/#2.
+        // The ER destination uses three bits; the word destination
+        // uses four (H8SX §2.4 ADDS/SUBS/INC/DEC rows).
+        first if matches!(first >> 8, 0x0b | 0x1b) => match first & 0x00f8 {
+            0x00 | 0x80 | 0x90 | 0x70 | 0xf0 => Some(2),
+            0x50 | 0x58 | 0xd0 | 0xd8 => Some(2),
+            _ => None,
+        },
         // MOV.B/W register-indirect, post-increment/pre-decrement, and
         // 16-bit displacement forms. Bit 7 selects transfer direction;
         // the remaining nibbles are register fields (H8SX §2.4).
@@ -114,10 +125,12 @@ pub(super) fn recognize(bytes: &[u8]) -> Option<usize> {
         },
         // MOV/ADD/CMP/SUB/OR/XOR/AND immediate to register. The 79xx
         // word forms have a four-bit register field and one 16-bit
-        // immediate word. The 7axx long forms have a three-bit ER field
-        // and two immediate words (H8SX §2.4 Table 2.2).
+        // immediate word. In 7axx, bit 3 selects a 16-bit (set) or
+        // 32-bit (clear) immediate, followed by a three-bit ER field.
         first if first >> 8 == 0x79 && (first & 0x00f0) < 0x70 => Some(4),
-        first if first >> 8 == 0x7a && (first & 0x00f0) < 0x70 && first & 8 == 0 => Some(6),
+        first if first >> 8 == 0x7a && (first & 0x00f0) < 0x70 => {
+            Some(if first & 8 == 0 { 6 } else { 4 })
+        }
         // Eight immediate-byte/register rows: ADD, ADDX, CMP, SUBX,
         // OR, XOR, AND and MOV (H8SX §2.4 Table 2.2). The high nibble
         // selects the operation, the next nibble a byte register, and
