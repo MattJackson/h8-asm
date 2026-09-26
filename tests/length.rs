@@ -21,7 +21,7 @@ fn first_word_zero_suffix_census() {
         [7647, 56520, 1249, 120, 0, 0, 0, 0],
         [7295, 56872, 1249, 120, 0, 0, 0, 0],
         [7262, 56905, 1249, 120, 0, 0, 0, 0],
-        [8145, 55996, 1273, 122, 0, 0, 0, 0],
+        [8017, 56124, 1273, 122, 0, 0, 0, 0],
     ]) {
         let mut counts = [0usize; 8];
         for first in 0..=u16::MAX {
@@ -158,6 +158,22 @@ fn h8sx_shift_and_rotate_register_space() {
                 "{high:02x}{low:02x}"
             );
         }
+    }
+}
+
+#[test]
+fn h8sx_unary_register_space() {
+    // H8SX §2.4 NOT/NEG/EXTU/EXTS register rows. The long rows use
+    // a three-bit ER register and fixed-zero bit 3.
+    for low in 0..=u8::MAX {
+        let group = low >> 4;
+        let expected = matches!(group, 0 | 1 | 5 | 8 | 9 | 13)
+            || matches!(group, 3 | 7 | 11 | 15) && low & 8 == 0;
+        assert_eq!(
+            insn_len(&[0x17, low], Target::H8SX, Mode::Normal),
+            if expected { Some(2) } else { None },
+            "17{low:02x}"
+        );
     }
 }
 

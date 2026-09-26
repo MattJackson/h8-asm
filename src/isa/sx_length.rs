@@ -90,6 +90,20 @@ pub(super) fn recognize(bytes: &[u8]) -> Option<usize> {
                 None
             }
         }
+        // NOT, NEG, EXTU and EXTS register forms. Byte/word operands
+        // use a four-bit register; long operands require bit 3 clear.
+        // H8SX §2.4 fixes the additional bits in EXTU.L/EXTS.L, even
+        // though binutils decodes some aliases in this group.
+        first if first >> 8 == 0x17 => {
+            let low = first as u8;
+            if matches!(low >> 4, 0 | 1 | 5 | 8 | 9 | 13)
+                || matches!(low >> 4, 3 | 7 | 11 | 15) && low & 8 == 0
+            {
+                Some(2)
+            } else {
+                None
+            }
+        }
         // MOV.B/W register-indirect, post-increment/pre-decrement, and
         // 16-bit displacement forms. Bit 7 selects transfer direction;
         // the remaining nibbles are register fields (H8SX §2.4).
