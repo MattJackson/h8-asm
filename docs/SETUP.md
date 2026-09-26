@@ -38,9 +38,17 @@ so the same CI promotion was dispatched with destination=main (run
 The initial ruleset rejected branch creation despite the successful check;
 the branch-creation exception was enabled for this bootstrap and immediately
 restored to false after CI created main. main was then set as the default.
-If a completion callback does not arrive, `gh workflow run promote.yml
---ref main -f destination=main` resumes through the same validation; it does
-not push a branch locally or bypass failed QA.
+GitHub does not accept workflow_dispatch job checks as required ruleset checks.
+For subsequent promotions, open a qa → main PR so the existing pull_request
+trigger runs the full QA gate with an eligible event. Keep the successful
+branch QA run as well: the promotion workflow validates that exact source run.
+After both gates pass, `gh workflow run promote.yml --ref main -f
+destination=main` fast-forwards through CI. Do not merge/squash the PR into a
+new commit, remove the required check, or repeat the bootstrap exception.
+The PR is the qualifying check trigger; promotion preserves the tested SHA.
+See [GitHub's required-check guidance](https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/troubleshooting-required-status-checks).
+An absent completion callback can be resumed through that same dispatch after
+the eligible checks pass; a successful dispatch-only QA run is insufficient.
 
 Local REUSE lint passes. The REUSE API accepted registration on 2026-09-26
 (HTTP 202) and sent a confirmation email to the maintainer. The external badge

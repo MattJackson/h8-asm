@@ -55,5 +55,9 @@ The promotion workflow validates the source repository, branch, workflow,
 event and current SHA, then dispatches the next stage. dev must pass the fast
 gate (including workflow security analysis); qa must pass the complete gate
 before main advances. Release re-runs the full gate before publishing.
-PR checks do not promote branches, and superseded runs cannot promote old code.
-An interrupted promotion can be resumed through promote.yml's dispatch input.
+A qa → main PR supplies the pull_request-triggered QA check that GitHub
+accepts for the main ruleset; dispatch-only checks do not qualify. PR checks
+do not themselves promote branches. After branch QA and PR QA pass, use the
+promotion workflow's main dispatch, preserving the exact SHA instead of
+creating a merge commit. Superseded runs cannot promote old code. See
+docs/SETUP.md for the verified promotion and recovery procedure.
