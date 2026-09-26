@@ -2,7 +2,9 @@
 
 Sources: H8/300 ADE-602-025 Appendix A/B; H8/300H REJ09B0213
 §2.4–2.5; H8S REJ09B0139 §2.4–2.5; H8SX REJ09B0102 §2.4.
-This is an initial map, not a claim of complete ISA support.
+This is an initial map, not a claim of complete ISA support. Semantic decode
+currently handles selected H8/300 instructions and a narrow H8SX
+control-flow/CMP.B subset; no encoder exists.
 
 ## 1. Instruction boundaries
 
@@ -10,6 +12,11 @@ Words are big-endian. `isa::insn_len` accepts a complete byte slice and an
 explicit target/mode pair. It returns `None` for truncation, an unsupported
 pair, an unrecognized encoding, or an unimplemented H8SX instruction. It does not return
 operands or prove that an instruction is safe to execute.
+For H8/300 through H8S, odd d:8 displacements in Bcc/BSR are rejected:
+H8/300 §2 says the signed displacement must be even, and the later manuals
+retain the even branch-destination requirement. H8SX separately allocates
+BRA/S with bit 0 set, so it does not use this legacy rule. H8SX BSR d:8 and
+the d:16 Bcc/BSR forms still require even destinations.
 
 The first word does not always determine length or validity. For example,
 `0100 6907` is four bytes, whereas `0100 7870 6b27 ffffffff` is ten bytes
@@ -29,7 +36,10 @@ contains three. The earlier cores' instruction-code tables are shorter; H8S
 ## 2. Initial opcode map
 
 The ranges below refer to the high byte of the first word. Length recognition
-lives in `src/isa/length.rs`. Every row still lacks semantic decode/encode.
+lives in `src/isa/length.rs` and `src/isa/sx_length.rs`. Selected H8/300
+operation-only, byte-register, and d:8 branch rows have semantic decode;
+H8SX has selected control-flow and CMP.B semantic decode. Other rows remain
+length-only, and no row has encode support.
 “Later” names additions within a row, not a claim that every pattern is valid.
 
 | High byte | Family | Introduced / later additions | Length recognition |
@@ -132,16 +142,25 @@ target support table. Counts describe this probe construction only.
 
 | Target | Rejected | 2 bytes | 4 bytes | 6 bytes | 8 bytes | 10 bytes | 12 bytes | 14 bytes |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| H8/300 | 11,506 | 53,556 | 474 | 0 | 0 | 0 | 0 | 0 |
-| H8/300H | 7,647 | 56,520 | 1,249 | 120 | 0 | 0 | 0 | 0 |
-| H8S/2000 | 7,295 | 56,872 | 1,249 | 120 | 0 | 0 | 0 | 0 |
-| H8S/2600 | 7,262 | 56,905 | 1,249 | 120 | 0 | 0 | 0 | 0 |
-| H8SX | 8,017 | 56,124 | 1,273 | 122 | 0 | 0 | 0 | 0 |
+| H8/300 | 13,682 | 51,380 | 474 | 0 | 0 | 0 | 0 | 0 |
+| H8/300H | 9,823 | 54,344 | 1,249 | 120 | 0 | 0 | 0 | 0 |
+| H8S/2000 | 9,471 | 54,696 | 1,249 | 120 | 0 | 0 | 0 | 0 |
+| H8S/2600 | 9,438 | 54,729 | 1,249 | 120 | 0 | 0 | 0 | 0 |
+| H8SX | 8,145 | 55,996 | 1,273 | 122 | 0 | 0 | 0 | 0 |
 
 Zero counts for eight bytes and longer reflect the fixed suffix, not absent
 instructions. H8SX rejections reflect missing implementation, not undefined
 instructions. Full suffix/operand sweeps, semantic round trips, binutils
 conformance, and the phase-3 exhaustive audit have not been performed.
+
+The opt-in `tests/binutils_legacy.rs` probe uses the same zero-suffix method
+for the four older targets. After enforcing the manual's even d:8 branch
+displacement rule, binutils 2.47 has no accepted-length disagreements or
+crate-only decodes in that probe. Its matching recognized counts are 51,854
+(H8/300), 55,713 (H8/300H), 56,065 (H8S/2000), and 56,098 (H8S/2600).
+Binutils also decodes 6,325, 2,466, 2,114, and 2,081 additional first words
+respectively; some are later-core instructions decoded in older-core mode.
+Those counts cannot establish that the extra patterns belong to each target.
 
 ## 5. Independent first-word probe
 
@@ -149,8 +168,8 @@ conformance, and the phase-3 exhaustive audit have not been performed.
 binutils. It assembles all 65,536 H8SX first words with fourteen zero padding
 bytes per candidate, disassembles with `objdump -d -z -w`, and compares the
 length at each 16-byte slot with `isa::insn_len` on the same zero suffix.
-With binutils 2.47, 57,519 slots agree on a recognized length, 7,357 are
-rejected by both, and 660 are decoded only by binutils. No slot is accepted
+With binutils 2.47, 57,391 slots agree on a recognized length, 7,357 are
+rejected by both, and 788 are decoded only by binutils. No slot is accepted
 only by this crate, and no accepted slot has a length disagreement. This is
 an independent boundary check for one suffix, not full conformance.
 

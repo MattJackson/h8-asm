@@ -45,7 +45,11 @@ pub(super) fn recognize(bytes: &[u8], target: Target) -> Option<usize> {
             3 | 7 | 11 | 15 => !base && lo & 8 == 0,
             _ => false,
         },
-        0x20..=0x4f | 0x55 | 0x5b | 0x5f => true,
+        0x20..=0x3f | 0x5b | 0x5f => true,
+        // H8/300 §2 Bcc/BSR: the signed PC-relative displacement must
+        // be even. The same even-destination requirement applies in
+        // H8/300H and H8S (§2 branch instructions).
+        0x40..=0x4f | 0x55 => lo & 1 == 0,
         0x50 | 0x51 => !base || lo & 8 == 0,
         0x52 | 0x53 => !base && lo & 8 == 0,
         0x54 | 0x56 => lo == 0x70,

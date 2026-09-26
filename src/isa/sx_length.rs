@@ -19,6 +19,43 @@ pub(super) fn recognize(bytes: &[u8]) -> Option<usize> {
         // ORC, XORC, ANDC and LDC.B #xx:8,CCR. The low byte is the
         // immediate, so all 256 variants of each opcode are allocated.
         first if matches!(first >> 8, 0x04..=0x07) => Some(2),
+        // LDM.L/STM.L transfer two to four consecutive ER registers.
+        // The 01n0 prefix encodes the group size minus one; 6d7r names
+        // the last loaded register, while 6dfr names the first stored
+        // register (H8SX §2.4 LDM/STM rows).
+        first if matches!(first, 0x0110 | 0x0120 | 0x0130) => {
+            let second = word(bytes, 2)?;
+            let count_minus_one = (first >> 4) as u8 & 3;
+            let register = (second & 7) as u8;
+            match second & 0xfff8 {
+                0x6d70 if register >= count_minus_one => Some(4),
+                0x6df0 if register + count_minus_one < 8 => Some(4),
+                _ => None,
+            }
+        }
+        // LDC.W/STC.W transfer CCR or EXR through memory. The prefix
+        // low bit selects EXR; 0141 07xx loads an immediate byte into
+        // EXR. Memory forms reserve the second word's low nibble.
+        first if matches!(first, 0x0140 | 0x0141) => {
+            let second = word(bytes, 2)?;
+            match second {
+                word if first == 0x0141 && word >> 8 == 0x07 => Some(4),
+                word if matches!(word >> 8, 0x69 | 0x6d) && word & 0x000f == 0 => Some(4),
+                word if word >> 8 == 0x6f && word & 0x000f == 0 => Some(6),
+                0x6b00 | 0x6b80 => Some(6),
+                0x6b20 | 0x6ba0 => Some(8),
+                _ => None,
+            }
+        }
+        // MAC @ERn+,@ERm+ has two three-bit ER fields (H8SX §2.4).
+        0x0160 => {
+            let second = word(bytes, 2)?;
+            if second & 0xff88 == 0x6d00 {
+                Some(4)
+            } else {
+                None
+            }
+        }
         // MOV.L single-memory-operand forms (H8SX §2.4 MOV rows).
         // The 0100 prefix is followed by a second opcode word. Only
         // the exact register/EA families below are recognized here.
@@ -129,9 +166,21 @@ pub(super) fn recognize(bytes: &[u8]) -> Option<usize> {
         // TRAPA #x:2 occupies low-byte bits 5–4; all other bits are zero.
         first if first >> 8 == 0x57 && first & 0x00cf == 0 => Some(2),
         // Bcc d:16, BSR d:8, and BSR d:16 (H8SX §2.4).
-        first if first & 0xff0f == 0x5800 => Some(4),
-        first if first >> 8 == 0x55 => Some(2),
-        0x5c00 => Some(4),
+        first if first & 0xff0f == 0x5800 => {
+            if word(bytes, 2)? & 1 == 0 {
+                Some(4)
+            } else {
+                None
+            }
+        }
+        first if first >> 8 == 0x55 && first & 1 == 0 => Some(2),
+        0x5c00 => {
+            if word(bytes, 2)? & 1 == 0 {
+                Some(4)
+            } else {
+                None
+            }
+        }
         // RTS/L and RTE/L save 1–4 consecutive ER registers. The low
         // three bits encode the last register, so a group of n+1 cannot
         // end before ERn (H8SX §2.4, page 813).

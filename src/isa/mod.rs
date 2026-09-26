@@ -4,8 +4,10 @@
 //! opcode families. Other H8SX encodings are refused until their extended
 //! opcode tables are implemented.
 
+pub mod decode;
 mod length;
 mod sx_length;
+pub mod sx_semantic;
 
 use crate::{Mode, Target};
 

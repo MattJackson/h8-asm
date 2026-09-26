@@ -4,8 +4,9 @@
 //! number.
 //!
 //! **Pre-alpha.** [`isa::insn_len`] recognizes lengths through H8S and selected
-//! H8SX branch and immediate-operation forms; semantic
-//! decoding and encoding are not implemented. Every API is parameterised by
+//! H8SX opcode families. [`isa::decode::decode`] decodes a small H8/300 subset;
+//! [`isa::sx_semantic::decode`] covers selected H8SX control flow and CMP.B;
+//! encoding is not implemented. Every API is parameterised by
 //! which core the bytes were
 //! written for ([`Target`]), and which CPU operating mode it runs in
 //! ([`Mode`]). Both change what a given byte sequence means, so neither is

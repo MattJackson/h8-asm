@@ -231,14 +231,32 @@ ADDS/SUBS/INC/DEC rows are recognized with manual-defined register widths.
 The H8SX zero-suffix census is 8,929 rejected, 55,212 two-byte, 1,273
 four-byte, and 122 six-byte first words. An ignored opt-in integration test
 now reproduces a complete first-word comparison with binutils 2.47:
-57,519 matching recognized lengths, 7,357 rejected by both, 660
+57,391 matching recognized lengths, 7,357 rejected by both, 788
 binutils-only decodes, and zero accepted-length disagreements. Some
 binutils-only decodes are manual-forbidden aliases, so this is a diagnostic
 probe rather than a completeness score. See §5 of `spec/H8-ISA.md`.
 The `10`–`13` shift and rotate register rows have also been added; the H8SX
 `17` NOT/NEG/EXTU/EXTS register rows now use the manual's fixed bit masks.
-The H8SX zero-suffix census is now 8,017 rejected, 56,124 two-byte, 1,273 four-byte,
+The H8SX zero-suffix census is now 8,145 rejected, 55,996 two-byte, 1,273 four-byte,
 and 122 six-byte first words.
+
+Integration checkpoint (2026-09-25): the H8SX `01` prefix now recognizes
+selected LDM/STM, control-register memory/immediate, and MAC forms (460
+verified second-word encodings; unchanged zero-suffix first-word census).
+`isa::decode::decode` now provides a deliberately narrow H8/300 semantic
+decoder for NOP/SLEEP/RTS/RTE, ADD.B/MOV.B register pairs, Bcc d:8, and
+BSR d:8. It refuses unsupported encodings and odd branch displacements.
+`isa::sx_semantic::decode` covers a similarly narrow H8SX control-flow and
+CMP.B immediate subset, with typed signed displacements and 24-bit targets.
+The legacy length recognizer now also refuses odd Bcc/BSR d:8 displacements
+as required by the H8/300 manual. The updated zero-suffix censuses are in
+`spec/H8-ISA.md`. H8SX BSR d:8 and d:16 Bcc/BSR also refuse odd
+displacements, while BRA/S retains its distinct odd low-bit opcode. An
+ignored binutils probe covers all four legacy targets; after the branch
+fix, each has zero crate-only decodes and zero accepted length disagreements
+under the zero-suffix probe. The full tests, Clippy,
+and 100% line/region/function coverage gate pass. Semantic decode remains
+minimal and no encoder, relocator, or detour installer exists yet.
 
 Planning estimate, made at this checkpoint: 1–3 weeks of focused work for
 reliable length recognition across all five targets, and 8–16 weeks for the

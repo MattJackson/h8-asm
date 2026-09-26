@@ -17,11 +17,11 @@ const MODES: [Mode; 4] = [Mode::Normal, Mode::Middle, Mode::Advanced, Mode::Maxi
 #[test]
 fn first_word_zero_suffix_census() {
     for (target, expected) in TARGETS.into_iter().zip([
-        [11506, 53556, 474, 0, 0, 0, 0, 0],
-        [7647, 56520, 1249, 120, 0, 0, 0, 0],
-        [7295, 56872, 1249, 120, 0, 0, 0, 0],
-        [7262, 56905, 1249, 120, 0, 0, 0, 0],
-        [8017, 56124, 1273, 122, 0, 0, 0, 0],
+        [13682, 51380, 474, 0, 0, 0, 0, 0],
+        [9823, 54344, 1249, 120, 0, 0, 0, 0],
+        [9471, 54696, 1249, 120, 0, 0, 0, 0],
+        [9438, 54729, 1249, 120, 0, 0, 0, 0],
+        [8145, 55996, 1273, 122, 0, 0, 0, 0],
     ]) {
         let mut counts = [0usize; 8];
         for first in 0..=u16::MAX {
@@ -54,6 +54,23 @@ fn h8sx_byte_immediate_register_space() {
         let bytes = first.to_be_bytes();
         assert_eq!(insn_len(&bytes, Target::H8SX, Mode::Normal), Some(2));
         assert_eq!(insn_len(&bytes[..1], Target::H8SX, Mode::Normal), None);
+    }
+}
+
+#[test]
+fn legacy_pc_relative_displacements_are_even() {
+    // H8/300 §2 Bcc/BSR requires an even displacement; H8/300H and
+    // H8S retain the even branch-destination requirement.
+    for target in TARGETS.into_iter().filter(|target| *target != Target::H8SX) {
+        for high in (0x40u8..=0x4f).chain([0x55]) {
+            for low in 0..=u8::MAX {
+                assert_eq!(
+                    insn_len(&[high, low], target, Mode::Normal),
+                    if low & 1 == 0 { Some(2) } else { None },
+                    "{target:?} {high:02x}{low:02x}"
+                );
+            }
+        }
     }
 }
 
@@ -464,9 +481,17 @@ fn h8sx_branch_lengths_and_reserved_bits() {
     for displacement in [0, 1, 0x7f, 0xff] {
         assert_eq!(
             insn_len(&[0x55, displacement], Target::H8SX, Mode::Normal),
-            Some(2)
+            if displacement & 1 == 0 { Some(2) } else { None }
         );
     }
+    assert_eq!(
+        insn_len(&[0x58, 0x00, 0x00, 0x01], Target::H8SX, Mode::Normal),
+        None
+    );
+    assert_eq!(
+        insn_len(&[0x5c, 0x00, 0x00, 0x01], Target::H8SX, Mode::Normal),
+        None
+    );
     assert_eq!(
         insn_len(&[0x5c, 0x00, 0xff, 0xfe], Target::H8SX, Mode::Normal),
         Some(4)
