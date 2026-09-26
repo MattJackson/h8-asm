@@ -231,10 +231,13 @@ ADDS/SUBS/INC/DEC rows are recognized with manual-defined register widths.
 The H8SX zero-suffix census is 8,929 rejected, 55,212 two-byte, 1,273
 four-byte, and 122 six-byte first words. An ignored opt-in integration test
 now reproduces a complete first-word comparison with binutils 2.47:
-56,607 matching recognized lengths, 7,357 rejected by both, 1,572
+57,391 matching recognized lengths, 7,357 rejected by both, 788
 binutils-only decodes, and zero accepted-length disagreements. Some
 binutils-only decodes are manual-forbidden aliases, so this is a diagnostic
 probe rather than a completeness score. See §5 of `spec/H8-ISA.md`.
+The `10`–`13` shift and rotate register rows have also been added; the H8SX
+zero-suffix census is now 8,145 rejected, 55,996 two-byte, 1,273 four-byte,
+and 122 six-byte first words.
 
 Planning estimate, made at this checkpoint: 1–3 weeks of focused work for
 reliable length recognition across all five targets, and 8–16 weeks for the

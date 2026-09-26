@@ -21,7 +21,7 @@ fn first_word_zero_suffix_census() {
         [7647, 56520, 1249, 120, 0, 0, 0, 0],
         [7295, 56872, 1249, 120, 0, 0, 0, 0],
         [7262, 56905, 1249, 120, 0, 0, 0, 0],
-        [8929, 55212, 1273, 122, 0, 0, 0, 0],
+        [8145, 55996, 1273, 122, 0, 0, 0, 0],
     ]) {
         let mut counts = [0usize; 8];
         for first in 0..=u16::MAX {
@@ -130,6 +130,28 @@ fn h8sx_adds_subs_and_increment_decrement() {
         for low in 0..=u8::MAX {
             let expected = matches!(low & 0xf8, 0x00 | 0x80 | 0x90 | 0x70 | 0xf0)
                 || matches!(low & 0xf8, 0x50 | 0x58 | 0xd0 | 0xd8);
+            assert_eq!(
+                insn_len(&[high, low], Target::H8SX, Mode::Normal),
+                if expected { Some(2) } else { None },
+                "{high:02x}{low:02x}"
+            );
+        }
+    }
+}
+
+#[test]
+fn h8sx_shift_and_rotate_register_space() {
+    // H8SX §2.4 SHLL/SHLR/SHAL/SHAR and ROTXL/ROTXR/ROTL/ROTR
+    // register rows, including the listed fixed shift counts.
+    for high in 0x10u8..=0x13 {
+        for low in 0..=u8::MAX {
+            let group = low >> 4;
+            let expected = if high <= 0x11 {
+                matches!(group, 0x0..=0xa | 0xc | 0xd | 0xf) || group == 0xb && low & 8 == 0
+            } else {
+                matches!(group, 0 | 1 | 4 | 5 | 8 | 9 | 12 | 13)
+                    || matches!(group, 3 | 7 | 11 | 15) && low & 8 == 0
+            };
             assert_eq!(
                 insn_len(&[high, low], Target::H8SX, Mode::Normal),
                 if expected { Some(2) } else { None },

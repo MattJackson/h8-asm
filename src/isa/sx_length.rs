@@ -68,6 +68,28 @@ pub(super) fn recognize(bytes: &[u8]) -> Option<usize> {
             0x50 | 0x58 | 0xd0 | 0xd8 => Some(2),
             _ => None,
         },
+        // SHLL/SHLR/SHAL/SHAR and ROTXL/ROTXR/ROTL/ROTR register
+        // forms. Byte/word registers use four bits; ER destinations use
+        // three. H8SX §2.4 also allocates shift counts 2/4/8/16 where
+        // listed in the corresponding operation rows.
+        first if matches!(first >> 8, 0x10 | 0x11) => {
+            let low = first as u8;
+            if matches!(low >> 4, 0x0..=0xa | 0xc | 0xd | 0xf) || low >> 4 == 0xb && low & 8 == 0 {
+                Some(2)
+            } else {
+                None
+            }
+        }
+        first if matches!(first >> 8, 0x12 | 0x13) => {
+            let low = first as u8;
+            if matches!(low >> 4, 0 | 1 | 4 | 5 | 8 | 9 | 12 | 13)
+                || matches!(low >> 4, 3 | 7 | 11 | 15) && low & 8 == 0
+            {
+                Some(2)
+            } else {
+                None
+            }
+        }
         // MOV.B/W register-indirect, post-increment/pre-decrement, and
         // 16-bit displacement forms. Bit 7 selects transfer direction;
         // the remaining nibbles are register fields (H8SX §2.4).

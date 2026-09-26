@@ -90,6 +90,9 @@ H8SX `0b`/`1b` ADDS/SUBS and long INC/DEC likewise use three-bit ER fields,
 while word INC/DEC uses a four-bit word-register field. Binutils accepts
 some extra `0b`/`1b` patterns with bit 3 set in an ER field; the manual's
 fixed-zero field is retained here.
+The `10`–`13` shift and rotate register rows include the manual's listed
+shift counts 1/2/4/8/16. Their byte and word registers use four bits;
+long ER destinations use three.
 The byte register-pair rows `08`/`0c`/`0e`/`14`–`16`/`18`/`1c`/`1e`
 also allocate every combination of two four-bit byte-register fields.
 H8SX `68`/`69` and `6c`/`6d` MOV.B/W register-indirect and increment/decrement
@@ -130,7 +133,7 @@ target support table. Counts describe this probe construction only.
 | H8/300H | 7,647 | 56,520 | 1,249 | 120 | 0 | 0 | 0 | 0 |
 | H8S/2000 | 7,295 | 56,872 | 1,249 | 120 | 0 | 0 | 0 | 0 |
 | H8S/2600 | 7,262 | 56,905 | 1,249 | 120 | 0 | 0 | 0 | 0 |
-| H8SX | 8,929 | 55,212 | 1,273 | 122 | 0 | 0 | 0 | 0 |
+| H8SX | 8,145 | 55,996 | 1,273 | 122 | 0 | 0 | 0 | 0 |
 
 Zero counts for eight bytes and longer reflect the fixed suffix, not absent
 instructions. H8SX rejections reflect missing implementation, not undefined
@@ -143,8 +146,8 @@ conformance, and the phase-3 exhaustive audit have not been performed.
 binutils. It assembles all 65,536 H8SX first words with fourteen zero padding
 bytes per candidate, disassembles with `objdump -d -z -w`, and compares the
 length at each 16-byte slot with `isa::insn_len` on the same zero suffix.
-With binutils 2.47, 56,607 slots agree on a recognized length, 7,357 are
-rejected by both, and 1,572 are decoded only by binutils. No slot is accepted
+With binutils 2.47, 57,391 slots agree on a recognized length, 7,357 are
+rejected by both, and 788 are decoded only by binutils. No slot is accepted
 only by this crate, and no accepted slot has a length disagreement. This is
 an independent boundary check for one suffix, not full conformance.
 
