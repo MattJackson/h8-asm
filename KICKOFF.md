@@ -210,6 +210,18 @@ table runs through roughly PDF page 907. Do not treat the zero-suffix rejection
 counts as undefined-instruction counts. Repository creation/publishing and
 phase 2 onward remain outstanding.
 
+Further checkpoint (2026-09-25): H8SX recognition now also covers direct
+CCR/EXR byte transfers, CCR immediate operations, register bit operations,
+immediate bit operations to byte registers, and three-bit word immediate
+ADD/MOV/SUB/CMP. The zero-suffix H8SX census is now 10,125 rejected,
+54,072 two-byte, 1,217 four-byte, and 122 six-byte first words. Built GNU
+binutils 2.47 locally under `/tmp/h8-binutils/build` for `h8300-elf`;
+`gas/as-new` and `binutils/objdump` assembled/disassembled representative
+H8SX encodings from these groups, including CCR/EXR, bit, and word-immediate
+forms. This is a smoke check, not the phase-4 conformance sweep. The build is
+temporary and must be reproduced if `/tmp` is cleared. Tests, Clippy, and the
+100% coverage gate passed after these additions.
+
 Planning estimate, made at this checkpoint: 1–3 weeks of focused work for
 reliable length recognition across all five targets, and 8–16 weeks for the
 full six-phase scope. These are rough effort estimates, not release dates.

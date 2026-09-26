@@ -13,6 +13,12 @@ pub(super) fn recognize(bytes: &[u8]) -> Option<usize> {
     match first {
         // Operation-only rows: NOP, SLEEP, RTS, RTE.
         0x0000 | 0x0180 | 0x5470 | 0x5670 => Some(2),
+        // STC.B CCR/EXR,Rd and LDC.B Rs,CCR/EXR. Bit 4 selects the
+        // control register; the low nibble selects a byte register.
+        first if matches!(first >> 8, 0x02 | 0x03) && first & 0x00e0 == 0 => Some(2),
+        // ORC, XORC, ANDC and LDC.B #xx:8,CCR. The low byte is the
+        // immediate, so all 256 variants of each opcode are allocated.
+        first if matches!(first >> 8, 0x04..=0x07) => Some(2),
         // MOV.L single-memory-operand forms (H8SX §2.4 MOV rows).
         // The 0100 prefix is followed by a second opcode word. Only
         // the exact register/EA families below are recognized here.
@@ -35,9 +41,20 @@ pub(super) fn recognize(bytes: &[u8]) -> Option<usize> {
         // Word register pairs use full four-bit R/E register fields:
         // ADD, MOV, CMP, SUB, OR, XOR, AND (H8SX §2.4 Table 2.2).
         first if matches!(first >> 8, 0x09 | 0x0d | 0x19 | 0x1d | 0x64..=0x66) => Some(2),
-        // ADD/MOV/CMP/SUB .L ERs,ERd: bit 7 selects the long form,
-        // while bit 3 is fixed zero; the other six bits name ERs/ERd.
-        first if matches!(first >> 8, 0x0a | 0x0f | 0x1a | 0x1f) && first & 0x0088 == 0x0080 => {
+        // BSET/BNOT/BCLR/BTST Rn,Rd and BST/BIST Rn,Rd. Both low-byte
+        // nibbles are register fields (H8SX §2.4 bit-operation rows).
+        first if matches!(first >> 8, 0x60..=0x63 | 0x67) => Some(2),
+        // The immediate bit number occupies bits 6–4; bit 7 is fixed
+        // zero in the register-destination rows (H8SX §2.4).
+        first if matches!(first >> 8, 0x70..=0x73) && first & 0x0080 == 0 => Some(2),
+        first if matches!(first >> 8, 0x74..=0x77) => Some(2),
+        // ADD/MOV/SUB/CMP .W #xx:3,Rd use low-byte bits 6–4 for the
+        // immediate and bits 3–0 for Rd. The .L register-pair forms
+        // instead set bit 7 and require bit 3 to be zero (§2.4).
+        first
+            if matches!(first >> 8, 0x0a | 0x0f | 0x1a | 0x1f)
+                && (first & 0x0080 == 0 || first & 0x0088 == 0x0080) =>
+        {
             Some(2)
         }
         // MOV.B/W register-indirect, post-increment/pre-decrement, and

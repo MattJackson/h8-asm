@@ -36,15 +36,15 @@ lives in `src/isa/length.rs`. Every row still lacks semantic decode/encode.
 |---|---|---|---|
 | 00 | NOP | 300 | implemented |
 | 01 | SLEEP and extension prefixes | 300; 300H long/control; H8S register groups; 2600 MAC | implemented through H8S |
-| 02–07 | Control-register transfers and immediate logic | 300; H8S EXR; 2600 MAC registers | implemented through H8S |
+| 02–07 | Control-register transfers and immediate logic | 300; H8S EXR; 2600 MAC registers | implemented through H8S; H8SX byte register/CCR/EXR and CCR-immediate rows |
 | 08–1f | Register arithmetic, shifts, rotates, logic | 300; 300H word/long; H8S shift by two | implemented through H8S; selected H8SX byte, word and long register rows |
 | 20–3f | Byte absolute moves | 300 | implemented, including H8SX |
 | 40–4f | Conditional branches, d:8; H8SX BRA/S | 300; H8SX delay-slot branch | implemented through H8S; H8SX d:8 rows |
 | 50–53 | Multiply/divide | 300; 300H word | implemented through H8S |
 | 54–5f | Returns, calls, jumps, traps and d:16 branches | 300; 300H extensions; H8SX PC-indexed and 32-bit absolute forms | implemented through H8S; selected H8SX branch/jump/call/return rows |
-| 60–67 | Register bit operations and word logic | 300; 300H word logic | implemented through H8S; H8SX word logic register pairs |
+| 60–67 | Register bit operations and word logic | 300; 300H word logic | implemented through H8S; H8SX word logic and register bit rows |
 | 68–6f | Memory moves and absolute bit prefixes | 300; 300H extended addresses; H8S absolute bit operations | implemented through H8S; selected H8SX 68–6f MOV.B/W rows |
-| 70–77 | Immediate bit operations | 300 | implemented |
+| 70–77 | Immediate bit operations | 300 | implemented, including H8SX register rows |
 | 78 | Extended displacement prefix | 300H; H8SX EA expansion | implemented through H8S; selected H8SX ADD.B rows |
 | 79–7a | Immediate word/long operations | 300 word MOV; 300H extensions | implemented through H8S; seven H8SX register rows per width |
 | 7b | EEPMOV | 300 byte; 300H word | implemented through H8S |
@@ -61,6 +61,10 @@ displacement/indexed, and 16/32-bit absolute destinations. The ADD.B rows
 are recognized at 10, 12, or 14 bytes as the destination requires. Other
 H8SX encodings are currently refused. The seven `79xx` word-immediate register
 rows are four bytes; the seven `7axx` long-immediate ER rows are six bytes.
+The `02`–`03` H8SX rows cover direct byte transfers to and from CCR/EXR.
+The `04`–`07` rows cover all eight-bit CCR immediates. Register bit
+operations occupy `60`–`63` and `67`; immediate bit operations to a register
+occupy `70`–`77`, with bit 7 fixed zero for `70`–`73`.
 The rest of the §2.4 opcode map still
 needs implementation.
 
@@ -74,7 +78,8 @@ distinct when semantic decoding is added.
 The `54`/`56` long-return rows use an encoded final ER register and a
 group size of one to four. A group is valid only when that final register
 is at least the group size minus one (H8SX §2.4, manual page 813).
-The word register-pair rows `09`/`0d`/`19`/`1d`/`64`–`66` allocate every
+The three-bit word-immediate rows `0a`/`0f`/`1a`/`1f` allocate low-byte
+values `00`–`7f`. The word register-pair rows `09`/`0d`/`19`/`1d`/`64`–`66` allocate every
 combination of their two four-bit register fields. The long ADD/MOV/CMP/SUB
 rows `0a`/`0f`/`1a`/`1f` use three-bit ER fields and a fixed-zero bit 3.
 The byte register-pair rows `08`/`0c`/`0e`/`14`–`16`/`18`/`1c`/`1e`
@@ -117,7 +122,7 @@ target support table. Counts describe this probe construction only.
 | H8/300H | 7,647 | 56,520 | 1,249 | 120 | 0 | 0 | 0 | 0 |
 | H8S/2000 | 7,295 | 56,872 | 1,249 | 120 | 0 | 0 | 0 | 0 |
 | H8S/2600 | 7,262 | 56,905 | 1,249 | 120 | 0 | 0 | 0 | 0 |
-| H8SX | 14,541 | 49,656 | 1,217 | 122 | 0 | 0 | 0 | 0 |
+| H8SX | 10,125 | 54,072 | 1,217 | 122 | 0 | 0 | 0 | 0 |
 
 Zero counts for eight bytes and longer reflect the fixed suffix, not absent
 instructions. H8SX rejections reflect missing implementation, not undefined

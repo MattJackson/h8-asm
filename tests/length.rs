@@ -21,7 +21,7 @@ fn first_word_zero_suffix_census() {
         [7647, 56520, 1249, 120, 0, 0, 0, 0],
         [7295, 56872, 1249, 120, 0, 0, 0, 0],
         [7262, 56905, 1249, 120, 0, 0, 0, 0],
-        [14541, 49656, 1217, 122, 0, 0, 0, 0],
+        [10125, 54072, 1217, 122, 0, 0, 0, 0],
     ]) {
         let mut counts = [0usize; 8];
         for first in 0..=u16::MAX {
@@ -54,6 +54,43 @@ fn h8sx_byte_immediate_register_space() {
         let bytes = first.to_be_bytes();
         assert_eq!(insn_len(&bytes, Target::H8SX, Mode::Normal), Some(2));
         assert_eq!(insn_len(&bytes[..1], Target::H8SX, Mode::Normal), None);
+    }
+}
+
+#[test]
+fn h8sx_ccr_and_register_bit_operations() {
+    // H8SX §2.4: ORC/XORC/ANDC/LDC.B #xx:8,CCR; register bit
+    // operations BSET/BNOT/BCLR/BTST and BST/BIST.
+    for high in [0x04u8, 0x05, 0x06, 0x07, 0x60, 0x61, 0x62, 0x63, 0x67] {
+        for low in 0..=u8::MAX {
+            assert_eq!(insn_len(&[high, low], Target::H8SX, Mode::Normal), Some(2));
+        }
+    }
+    // H8SX §2.4: immediate bit operations to a byte register.
+    for high in 0x70u8..=0x77 {
+        for low in 0..=u8::MAX {
+            assert_eq!(
+                insn_len(&[high, low], Target::H8SX, Mode::Normal),
+                if high <= 0x73 && low & 0x80 != 0 {
+                    None
+                } else {
+                    Some(2)
+                }
+            );
+        }
+    }
+}
+
+#[test]
+fn h8sx_byte_control_register_transfers() {
+    // H8SX §2.4 LDC.B/STC.B direct CCR and EXR forms.
+    for high in [0x02u8, 0x03] {
+        for low in 0..=u8::MAX {
+            assert_eq!(
+                insn_len(&[high, low], Target::H8SX, Mode::Normal),
+                if low < 0x20 { Some(2) } else { None }
+            );
+        }
     }
 }
 
@@ -182,7 +219,11 @@ fn h8sx_word_and_long_register_pairs() {
         for low in 0..=u8::MAX {
             assert_eq!(
                 insn_len(&[high, low], Target::H8SX, Mode::Normal),
-                if low & 0x88 == 0x80 { Some(2) } else { None },
+                if low & 0x80 == 0 || low & 0x88 == 0x80 {
+                    Some(2)
+                } else {
+                    None
+                },
                 "{high:02x}{low:02x}"
             );
         }
