@@ -17,6 +17,14 @@ pub(super) fn recognize(bytes: &[u8]) -> Option<usize> {
         // nibble. MOV.B @aa:8,Rd and MOV.B Rs,@aa:8 use one nibble for
         // the byte register and one byte for the address (H8SX §2.4).
         first if matches!(first >> 8, 0x08 | 0x0c | 0x20..=0x3f) => Some(2),
+        // Word register pairs use full four-bit R/E register fields:
+        // ADD, MOV, CMP, SUB, OR, XOR, AND (H8SX §2.4 Table 2.2).
+        first if matches!(first >> 8, 0x09 | 0x0d | 0x19 | 0x1d | 0x64..=0x66) => Some(2),
+        // ADD/MOV/CMP/SUB .L ERs,ERd: bit 7 selects the long form,
+        // while bit 3 is fixed zero; the other six bits name ERs/ERd.
+        first if matches!(first >> 8, 0x0a | 0x0f | 0x1a | 0x1f) && first & 0x0088 == 0x0080 => {
+            Some(2)
+        }
         // H8SX §2.4 Bcc: d:8 occupies seven bits and bit 0 is zero.
         // 40xx with bit 0 set is instead BRA/S, which has a delay slot
         // (§2.2.24) but is still one two-byte instruction.
@@ -26,6 +34,33 @@ pub(super) fn recognize(bytes: &[u8]) -> Option<usize> {
         first if first & 0xff0f == 0x5800 => Some(4),
         first if first >> 8 == 0x55 => Some(2),
         0x5c00 => Some(4),
+        // RTS/L and RTE/L save 1–4 consecutive ER registers. The low
+        // three bits encode the last register, so a group of n+1 cannot
+        // end before ERn (H8SX §2.4, page 813).
+        first if matches!(first >> 8, 0x54 | 0x56) && first & 0x00c0 == 0 => {
+            let low = first & 0x003f;
+            let count_minus_one = low >> 4;
+            let last = low & 7;
+            if low & 8 == 0 && last >= count_minus_one {
+                Some(2)
+            } else {
+                None
+            }
+        }
+        // JMP/JSR @aa:24: the first word carries eight address bits and
+        // the following word carries sixteen (H8SX §2.4, page 730).
+        first if matches!(first >> 8, 0x5a | 0x5e) => Some(4),
+        // JMP/JSR @@aa:8: the low byte names a vector-table address.
+        first if matches!(first >> 8, 0x5b | 0x5f) => Some(2),
+        // JMP/JSR @ERn, @aa:32 and @@vec:7; BRA/BSR through an index
+        // register share the 59/5d groups (H8SX §2.4, pages 696/730).
+        first if matches!(first >> 8, 0x59 | 0x5d) => match first & 0x00ff {
+            low if low & 0x80 != 0 => Some(2),             // @@vec:7
+            low if low & 0x8f == 0 => Some(2),             // @ERn
+            low if matches!(low & 0x8f, 5..=7) => Some(2), // PC-indexed branch
+            0x08 => Some(6),                               // @aa:32
+            _ => None,
+        },
         // MOV/ADD/CMP/SUB/OR/XOR/AND immediate to register. The 79xx
         // word forms have a four-bit register field and one 16-bit
         // immediate word. The 7axx long forms have a three-bit ER field

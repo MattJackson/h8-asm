@@ -21,7 +21,7 @@ fn first_word_zero_suffix_census() {
         [7647, 56520, 1249, 120, 0, 0, 0, 0],
         [7295, 56872, 1249, 120, 0, 0, 0, 0],
         [7262, 56905, 1249, 120, 0, 0, 0, 0],
-        [21443, 43908, 129, 56, 0, 0, 0, 0],
+        [17997, 46840, 641, 58, 0, 0, 0, 0],
     ]) {
         let mut counts = [0usize; 8];
         for first in 0..=u16::MAX {
@@ -97,6 +97,93 @@ fn h8sx_word_and_long_immediate_register_space() {
             assert_eq!(
                 insn_len(&[high, low, 0, 0, 0, 0], Target::H8SX, Mode::Normal),
                 None
+            );
+        }
+    }
+}
+
+#[test]
+fn h8sx_jump_call_and_index_branch_patterns() {
+    // H8SX §2.4 Table 2.2, manual pages 696, 730. For 59/5d the low
+    // byte selects register-indirect, PC-indexed, full absolute, or vector.
+    for high in [0x59u8, 0x5d] {
+        for low in 0..=u8::MAX {
+            let bytes = [high, low, 0x12, 0x34, 0x56, 0x78];
+            let expected = if low & 0x80 != 0 || low & 0x8f == 0 || (5..=7).contains(&(low & 0x8f))
+            {
+                Some(2)
+            } else if low == 8 {
+                Some(6)
+            } else {
+                None
+            };
+            assert_eq!(
+                insn_len(&bytes, Target::H8SX, Mode::Maximum),
+                expected,
+                "{high:02x}{low:02x}"
+            );
+            if let Some(len) = expected {
+                for end in 0..len {
+                    assert_eq!(insn_len(&bytes[..end], Target::H8SX, Mode::Maximum), None);
+                }
+            }
+        }
+    }
+    for high in [0x5au8, 0x5e] {
+        for low in 0..=u8::MAX {
+            let bytes = [high, low, 0x12, 0x34];
+            assert_eq!(insn_len(&bytes, Target::H8SX, Mode::Normal), Some(4));
+            assert_eq!(insn_len(&bytes[..3], Target::H8SX, Mode::Normal), None);
+        }
+    }
+    for high in [0x5bu8, 0x5f] {
+        for low in 0..=u8::MAX {
+            assert_eq!(insn_len(&[high, low], Target::H8SX, Mode::Normal), Some(2));
+        }
+    }
+}
+
+#[test]
+fn h8sx_long_return_register_ranges() {
+    // H8SX §2.4 Table 2.2, manual page 813. The low three bits
+    // encode the final ER register in a consecutive group of 1–4.
+    for high in [0x54u8, 0x56] {
+        for count_minus_one in 0..=3u8 {
+            for last in 0..=7u8 {
+                let low = (count_minus_one << 4) | last;
+                assert_eq!(
+                    insn_len(&[high, low], Target::H8SX, Mode::Maximum),
+                    if last >= count_minus_one {
+                        Some(2)
+                    } else {
+                        None
+                    },
+                    "{high:02x}{low:02x}"
+                );
+                assert_eq!(
+                    insn_len(&[high, low | 8], Target::H8SX, Mode::Maximum),
+                    None
+                );
+            }
+        }
+        assert_eq!(insn_len(&[high, 0x70], Target::H8SX, Mode::Normal), Some(2));
+    }
+}
+
+#[test]
+fn h8sx_word_and_long_register_pairs() {
+    // H8SX §2.4 Table 2.2, arithmetic, logic, compare and move rows.
+    for high in [0x09u8, 0x0d, 0x19, 0x1d, 0x64, 0x65, 0x66] {
+        for low in 0..=u8::MAX {
+            assert_eq!(insn_len(&[high, low], Target::H8SX, Mode::Normal), Some(2));
+        }
+    }
+    for high in [0x0au8, 0x0f, 0x1a, 0x1f] {
+        for low in 0..=u8::MAX {
+            assert_eq!(
+                insn_len(&[high, low], Target::H8SX, Mode::Normal),
+                if low & 0x88 == 0x80 { Some(2) } else { None },
+                "{high:02x}{low:02x}"
             );
         }
     }
