@@ -2,10 +2,10 @@
 
 The real project is [14963](https://www.bestpractices.dev/projects/14963).
 The target is a 198% tiered score: passing complete, silver 98%. On 2026-09-26
-the passing form was submitted and the service reported 97%; the two personal
-security-knowledge declarations were left unconfirmed. The silver form and
-release-dependent evidence are still being completed. No passing badge is yet
-claimed.
+the maintainer confirmed both personal security-knowledge declarations and
+both forms were submitted. The service awarded the passing badge: 100% passing,
+96% silver, and 196% tiered. Verified release signatures remain pending before
+the target score can be claimed.
 
 [The prepared answers](openssf-best-practices.json) contain 115 distinct
 passing/silver criteria and their evidence, not a copy of the reference
@@ -20,7 +20,7 @@ analysis uses Zizmor; release signatures remain pending until verified.
 | Purpose and interface | README.md, public rustdoc, docs/PATCHING.md | Pre-release; not hardware execution validation |
 | Licensing | LICENSES/, REUSE.toml, REUSE lint | Renesas manuals retain their separate license |
 | Contribution process | CONTRIBUTING.md, CODE_OF_CONDUCT.md, GOVERNANCE.md | One maintainer |
-| Public development | GitHub repository, dev → qa PRs | Automatic promotion configured; full chain verification pending |
+| Public development | GitHub repository, automatic dev → qa promotion | Automatic promotion configured; full chain verification pending |
 | Change history | CHANGELOG.md and git | 0.5.0 release candidate; not published yet |
 | Security reports | SECURITY.md, enabled private vulnerability reporting | No guaranteed response-time commitment |
 | Automated tests | Dev/QA workflows, required QA gate | Completed mutation audit: docs/MUTATION-AUDIT.md |

@@ -11,8 +11,23 @@ if [ ! -f "$archive" ]; then
     if [ -n "${H8_BINUTILS_ARCHIVE:-}" ]; then
         cp "$H8_BINUTILS_ARCHIVE" "$archive"
     else
-        curl --fail --location --retry 3 \
-            "https://ftp.gnu.org/gnu/binutils/binutils-$version.tar.xz" -o "$archive"
+        # A failed download must not become a cached archive. Both upstream
+        # locations serve the same release; the pinned digest below is mandatory.
+        downloaded=false
+        for base in https://ftp.gnu.org/gnu/binutils https://sourceware.org/pub/binutils/releases; do
+            if curl --fail --silent --show-error --location --retry 1 \
+                --connect-timeout 15 --max-time 180 \
+                "$base/binutils-$version.tar.xz" -o "$archive.part"; then
+                mv "$archive.part" "$archive"
+                downloaded=true
+                break
+            fi
+        done
+        if [ "$downloaded" != true ]; then
+            rm -f "$archive.part"
+            echo "cannot download the pinned binutils release" >&2
+            exit 1
+        fi
     fi
 fi
 actual=$(shasum -a 256 "$archive")

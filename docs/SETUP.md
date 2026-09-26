@@ -31,7 +31,8 @@ QA, then advances the exact successful qa commit to main and dispatches release.
 It validates repository/workflow/event/ref identity, rejects non-fast-forwards,
 and never checks out code in its privileged job. Explicit dispatch is necessary
 because a GITHUB_TOKEN ref update does not itself trigger another workflow.
-The first complete automatic chain still needs live verification.
+The dev → qa promotion succeeded in run 36265291013. The qa → main
+promotion and first release still need live verification.
 
 The REUSE badge service can scan the public repository. Local REUSE lint passes;
 the badge's refresh schedule is external. Dev, QA, Scorecard and REUSE badges
@@ -104,19 +105,20 @@ Uploads now use the GitHub repository secret CODECOV_TOKEN, as requested by
 the maintainer. Coverage OIDC is disabled. The release workflow forwards only
 this named secret to its reusable QA workflow. The source gate runs first and
 an attempted upload must succeed. The initial OIDC success above records the
-activation history; subsequent token uploads are verified separately.
+activation history. The token-authenticated upload succeeded in coverage job
+108468708345 of QA run 36265297104.
 
 ## OpenSSF Best Practices
 
 The maintainer registered [project 14963](https://www.bestpractices.dev/projects/14963)
 and authorized direct form submission. The target is 198% tiered (passing
 100%, silver 98%), matching the reference project. Use the actual repository
-URL and the evidence in openssf-best-practices.md. That document is an evidence checklist, not a
-completed 67-answer questionnaire or a claim of a passing badge. Personal
-self-assessments and unmet criteria must be answered honestly.
-
-Record the verified completion state after submission. Registration alone is
-not a passing badge. This is
+URL and the evidence in openssf-best-practices.md. After the maintainer
+confirmed both personal security-knowledge declarations on 2026-09-26, both
+forms were submitted and the service awarded the passing badge: 100% passing,
+96% silver, 196% tiered. Verified release signatures are still needed for the
+198% target. Access continuity remains Unmet because no alternate
+administrator or credential succession arrangement is established. This is
 separate from the already completed Scorecard run.
 
 ## Remaining authenticated access

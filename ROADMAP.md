@@ -10,13 +10,15 @@ reviewed reverse census are documented in docs/CONFORMANCE.md.
 Before the first release (now 0.5.0, as requested by the maintainer):
 
 - Run the final release candidate through hosted QA, including the new vector
-  alignment regression and mutation assertions. The Codecov OIDC upload has
-  succeeded and its first report is processed.
+  alignment regression and mutation assertions. The coverage upload using the
+  repository secret `CODECOV_TOKEN` has succeeded; Codecov OIDC is disabled.
 - Promote dev → qa → main with required checks and release protection; publish
   the verified crate and signed/attested release artifacts.
-- Finish Trusted Publishing and OpenSSF account setup; record actual service
-  state in docs/SETUP.md. A publishing token is saved locally and in the release
-  environment, so unattended token publication is configured as a fallback.
+- Verify the signed release and update OpenSSF from its confirmed 196% tiered
+  score to the 198% target. Passing is already 100%; silver is 96%.
+- Record final service state in docs/SETUP.md. A publishing token is saved
+  locally and in the release environment for unattended publication. Trusted
+  Publishing configuration remains optional pending account authorization.
 
 The full EC2 mutation audit and all survivor rechecks are complete. The combined
 result is 1,808 mutations: 1,698 caught, 67 surviving, five timeouts and 38
