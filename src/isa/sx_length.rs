@@ -75,6 +75,10 @@ pub(super) fn recognize(bytes: &[u8]) -> Option<usize> {
         // (§2.2.24) but is still one two-byte instruction.
         first if first >> 8 == 0x40 => Some(2),
         first if (0x41..=0x4f).contains(&(first >> 8)) && first & 1 == 0 => Some(2),
+        // Unsigned byte multiply/divide use two full register nibbles.
+        // The word forms name an ER destination in only three bits.
+        first if matches!(first >> 8, 0x50 | 0x51) => Some(2),
+        first if matches!(first >> 8, 0x52 | 0x53) && first & 8 == 0 => Some(2),
         // Bcc d:16, BSR d:8, and BSR d:16 (H8SX §2.4).
         first if first & 0xff0f == 0x5800 => Some(4),
         first if first >> 8 == 0x55 => Some(2),

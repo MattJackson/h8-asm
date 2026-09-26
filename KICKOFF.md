@@ -213,8 +213,9 @@ phase 2 onward remain outstanding.
 Further checkpoint (2026-09-25): H8SX recognition now also covers direct
 CCR/EXR byte transfers, CCR immediate operations, register bit operations,
 immediate bit operations to byte registers, and three-bit word immediate
-ADD/MOV/SUB/CMP. The zero-suffix H8SX census is now 10,125 rejected,
-54,072 two-byte, 1,217 four-byte, and 122 six-byte first words. Built GNU
+ADD/MOV/SUB/CMP, plus unsigned byte/word multiply and divide register rows.
+The zero-suffix H8SX census is now 9,357 rejected, 54,840 two-byte,
+1,217 four-byte, and 122 six-byte first words. Built GNU
 binutils 2.47 locally under `/tmp/h8-binutils/build` for `h8300-elf`;
 `gas/as-new` and `binutils/objdump` assembled/disassembled representative
 H8SX encodings from these groups, including CCR/EXR, bit, and word-immediate

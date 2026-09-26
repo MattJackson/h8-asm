@@ -21,7 +21,7 @@ fn first_word_zero_suffix_census() {
         [7647, 56520, 1249, 120, 0, 0, 0, 0],
         [7295, 56872, 1249, 120, 0, 0, 0, 0],
         [7262, 56905, 1249, 120, 0, 0, 0, 0],
-        [10125, 54072, 1217, 122, 0, 0, 0, 0],
+        [9357, 54840, 1217, 122, 0, 0, 0, 0],
     ]) {
         let mut counts = [0usize; 8];
         for first in 0..=u16::MAX {
@@ -89,6 +89,23 @@ fn h8sx_byte_control_register_transfers() {
             assert_eq!(
                 insn_len(&[high, low], Target::H8SX, Mode::Normal),
                 if low < 0x20 { Some(2) } else { None }
+            );
+        }
+    }
+}
+
+#[test]
+fn h8sx_unsigned_multiply_divide_register_space() {
+    // H8SX §2.4 MULXU/DIVXU .B and .W register forms.
+    for high in 0x50u8..=0x53 {
+        for low in 0..=u8::MAX {
+            assert_eq!(
+                insn_len(&[high, low], Target::H8SX, Mode::Normal),
+                if high <= 0x51 || low & 8 == 0 {
+                    Some(2)
+                } else {
+                    None
+                }
             );
         }
     }
