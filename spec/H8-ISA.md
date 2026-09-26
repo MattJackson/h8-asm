@@ -39,7 +39,7 @@ The ranges below refer to the high byte of the first word. Length recognition
 lives in `src/isa/length.rs` and `src/isa/sx_length.rs`. Selected H8/300
 operation-only, byte-register, and d:8 branch rows have semantic decode;
 H8SX has selected control-flow and CMP.B semantic decode. Other rows remain
-length-only, and no row has encode support.
+length-only. The H8/300 decoded subset has encode support; other rows do not.
 “Later” names additions within a row, not a claim that every pattern is valid.
 
 | High byte | Family | Introduced / later additions | Length recognition |
@@ -73,7 +73,9 @@ H8SX encodings are currently refused. The seven `79xx` word-immediate register
 rows are four bytes. The seven `7axx` long-immediate ER rows are four bytes
 with a 16-bit immediate (bit 3 set), or six bytes with a 32-bit immediate
 (bit 3 clear).
-The `02`–`03` H8SX rows cover direct byte transfers to and from CCR/EXR.
+The `02`–`03` H8SX rows cover direct byte transfers to and from CCR/EXR,
+selected MAC and 32-bit control-register transfers, and counted-shift
+prefixes whose second word fixes operation, size and destination.
 The `04`–`07` rows cover all eight-bit CCR immediates. Register bit
 operations occupy `60`–`63` and `67`; immediate bit operations to a register
 occupy `70`–`77`, with bit 7 fixed zero for `70`–`73`.
@@ -114,6 +116,9 @@ all 256 first-word variants in each of these six rows are allocated.
 The `6a`/`6b` absolute MOV.B/W rows use low-byte high nibbles `0`/`8`
 for 16-bit addresses (four bytes) and `2`/`a` for 32-bit addresses (six
 bytes). Other `6a`/`6b` high nibbles require separate review.
+The `6a18`/`6a38` absolute-memory byte-immediate rows recognize selected
+ADD/SUB/CMP/OR/XOR/AND second opcode bytes after 16/32-bit address
+extensions, for lengths six/eight bytes.
 For MOV.L, the H8SX `0100` prefix followed by `69`/`6d` is four bytes,
 followed by `6f` is six bytes, and followed by selected `6b` absolute
 address rows is six or eight bytes (§2.4, manual page 752). Those second
@@ -146,7 +151,7 @@ target support table. Counts describe this probe construction only.
 | H8/300H | 9,823 | 54,344 | 1,249 | 120 | 0 | 0 | 0 | 0 |
 | H8S/2000 | 9,471 | 54,696 | 1,249 | 120 | 0 | 0 | 0 | 0 |
 | H8S/2600 | 9,438 | 54,729 | 1,249 | 120 | 0 | 0 | 0 | 0 |
-| H8SX | 8,145 | 55,996 | 1,273 | 122 | 0 | 0 | 0 | 0 |
+| H8SX | 8,081 | 56,060 | 1,273 | 122 | 0 | 0 | 0 | 0 |
 
 Zero counts for eight bytes and longer reflect the fixed suffix, not absent
 instructions. H8SX rejections reflect missing implementation, not undefined
@@ -168,8 +173,8 @@ Those counts cannot establish that the extra patterns belong to each target.
 binutils. It assembles all 65,536 H8SX first words with fourteen zero padding
 bytes per candidate, disassembles with `objdump -d -z -w`, and compares the
 length at each 16-byte slot with `isa::insn_len` on the same zero suffix.
-With binutils 2.47, 57,391 slots agree on a recognized length, 7,357 are
-rejected by both, and 788 are decoded only by binutils. No slot is accepted
+With binutils 2.47, 57,455 slots agree on a recognized length, 7,357 are
+rejected by both, and 724 are decoded only by binutils. No slot is accepted
 only by this crate, and no accepted slot has a length disagreement. This is
 an independent boundary check for one suffix, not full conformance.
 
@@ -179,3 +184,13 @@ TRAPA row fixes bit 6 to zero. It also accepts `0b 08` as `ADDS #1,ER0`
 despite the fixed-zero bit before the three-bit ER field. Those patterns
 remain rejected here. The other binutils-only slots need manual review;
 their count is not a missing-instruction count.
+
+`tests/binutils_assemble_back.rs` provides a stronger check for the semantic
+H8/300 subset: it enumerates all 2,692 two-byte words the decoder accepts,
+verifies the crate's encoder produces each original word, renders Renesas
+assembly, translates only the Renesas `$` location counter to GNU gas's `.`,
+assembles, links to resolve PC-relative relocations, and compares the final
+`.text` bytes with the originals. All 2,692 matched using binutils 2.47.
+The linker step matters: comparing unresolved object bytes would give a
+false result for branches. This does not cover the other semantic or
+length-only families.

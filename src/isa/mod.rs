@@ -5,6 +5,8 @@
 //! opcode tables are implemented.
 
 pub mod decode;
+pub mod disasm;
+pub mod encode;
 mod length;
 mod sx_length;
 pub mod sx_semantic;

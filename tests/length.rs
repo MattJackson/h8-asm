@@ -21,7 +21,7 @@ fn first_word_zero_suffix_census() {
         [9823, 54344, 1249, 120, 0, 0, 0, 0],
         [9471, 54696, 1249, 120, 0, 0, 0, 0],
         [9438, 54729, 1249, 120, 0, 0, 0, 0],
-        [8145, 55996, 1273, 122, 0, 0, 0, 0],
+        [8081, 56060, 1273, 122, 0, 0, 0, 0],
     ]) {
         let mut counts = [0usize; 8];
         for first in 0..=u16::MAX {
@@ -105,7 +105,11 @@ fn h8sx_byte_control_register_transfers() {
         for low in 0..=u8::MAX {
             assert_eq!(
                 insn_len(&[high, low], Target::H8SX, Mode::Normal),
-                if low < 0x20 { Some(2) } else { None }
+                if low < 0x20 || matches!(low & 0xf8, 0x20 | 0x30 | 0x60 | 0x70) {
+                    Some(2)
+                } else {
+                    None
+                }
             );
         }
     }

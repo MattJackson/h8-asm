@@ -10,6 +10,16 @@ use crate::{Mode, Target};
 pub struct ByteRegister(u8);
 
 impl ByteRegister {
+    /// Constructs a byte register from its four-bit instruction-code field.
+    /// Returns `None` for values outside 0–15.
+    pub fn from_code(code: u8) -> Option<Self> {
+        if code < 16 {
+            Some(Self(code))
+        } else {
+            None
+        }
+    }
+
     /// The four-bit register number used in the instruction code.
     pub fn code(self) -> u8 {
         self.0

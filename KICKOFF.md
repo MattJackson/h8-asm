@@ -258,6 +258,19 @@ under the zero-suffix probe. The full tests, Clippy,
 and 100% line/region/function coverage gate pass. Semantic decode remains
 minimal and no encoder, relocator, or detour installer exists yet.
 
+Next integration (2026-09-26): H8/300's semantic subset now has an encoder
+and Renesas-style disassembler. All 2,692 decodable two-byte words round-trip
+through the encoder, and an opt-in GNU binutils assemble/link/objcopy test
+reproduces all 2,692 exact words from rendered assembly. The linker resolves
+branch relocations; Renesas `$` is translated to GNU gas `.` in that test.
+H8SX length recognition added 02/03 MAC/control/counted-shift forms and
+6a18/6a38 absolute byte-immediate arithmetic/logic forms. Its zero-suffix
+census is now 8,081 rejected, 56,060 two-byte, 1,273 four-byte, and 122
+six-byte first words. The binutils first-word probe now reports 57,455
+matching recognized lengths, 7,357 rejected by both, 724 binutils-only,
+and no crate-only or accepted-length disagreements. The encoder and
+disassembler remain limited to the small H8/300 semantic subset.
+
 Planning estimate, made at this checkpoint: 1–3 weeks of focused work for
 reliable length recognition across all five targets, and 8–16 weeks for the
 full six-phase scope. These are rough effort estimates, not release dates.

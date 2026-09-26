@@ -1,25 +1,33 @@
 # h8-asm
 
-A **Renesas H8 family decoder, instruction builder and detour installer** for
-Rust: H8/300, H8/300H, H8S/2000, H8S/2600 and H8SX.
+An in-progress **Renesas H8 family decoder, instruction builder and detour
+installer** for Rust: H8/300, H8/300H, H8S/2000, H8S/2600 and H8SX.
 
 It is the sibling of [thumb-asm](https://github.com/MattJackson/thumb-asm) and
 follows the same contract. It operates on a flat `&[u8]` image (a firmware dump
 or a flash region) where file offset and load address are the same number. It
-decodes and re-encodes instructions against Renesas' own manuals, and refuses
-rather than guesses when a request cannot be done faithfully.
+uses Renesas' own manuals as the encoding authority and refuses unsupported
+requests rather than guessing.
 
 Pure safe Rust: `#![forbid(unsafe_code)]`, `#![deny(missing_docs)]`, no
 dependencies beyond `std`.
 
 ## Status
 
-**Pre-alpha.** `isa::insn_len` recognizes instruction lengths for H8/300,
-H8/300H and H8S, plus selected H8SX branches, immediate operations, and ADD.B forms. Semantic decoding, encoding and
-patching are not implemented. The length tests and their limits are recorded in
+**Pre-alpha.** `isa::insn_len` recognizes instruction lengths through H8S and
+selected H8SX families. A typed H8/300 decoder, disassembler and encoder
+cover 2,692 two-byte encodings; a separate H8SX decoder covers selected
+control flow and byte comparisons. Relocation and detour installation are
+not implemented. The coverage map and limits are in
 [`spec/H8-ISA.md`](spec/H8-ISA.md). The build-out plan is in
 [`KICKOFF.md`](KICKOFF.md), and the manuals every encoding will be checked
 against are in [`spec/`](spec/README.md).
+
+The H8/300 semantic subset has an independent assemble-back check: its 2,692
+decoded words render as Renesas assembly, are assembled and linked with GNU
+binutils 2.47, and reproduce the original bytes exactly. Opt-in tests also
+compare all 65,536 first words per target against binutils with a zero-filled
+suffix. Those probes are narrower than full ISA conformance.
 
 ## Say what you are patching
 

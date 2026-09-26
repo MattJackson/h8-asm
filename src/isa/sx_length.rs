@@ -16,6 +16,25 @@ pub(super) fn recognize(bytes: &[u8]) -> Option<usize> {
         // STC.B CCR/EXR,Rd and LDC.B Rs,CCR/EXR. Bit 4 selects the
         // control register; the low nibble selects a byte register.
         first if matches!(first >> 8, 0x02 | 0x03) && first & 0x00e0 == 0 => Some(2),
+        // STMAC/STC.L and LDMAC/LDC.L use three-bit ER fields; bit 3
+        // remains zero. The high byte selects store (02) or load (03).
+        first
+            if matches!(first >> 8, 0x02 | 0x03)
+                && matches!(first & 0x00f8, 0x20 | 0x30 | 0x60 | 0x70) =>
+        {
+            Some(2)
+        }
+        // H8SX SHLL/SHLR #xx:5 register forms. The count occupies
+        // the low five bits of 038x/039x and must be 1..31; the second
+        // word selects B/W/L size and destination register (§2.4).
+        first if first & 0xffe0 == 0x0380 && first & 0x001f != 0 => {
+            let second = word(bytes, 2)?;
+            match second {
+                word if matches!(word >> 8, 0x10 | 0x11) && word & 0x00f0 < 0x0020 => Some(4),
+                word if matches!(word >> 8, 0x10 | 0x11) && word & 0x00f8 == 0x0030 => Some(4),
+                _ => None,
+            }
+        }
         // ORC, XORC, ANDC and LDC.B #xx:8,CCR. The low byte is the
         // immediate, so all 256 variants of each opcode are allocated.
         first if matches!(first >> 8, 0x04..=0x07) => Some(2),
@@ -152,6 +171,17 @@ pub(super) fn recognize(bytes: &[u8]) -> Option<usize> {
         first if matches!(first >> 8, 0x6a | 0x6b) => match first & 0x00f0 {
             0x00 | 0x80 => Some(4),
             0x20 | 0xa0 => Some(6),
+            // Six byte-immediate arithmetic/logical operations on an
+            // absolute memory byte. The EA extension precedes the
+            // 8x/ax/cx/dx/ex opcode-immediate word (§2.4).
+            0x10 | 0x30 if matches!(first, 0x6a18 | 0x6a38) => {
+                let opcode = word(bytes, if first == 0x6a18 { 4 } else { 6 })?;
+                if matches!(opcode >> 8, 0x80 | 0xa0 | 0xa1 | 0xc0 | 0xd0 | 0xe0) {
+                    Some(if first == 0x6a18 { 6 } else { 8 })
+                } else {
+                    None
+                }
+            }
             _ => None,
         },
         // H8SX §2.4 Bcc: d:8 occupies seven bits and bit 0 is zero.

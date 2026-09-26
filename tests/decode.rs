@@ -8,6 +8,12 @@ use h8_asm::{
 
 #[test]
 fn fixed_and_register_encodings() {
+    for code in 0..=u8::MAX {
+        assert_eq!(
+            h8_asm::isa::decode::ByteRegister::from_code(code).map(|register| register.code()),
+            if code < 16 { Some(code) } else { None }
+        );
+    }
     for (bytes, expected) in [
         ([0x00, 0x00], Instruction::Nop),
         ([0x01, 0x80], Instruction::Sleep),
