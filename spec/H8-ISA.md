@@ -17,10 +17,14 @@ The first word does not always determine length or validity. For example,
 sometimes following an address extension. A census with a fixed suffix cannot
 classify every prefix as allocated or undefined.
 
-The H8SX §2.4 `ADD.B @(d:32,ERs),@(d:32,ERd)` row is 14 bytes: three
-two-byte opcode words and two four-byte displacements. This establishes a
-**14-byte lower bound** for H8SX's maximum instruction length. A complete
-table audit is still needed before stating the exact maximum.
+**The maximum H8SX instruction length is 14 bytes.** H8SX §2.4 Table 2.2
+provides at most three 16-bit opcode words and at most two 32-bit operand
+extensions, giving 6 + 8 = 14 bytes. The `ADD.B
+@(d:32,ERs),@(d:32,ERd)` row attains the bound: its three opcode words and
+two four-byte displacements total 14 bytes. The full table's mnemonic column
+was checked for 32-bit fields: 589 rows contain two `:32` fields, and none
+contains three. The earlier cores' instruction-code tables are shorter; H8S
+§2.4 Table 2.2 ends at a tenth byte. `isa::MAX_INSN_LEN` pins the family bound.
 
 ## 2. Initial opcode map
 
@@ -55,8 +59,8 @@ byte absolute moves `20`–`3f`; and the §2.4 ADD.B
 `@(d:32,ERs),<destination>` rows for register-indirect, 16/32-bit
 displacement/indexed, and 16/32-bit absolute destinations. The ADD.B rows
 are recognized at 10, 12, or 14 bytes as the destination requires. Other
-H8SX encodings are currently refused. The full §2.4 table review and exact
-maximum-length derivation remain open.
+H8SX encodings are currently refused. The rest of the §2.4 opcode map still
+needs implementation.
 
 ## 3. Manual boundary witnesses
 

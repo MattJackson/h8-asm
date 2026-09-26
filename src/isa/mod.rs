@@ -9,6 +9,14 @@ mod sx_length;
 
 use crate::{Mode, Target};
 
+/// Maximum length, in bytes, of an H8 instruction across the supported cores.
+///
+/// H8SX REJ09B0102 §2.4 Table 2.2 has at most three 16-bit opcode words
+/// and two 32-bit operand extensions (6 + 8 = 14 bytes). Its ADD.B
+/// `@(d:32,ERs),@(d:32,ERd)` row attains this bound. Earlier cores have
+/// shorter instruction-code tables (H8S REJ09B0139 §2.4 Table 2.2).
+pub const MAX_INSN_LEN: usize = 14;
+
 /// Returns the length of the first complete, recognized instruction in `bytes`.
 ///
 /// Returns `None` for a truncated instruction, an undefined encoding, an

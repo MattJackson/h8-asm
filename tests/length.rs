@@ -1,4 +1,7 @@
-use h8_asm::{isa::insn_len, Mode, Target};
+use h8_asm::{
+    isa::{insn_len, MAX_INSN_LEN},
+    Mode, Target,
+};
 
 const TARGETS: [Target; 5] = [
     Target::H8_300,
@@ -137,6 +140,7 @@ fn h8sx_branch_lengths_and_reserved_bits() {
 // @(d:32,ERs),@(d:32,ERd), manual page 640 / PDF page 658.
 #[test]
 fn h8sx_two_32_bit_displacements() {
+    assert_eq!(MAX_INSN_LEN, 14);
     for source in 0..8 {
         for destination in 0..8 {
             let bytes = [
@@ -168,6 +172,9 @@ fn h8sx_two_32_bit_displacements() {
                     Some(14),
                     "source {source}, destination {destination}, {mode:?}"
                 );
+                let mut followed = bytes.to_vec();
+                followed.extend_from_slice(&[0xff, 0xff]);
+                assert_eq!(insn_len(&followed, Target::H8SX, mode), Some(14));
             }
         }
     }

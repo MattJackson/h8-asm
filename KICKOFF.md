@@ -184,9 +184,10 @@ Phase 1 remains in progress. `src/isa/length.rs` recognizes lengths through
 H8S; `src/isa/sx_length.rs` recognizes H8SX NOP/SLEEP/RTS/RTE, selected
 direct branches (including BRA/S), all byte-immediate register and byte
 absolute-move rows, and the ADD.B 32-bit source displacement
-family with several destination addressing modes. The 14-byte ADD.B form
-establishes a lower bound on H8SX's maximum instruction length, but the exact
-maximum is still unverified. `tests/length.rs` pins zero-suffix first-word censuses for
+family with several destination addressing modes. The full §2.4 table establishes
+14 bytes as the H8SX maximum: at most three opcode words and two 32-bit
+operand extensions, attained by the ADD.B two-displacement row.
+`tests/length.rs` pins zero-suffix first-word censuses for
 all five targets and checks modes, truncation, and selected manual prefix,
 extension and register boundaries. `spec/H8-ISA.md` records the initial map
 and the limits of those counts. No semantic decoder or encoder exists yet.
@@ -198,8 +199,8 @@ retain the whitespace of the source PDFs; `git diff --check` reports that
 whitespace on the initial commit, so use it on new source/docs changes rather
 than treating the imported dumps as hand-edited text.
 
-Next: finish the H8SX §1.7–1.8 and full §2.4 review, establish its maximum
-instruction length, then implement its length recognition and richer prefix
+Next: finish the H8SX §1.7–1.8 and full §2.4 opcode-map review, then implement
+the remaining length recognition and richer prefix
 censuses. Extracting PDF pages 653–660 covers only the start of §2.4; the full
 table runs through roughly PDF page 907. Do not treat the zero-suffix rejection
 counts as undefined-instruction counts. Repository creation/publishing and
