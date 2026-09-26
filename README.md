@@ -2,6 +2,7 @@
 
 [![Development checks](https://github.com/MattJackson/h8-asm/actions/workflows/dev.yml/badge.svg?branch=dev)](https://github.com/MattJackson/h8-asm/actions/workflows/dev.yml)
 [![QA](https://github.com/MattJackson/h8-asm/actions/workflows/qa.yml/badge.svg?branch=qa)](https://github.com/MattJackson/h8-asm/actions/workflows/qa.yml)
+[![Codecov](https://codecov.io/gh/MattJackson/h8-asm/graph/badge.svg?branch=dev)](https://app.codecov.io/gh/MattJackson/h8-asm)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/MattJackson/h8-asm/badge)](https://securityscorecards.dev/viewer/?uri=github.com/MattJackson/h8-asm)
 [![REUSE](https://api.reuse.software/badge/github.com/MattJackson/h8-asm)](https://api.reuse.software/info/github.com/MattJackson/h8-asm)
 

@@ -67,20 +67,17 @@ dispatch runs verification only. No successful publication is claimed yet.
 
 ## Codecov
 
-The repository is visible through Codecov's public API but was inactive before
-its first upload. QA now attempts authenticated uploads using the supported
-[Codecov OIDC flow](https://github.com/codecov/codecov-action#using-oidc), with
-id-token permission limited to the coverage job and its reusable-workflow
-caller. An explicit CODECOV_TOKEN secret remains an optional alternative.
-The first upload still needs verification; do not call the service active
-until it succeeds.
+Codecov is active. The first OIDC upload succeeded in QA run 36263344962
+on 2026-09-26 for commit 0e0cb921977a14bae0117a65c65d5716b56b5933.
+Its processed report shows 100% coverage (2,801/2,801 Codecov-counted lines);
+these service counts are distinct from LLVM's source line/region/function
+counts. The public API confirms active=true and activated=true.
 
-If Codecov requires account activation, sign in at
-https://app.codecov.io/gh/MattJackson/h8-asm and enable the GitHub app for this
-repository. A service authentication failure must be reported and corrected;
-it is not silently treated as a passed upload. Add the coverage badge only
-after a successful report is visible. The 100% source gate remains mandatory
-before upload.
+Uploads use the supported [Codecov OIDC flow](https://github.com/codecov/codecov-action#using-oidc),
+with id-token permission limited to the coverage job and its reusable-workflow
+caller. CODECOV_TOKEN remains an optional alternative. The source coverage gate
+runs first; an attempted upload must succeed. The README badge links to the
+verified service and currently displays dev while main is being established.
 
 ## OpenSSF Best Practices
 

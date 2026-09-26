@@ -10,7 +10,8 @@ reviewed reverse census are documented in docs/CONFORMANCE.md.
 Before the first release (now 0.5.0, as requested by the maintainer):
 
 - Run the final release candidate through hosted QA, including the new vector
-  alignment regression, mutation assertions, and authenticated Codecov upload.
+  alignment regression and mutation assertions. The Codecov OIDC upload has
+  succeeded and its first report is processed.
 - Promote dev → qa → main with required checks and release protection; publish
   the verified crate and signed/attested release artifacts.
 - Finish Trusted Publishing and OpenSSF account setup; record actual service

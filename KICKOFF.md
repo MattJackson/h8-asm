@@ -580,3 +580,8 @@ No token value belongs in this repository or its logs. No publication is yet
 claimed. Codecov's first OIDC upload and OpenSSF registration remain pending.
 ROADMAP.md is the current remaining-work list; older checkpoints above are
 historical evidence, not current state. The six-phase goal remains active.
+
+Codecov follow-up: OIDC upload succeeded in run 36263344962; the public API
+confirms activation and a complete 100% report for 0e0cb92. README badge added.
+The publishing token lacks Trusted Publishing configuration permission (403),
+so the protected release environment token path remains selected.
