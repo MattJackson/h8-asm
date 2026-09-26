@@ -183,7 +183,8 @@ LLVM→binutils as you go, rather than copying and "fixing later".
 Phase 1 remains in progress. `src/isa/length.rs` recognizes lengths through
 H8S; `src/isa/sx_length.rs` recognizes H8SX NOP/SLEEP/RTS/RTE, selected
 direct branches (including BRA/S), all byte-immediate register and byte
-absolute-move rows, and the ADD.B 32-bit source displacement
+absolute-move rows, the seven word- and seven long-immediate register rows,
+and the ADD.B 32-bit source displacement
 family with several destination addressing modes. The full §2.4 table establishes
 14 bytes as the H8SX maximum: at most three opcode words and two 32-bit
 operand extensions, attained by the ADD.B two-displacement row.

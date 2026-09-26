@@ -46,7 +46,7 @@ lives in `src/isa/length.rs`. Every row still lacks semantic decode/encode.
 | 68–6f | Memory moves and absolute bit prefixes | 300; 300H extended addresses; H8S absolute bit operations | implemented through H8S |
 | 70–77 | Immediate bit operations | 300 | implemented |
 | 78 | Extended displacement prefix | 300H; H8SX EA expansion | implemented through H8S; selected H8SX ADD.B rows |
-| 79–7a | Immediate word/long operations | 300 word MOV; 300H extensions | implemented through H8S |
+| 79–7a | Immediate word/long operations | 300 word MOV; 300H extensions | implemented through H8S; seven H8SX register rows per width |
 | 7b | EEPMOV | 300 byte; 300H word | implemented through H8S |
 | 7c–7f | Memory bit operations | 300 | implemented through H8S |
 | 80–ff | Byte immediate operations | 300 | implemented, including H8SX |
@@ -59,7 +59,9 @@ byte absolute moves `20`–`3f`; and the §2.4 ADD.B
 `@(d:32,ERs),<destination>` rows for register-indirect, 16/32-bit
 displacement/indexed, and 16/32-bit absolute destinations. The ADD.B rows
 are recognized at 10, 12, or 14 bytes as the destination requires. Other
-H8SX encodings are currently refused. The rest of the §2.4 opcode map still
+H8SX encodings are currently refused. The seven `79xx` word-immediate register
+rows are four bytes; the seven `7axx` long-immediate ER rows are six bytes.
+The rest of the §2.4 opcode map still
 needs implementation.
 
 ## 3. Manual boundary witnesses
@@ -89,7 +91,7 @@ target support table. Counts describe this probe construction only.
 | H8/300H | 7,647 | 56,520 | 1,249 | 120 | 0 | 0 | 0 | 0 |
 | H8S/2000 | 7,295 | 56,872 | 1,249 | 120 | 0 | 0 | 0 | 0 |
 | H8S/2600 | 7,262 | 56,905 | 1,249 | 120 | 0 | 0 | 0 | 0 |
-| H8SX | 21,611 | 43,908 | 17 | 0 | 0 | 0 | 0 | 0 |
+| H8SX | 21,443 | 43,908 | 129 | 56 | 0 | 0 | 0 | 0 |
 
 Zero counts for eight bytes and longer reflect the fixed suffix, not absent
 instructions. H8SX rejections reflect missing implementation, not undefined

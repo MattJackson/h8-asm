@@ -21,7 +21,7 @@ fn first_word_zero_suffix_census() {
         [7647, 56520, 1249, 120, 0, 0, 0, 0],
         [7295, 56872, 1249, 120, 0, 0, 0, 0],
         [7262, 56905, 1249, 120, 0, 0, 0, 0],
-        [21611, 43908, 17, 0, 0, 0, 0, 0],
+        [21443, 43908, 129, 56, 0, 0, 0, 0],
     ]) {
         let mut counts = [0usize; 8];
         for first in 0..=u16::MAX {
@@ -65,6 +65,39 @@ fn h8sx_byte_register_and_absolute_space() {
         for low in 0..=u8::MAX {
             let bytes = [high, low];
             assert_eq!(insn_len(&bytes, Target::H8SX, Mode::Normal), Some(2));
+        }
+    }
+}
+
+#[test]
+fn h8sx_word_and_long_immediate_register_space() {
+    // H8SX §2.4, seven operations each for 79xx (.W) and 7axx (.L).
+    for operation in 0..=6u8 {
+        for register in 0..=15u8 {
+            let word = [0x79, (operation << 4) | register, 0x12, 0x34];
+            for end in 0..word.len() {
+                assert_eq!(insn_len(&word[..end], Target::H8SX, Mode::Maximum), None);
+            }
+            assert_eq!(insn_len(&word, Target::H8SX, Mode::Maximum), Some(4));
+
+            let long = [0x7a, (operation << 4) | register, 0x12, 0x34, 0x56, 0x78];
+            assert_eq!(
+                insn_len(&long, Target::H8SX, Mode::Maximum),
+                if register < 8 { Some(6) } else { None }
+            );
+            if register < 8 {
+                for end in 0..long.len() {
+                    assert_eq!(insn_len(&long[..end], Target::H8SX, Mode::Maximum), None);
+                }
+            }
+        }
+    }
+    for high in [0x79u8, 0x7a] {
+        for low in 0x70..=0xff {
+            assert_eq!(
+                insn_len(&[high, low, 0, 0, 0, 0], Target::H8SX, Mode::Normal),
+                None
+            );
         }
     }
 }

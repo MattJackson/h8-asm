@@ -26,6 +26,12 @@ pub(super) fn recognize(bytes: &[u8]) -> Option<usize> {
         first if first & 0xff0f == 0x5800 => Some(4),
         first if first >> 8 == 0x55 => Some(2),
         0x5c00 => Some(4),
+        // MOV/ADD/CMP/SUB/OR/XOR/AND immediate to register. The 79xx
+        // word forms have a four-bit register field and one 16-bit
+        // immediate word. The 7axx long forms have a three-bit ER field
+        // and two immediate words (H8SX §2.4 Table 2.2).
+        first if first >> 8 == 0x79 && (first & 0x00f0) < 0x70 => Some(4),
+        first if first >> 8 == 0x7a && (first & 0x00f0) < 0x70 && first & 8 == 0 => Some(6),
         // Eight immediate-byte/register rows: ADD, ADDX, CMP, SUBX,
         // OR, XOR, AND and MOV (H8SX §2.4 Table 2.2). The high nibble
         // selects the operation, the next nibble a byte register, and
