@@ -180,17 +180,29 @@ LLVM→binutils as you go, rather than copying and "fixing later".
 
 ## Resume checkpoint (2026-09-25)
 
-Phase 1 remains in progress. The pre-existing `src/isa/length.rs` recognizes
-lengths through H8S; four fixed H8SX opcodes are now recognized. Added `tests/length.rs` with
-pinned zero-suffix first-word censuses for all five targets, all modes,
-truncation checks, and manual prefix/extension/register-boundary witnesses.
-`spec/H8-ISA.md` records the initial map and the limitations of those counts.
-Redundant word reads in private helpers were replaced with dispatcher-supplied
-words. No semantic decoder or encoder exists yet.
+Phase 1 remains in progress. `src/isa/length.rs` recognizes lengths through
+H8S; `src/isa/mod.rs` additionally recognizes four fixed H8SX opcodes (NOP,
+SLEEP, RTS, RTE). `tests/length.rs` pins zero-suffix first-word censuses for
+all five targets and checks modes, truncation, and selected manual prefix,
+extension and register boundaries. `spec/H8-ISA.md` records the initial map
+and the limits of those counts. No semantic decoder or encoder exists yet.
+
+The first local commit is on `dev`; there is no remote. At this checkpoint,
+`cargo test`, `cargo clippy --all-targets -- -D warnings`, and the 100%
+line/region/function `cargo llvm-cov` gate passed. The licensed text dumps
+retain the whitespace of the source PDFs; `git diff --check` reports that
+whitespace on the initial commit, so use it on new source/docs changes rather
+than treating the imported dumps as hand-edited text.
 
 Next: finish the H8SX §1.7–1.8 and full §2.4 review, establish its maximum
 instruction length, then implement its length recognition and richer prefix
-censuses. The eight-page layout extraction mentioned above is only the start
-of §2.4, not the whole table. Do not treat the zero-suffix rejection counts as
-undefined-instruction counts. Repository creation/publishing and phase 2 onward
-remain outstanding.
+censuses. Extracting PDF pages 653–660 covers only the start of §2.4; the full
+table runs through roughly PDF page 907. Do not treat the zero-suffix rejection
+counts as undefined-instruction counts. Repository creation/publishing and
+phase 2 onward remain outstanding.
+
+Planning estimate, made at this checkpoint: 1–3 weeks of focused work for
+reliable length recognition across all five targets, and 8–16 weeks for the
+full six-phase scope. These are rough effort estimates, not release dates.
+H8SX table complexity and independent conformance findings are the largest
+unknowns.
