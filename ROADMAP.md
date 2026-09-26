@@ -7,18 +7,18 @@ The H8SX table includes all 8,493 reviewed source rows. The complete
 four-byte sweeps pass for all five targets; mandatory GNU checks and the
 reviewed reverse census are documented in docs/CONFORMANCE.md.
 
-Before the first release (now 0.5.0, as requested by the maintainer):
+Version 0.5.0 is published on crates.io and GitHub. The exact release commit
+passed dev and full QA, was promoted through CI to main, and passed full QA
+again in release run 36267228252. main is the default branch. The release
+archive matches the registry bytes; its Sigstore signature and SLSA provenance
+were independently verified. OpenSSF project 14963 confirms the requested
+198% tiered score (100% passing, 98% silver). Codecov processes the repository
+secret uploads at 100% coverage.
 
-- Run the final release candidate through hosted QA, including the new vector
-  alignment regression and mutation assertions. The coverage upload using the
-  repository secret `CODECOV_TOKEN` has succeeded; Codecov OIDC is disabled.
-- Promote dev → qa → main with required checks and release protection; publish
-  the verified crate and signed/attested release artifacts.
-- Verify the signed release and update OpenSSF from its confirmed 196% tiered
-  score to the 198% target. Passing is already 100%; silver is 96%.
-- Record final service state in docs/SETUP.md. A publishing token is saved
-  locally and in the release environment for unattended publication. Trusted
-  Publishing configuration remains optional pending account authorization.
+Optional account follow-ups are documented in docs/SETUP.md: Trusted Publishing
+can replace the saved release token when account authorization permits it, and
+the external REUSE badge depends on the service completing its registration
+and scan. Neither is represented as a completed service configuration.
 
 The full EC2 mutation audit and all survivor rechecks are complete. The combined
 result is 1,808 mutations: 1,698 caught, 67 surviving, five timeouts and 38
@@ -30,8 +30,10 @@ removed after collecting results.
 
 Longer legacy operand audits are complete. Both initial hosted QA runs passed
 all six Linux/macOS/Windows × stable/Rust 1.58 cells, including all five full
-four-byte sweeps in each cell. The final candidate must pass again after the
-last source/test changes; those earlier runs do not certify newer changes.
+four-byte sweeps in each cell. The published commit subsequently passed the
+complete six-cell matrix in
+both QA run 36266043197 and release run 36267228252; these runs include the
+final source/test changes.
 
 Deliberate current limitations:
 

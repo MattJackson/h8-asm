@@ -1,7 +1,11 @@
-# h8-asm kickoff
+# h8-asm kickoff archive
 
-A working note for starting the build-out. It is not documentation. Delete it,
-or fold what is left into `ROADMAP.md`, once phase 3 lands.
+This is the historical build plan and checkpoint log, retained to preserve the
+original requirements and their evidence. Remaining work has been folded into
+[ROADMAP.md](ROADMAP.md); current service and release state belongs in
+[docs/SETUP.md](docs/SETUP.md). Statements below describe their dated
+checkpoints, not the current implementation. The six-phase plan remains the
+completion-audit baseline.
 
 ## What this is
 

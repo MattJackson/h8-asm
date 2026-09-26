@@ -7,8 +7,8 @@ coverage and conformance gates do not depend on a badge claiming completion.
 ## GitHub
 
 The public repository is https://github.com/MattJackson/h8-asm. Sources are
-on dev; qa runs the full verification workflow. dev is the temporary default
-branch until the first release. Promotion follows dev → qa → main.
+developed on dev; qa runs the full verification workflow. main is the default
+branch. Promotion follows dev → qa → main.
 
 Completed configuration:
 
@@ -19,7 +19,7 @@ Completed configuration:
 - qa requires the successful dev check (`fmt, clippy, test`), linear history,
   and no deletion/force pushes. Direct fast-forward promotion preserves the SHA.
 - An active main ruleset requires the Actions `qa gate` check, linear history,
-  and no deletion/force pushes, including before main is first created.
+  and no deletion/force pushes. No actor has a ruleset bypass.
 - Workflow default permissions are read-only; workflows cannot approve PRs.
 - The release environment accepts deployments from main only, without an
   additional manual reviewer gate.
@@ -31,17 +31,26 @@ QA, then advances the exact successful qa commit to main and dispatches release.
 It validates repository/workflow/event/ref identity, rejects non-fast-forwards,
 and never checks out code in its privileged job. Explicit dispatch is necessary
 because a GITHUB_TOKEN ref update does not itself trigger another workflow.
-The dev → qa promotion succeeded in run 36265291013. The qa → main
-promotion and first release still need live verification.
+The dev → qa promotion of commit 15a15a0 succeeded in run 36266036464; full
+QA passed in run 36266043197. GitHub did not start the QA completion callback,
+so the same CI promotion was dispatched with destination=main (run
+36267120070). Its API checks validated QA and created main at exactly that SHA.
+The initial ruleset rejected branch creation despite the successful check;
+the branch-creation exception was enabled for this bootstrap and immediately
+restored to false after CI created main. main was then set as the default.
+If a completion callback does not arrive, `gh workflow run promote.yml
+--ref main -f destination=main` resumes through the same validation; it does
+not push a branch locally or bypass failed QA.
 
-The REUSE badge service can scan the public repository. Local REUSE lint passes;
-the badge's refresh schedule is external. Dev, QA, Scorecard and REUSE badges
-link to their actual services. A missing release or questionnaire ID is not
-represented as a completed badge.
+Local REUSE lint passes. The REUSE API accepted registration on 2026-09-26
+(HTTP 202) and sent a confirmation email to the maintainer. The external badge
+remains pending that confirmation and its service scan; it is not claimed
+compliant until the service reports it. Dev, QA, Scorecard and REUSE badges
+link to their actual services.
 
 ## First crates.io publication
 
-The first release candidate is h8-asm 0.5.0. The maintainer has supplied a
+The first release is h8-asm 0.5.0, published on 2026-09-26. The maintainer supplied a
 local publishing credential for the authenticated bootstrap. It is saved in
 Cargo's local credential store and the GitHub release environment secret
 CARGO_REGISTRY_TOKEN. The [crates.io Trusted Publishing rollout](https://blog.rust-lang.org/2025/07/11/crates-io-development-update-2025-07/)
@@ -72,7 +81,13 @@ incomplete tagged releases must resume from their original commit. The package
 must byte-match the immutable registry artifact before signing or attestation. It can finish tagging and
 release creation after the authenticated bootstrap without republishing the
 crate. Its dry-run mode performs verification without publishing. A non-main
-dispatch runs verification only. No successful publication is claimed yet.
+dispatch runs verification only. Release run 36267228252 completed successfully
+on commit 15a15a023312dd1927f96c18895dcd12e1ef6a01, published 0.5.0, created
+tag v0.5.0, and uploaded all five signed/attested release assets. Independent
+download verification passed for the exact release workflow identity. The
+Published rustdoc is available at https://docs.rs/h8-asm/0.5.0/h8_asm/. The
+registry and GitHub archive both have SHA-256
+`07f60b20bbdeac16166434ca88ab1ea59438a0d5fcc79399c5efd6f7469c5a93`.
 
 ## Verifying release artifacts
 
@@ -116,14 +131,13 @@ and authorized direct form submission. The target is 198% tiered (passing
 URL and the evidence in openssf-best-practices.md. After the maintainer
 confirmed both personal security-knowledge declarations on 2026-09-26, both
 forms were submitted and the service awarded the passing badge: 100% passing,
-96% silver, 196% tiered. Verified release signatures are still needed for the
-198% target. Access continuity remains Unmet because no alternate
+98% silver, 198% tiered after independently verified release-signing evidence
+was submitted. Access continuity remains Unmet because no alternate
 administrator or credential succession arrangement is established. This is
 separate from the already completed Scorecard run.
 
 ## Remaining authenticated access
 
 GitHub setup is accessible through the authenticated CLI. A local token is
-available for crates.io first publication. The supplied Best Practices session
-is held outside the repository while completing its forms. Trusted Publishing
+available for crates.io first publication. The Best Practices forms are saved at the target score. Trusted Publishing
 configuration still requires an owner session or a token with that scope.
