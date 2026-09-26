@@ -41,7 +41,7 @@ lives in `src/isa/length.rs`. Every row still lacks semantic decode/encode.
 | 20–3f | Byte absolute moves | 300 | implemented, including H8SX |
 | 40–4f | Conditional branches, d:8; H8SX BRA/S | 300; H8SX delay-slot branch | implemented through H8S; H8SX d:8 rows |
 | 50–53 | Multiply/divide | 300; 300H word | implemented through H8S; H8SX unsigned register rows |
-| 54–5f | Returns, calls, jumps, traps and d:16 branches | 300; 300H extensions; H8SX PC-indexed and 32-bit absolute forms | implemented through H8S; selected H8SX branch/jump/call/return rows |
+| 54–5f | Returns, calls, jumps, traps and d:16 branches | 300; 300H extensions; H8SX PC-indexed and 32-bit absolute forms | implemented through H8S; selected H8SX branch/jump/call/return/trap rows |
 | 60–67 | Register bit operations and word logic | 300; 300H word logic | implemented through H8S; H8SX word logic and register bit rows |
 | 68–6f | Memory moves and absolute bit prefixes | 300; 300H extended addresses; H8S absolute bit operations | implemented through H8S; selected H8SX 68–6f MOV.B/W rows |
 | 70–77 | Immediate bit operations | 300 | implemented, including H8SX register rows |
@@ -122,7 +122,7 @@ target support table. Counts describe this probe construction only.
 | H8/300H | 7,647 | 56,520 | 1,249 | 120 | 0 | 0 | 0 | 0 |
 | H8S/2000 | 7,295 | 56,872 | 1,249 | 120 | 0 | 0 | 0 | 0 |
 | H8S/2600 | 7,262 | 56,905 | 1,249 | 120 | 0 | 0 | 0 | 0 |
-| H8SX | 9,357 | 54,840 | 1,217 | 122 | 0 | 0 | 0 | 0 |
+| H8SX | 9,353 | 54,844 | 1,217 | 122 | 0 | 0 | 0 | 0 |
 
 Zero counts for eight bytes and longer reflect the fixed suffix, not absent
 instructions. H8SX rejections reflect missing implementation, not undefined

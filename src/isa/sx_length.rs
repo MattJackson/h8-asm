@@ -79,6 +79,8 @@ pub(super) fn recognize(bytes: &[u8]) -> Option<usize> {
         // The word forms name an ER destination in only three bits.
         first if matches!(first >> 8, 0x50 | 0x51) => Some(2),
         first if matches!(first >> 8, 0x52 | 0x53) && first & 8 == 0 => Some(2),
+        // TRAPA #x:2 occupies low-byte bits 5–4; all other bits are zero.
+        first if first >> 8 == 0x57 && first & 0x00cf == 0 => Some(2),
         // Bcc d:16, BSR d:8, and BSR d:16 (H8SX §2.4).
         first if first & 0xff0f == 0x5800 => Some(4),
         first if first >> 8 == 0x55 => Some(2),

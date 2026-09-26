@@ -21,7 +21,7 @@ fn first_word_zero_suffix_census() {
         [7647, 56520, 1249, 120, 0, 0, 0, 0],
         [7295, 56872, 1249, 120, 0, 0, 0, 0],
         [7262, 56905, 1249, 120, 0, 0, 0, 0],
-        [9357, 54840, 1217, 122, 0, 0, 0, 0],
+        [9353, 54844, 1217, 122, 0, 0, 0, 0],
     ]) {
         let mut counts = [0usize; 8];
         for first in 0..=u16::MAX {
@@ -108,6 +108,17 @@ fn h8sx_unsigned_multiply_divide_register_space() {
                 }
             );
         }
+    }
+}
+
+#[test]
+fn h8sx_trap_vectors() {
+    // H8SX §2.4 TRAPA #x:2 has four vectors and fixed reserved bits.
+    for low in 0..=u8::MAX {
+        assert_eq!(
+            insn_len(&[0x57, low], Target::H8SX, Mode::Normal),
+            if low & 0xcf == 0 { Some(2) } else { None }
+        );
     }
 }
 
