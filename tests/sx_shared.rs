@@ -153,3 +153,28 @@ fn longer_encodings_cover_every_register_and_extension_boundary() {
         );
     }
 }
+
+#[test]
+fn immediate_spelling_distinguishes_implicit_counts_and_encoded_widths() {
+    use h8_asm::isa::{Insn, Operand as O, Reg, Size};
+    for (mnemonic, size, value, bits, register, expected) in [
+        ("SHLL", Size::Long, 1, 0, Reg::Long(0), "SHLL.L ER0"),
+        ("SHLL", Size::Long, 2, 0, Reg::Long(0), "SHLL.L #2,ER0"),
+        ("SHLL", Size::Long, 1, 5, Reg::Long(0), "SHLL.L #1:5,ER0"),
+        ("SHLL", Size::Long, 0, 5, Reg::Long(0), "SHLL.L #0:5,ER0"),
+        ("ADDS", Size::Long, 1, 0, Reg::Long(0), "ADDS #1,ER0"),
+        ("MOV", Size::Word, 1, 3, Reg::Word(0), "MOV.W #1:3,R0"),
+        ("MOV", Size::Byte, 1, 8, Reg::Byte(8), "MOV.B #H'1:8,R0L"),
+        ("MOV", Size::Byte, 255, 8, Reg::Byte(8), "MOV.B #H'FF:8,R0L"),
+    ] {
+        let insn = Insn::new(
+            mnemonic,
+            Some(size),
+            [O::Immediate { value, bits }, O::Register(register), O::None],
+        );
+        assert_eq!(
+            disassemble_insn(insn, Target::H8SX, Mode::Maximum).unwrap(),
+            expected
+        );
+    }
+}

@@ -19,6 +19,9 @@ name: qa full gate
 on:
   push:
     branches: [qa]
+  pull_request:
+    branches: [qa, main]
+  workflow_dispatch:
   workflow_call:
     secrets:
       CODECOV_TOKEN:

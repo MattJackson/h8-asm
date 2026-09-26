@@ -264,3 +264,51 @@ fn h8s_multiple_register_groups_are_not_h8sx_serial_ranges() {
         Some(4)
     );
 }
+
+#[test]
+fn manual_context_preserves_absolute_widths_and_control_operation_sizes() {
+    // REJ09B0213/REJ09B0139 instruction-code tables: the same absolute
+    // extension is aa:24 on H8/300H and aa:32 on H8S.
+    for (target, bits) in [(Target::H8_300H, 24), (Target::H8S2000, 32)] {
+        let decoded =
+            decode_insn(&[0x6a, 0x20, 0, 0x12, 0x34, 0x56], target, Mode::Advanced).unwrap();
+        assert_eq!(
+            decoded.insn.operands[0],
+            Operand::Address(Ea::Absolute {
+                value: 0x123456,
+                bits
+            })
+        );
+    }
+    for opcode in 4..=7u8 {
+        let expected = if opcode == 7 { Some(Size::Byte) } else { None };
+        assert_eq!(
+            decode_insn(&[opcode, 1], Target::H8_300, Mode::Normal)
+                .unwrap()
+                .insn
+                .size,
+            expected
+        );
+        assert_eq!(
+            decode_insn(&[1, 0x41, opcode, 1], Target::H8S2000, Mode::Advanced)
+                .unwrap()
+                .insn
+                .size,
+            expected
+        );
+    }
+    assert_eq!(
+        decode_insn(&[0x0b, 0], Target::H8_300, Mode::Normal)
+            .unwrap()
+            .insn
+            .size,
+        Some(Size::Word)
+    );
+    assert_eq!(
+        decode_insn(&[0x0b, 0], Target::H8_300H, Mode::Advanced)
+            .unwrap()
+            .insn
+            .size,
+        Some(Size::Long)
+    );
+}

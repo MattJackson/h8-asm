@@ -6,7 +6,7 @@ encoding, branch relocation or patch placement can still produce unsafe
 firmware. Treat silent wrong output, unchecked bounds and non-atomic failure
 as security-relevant correctness defects.
 
-Report sensitive issues privately to matthew@pq.io. Include the version or
+Report sensitive issues through [GitHub private vulnerability reporting](https://github.com/MattJackson/h8-asm/security/advisories/new) or matthew@pq.io. Include the version or
 commit, target and operating mode, exact input bytes or typed instruction,
 API call, expected result and relevant Renesas manual section. A minimal
 failing test is particularly useful. Do not publish exploitable firmware
