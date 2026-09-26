@@ -280,6 +280,23 @@ fn manual_context_preserves_absolute_widths_and_control_operation_sizes() {
             })
         );
     }
+    for (target, mode, bits) in [
+        (Target::H8_300, Mode::Normal, 16),
+        (Target::H8_300H, Mode::Advanced, 24),
+    ] {
+        for opcode in [0x5a, 0x5e] {
+            assert_eq!(
+                decode_insn(&[opcode, 0, 0x12, 0x34], target, mode)
+                    .unwrap()
+                    .insn
+                    .operands[0],
+                Operand::Address(Ea::Absolute {
+                    value: 0x1234,
+                    bits
+                })
+            );
+        }
+    }
     for opcode in 4..=7u8 {
         let expected = if opcode == 7 { Some(Size::Byte) } else { None };
         assert_eq!(
