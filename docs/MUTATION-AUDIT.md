@@ -79,3 +79,8 @@ They are detected nontermination cases, recorded separately from caught tests.
 The 38 unviable mutations fail to compile; they are not counted as successful
 behavioral detections. Future changes should rerun the audit and review new
 survivors rather than carrying these classifications forward unchecked.
+
+After this mutation snapshot, the ignored GNU older-core oracle was strengthened
+to assert all counts and the complete reviewed reverse sets. It passed on
+Rust 1.58 with pinned binutils. This adds independent conformance assertions,
+not additional mutation results; the JSON retains the original audit hashes.

@@ -4,14 +4,15 @@ Sources: H8/300 ADE-602-025 Appendix A/B; H8/300H REJ09B0213
 §2.4–2.5; H8S REJ09B0139 §2.4–2.5; H8SX REJ09B0102 §2.4.
 The shared semantic codec covers recognized instructions on all five targets
 with typed operands, exact-width encoding and Renesas rendering. The H8SX
-implementation follows all 8,493 reviewed manual rows. Full exhaustive
-validation and the remaining release requirements are still in progress.
+implementation follows all 8,493 reviewed manual rows. The full four-byte
+census and longer field audits are recorded below; release setup is tracked
+in ../ROADMAP.md.
 
 ## 1. Instruction boundaries
 
 Words are big-endian. `isa::insn_len` accepts a complete byte slice and an
 explicit target/mode pair. It returns `None` for truncation, an unsupported
-pair, an unrecognized encoding, or an unimplemented H8SX instruction. It does not return
+pair, or an unrecognized encoding. It does not return
 operands or prove that an instruction is safe to execute.
 For H8/300 through H8S, odd displacements in Bcc/BSR are rejected:
 H8/300 §2 says the signed displacement must be even, and the later manuals
@@ -47,7 +48,7 @@ serial register groups and even relative destinations. The first-word index
 contains 99,079 row candidates and avoids scanning the whole table per
 instruction. Every row has constrained minimum/maximum-field witnesses and
 all truncations checked. This proves coverage of the extracted row grammar,
-not completion of the four-byte sweep.
+separate from the full four-byte sweep recorded below.
 
 The grammar includes memory-to-memory arithmetic, all table EA extensions,
 MOV/MOVA, shifts, bit operations, control flow, register groups, multiply and
@@ -92,9 +93,8 @@ target support table. Counts describe this probe construction only.
 
 Zero counts for ten bytes and longer reflect the fixed suffix, not absent
 instructions. Rejection in this probe does not classify every completion of
-a first word as undefined. Full suffix/operand sweeps and the phase-3 exhaustive audit have not been
-performed. Semantic round trips and independent checks cover the subsets
-described in §5.
+a first word as undefined. The full four-byte sweep and longer operand-field
+audits are recorded below, separately from this fixed-suffix probe.
 
 The opt-in `tests/binutils_legacy.rs` probe uses the same zero-suffix method
 for the four older targets. After enforcing the manual's even d:8 branch
@@ -120,8 +120,8 @@ Some binutils-only slots are aliases the manual does not allocate. For
 example, binutils decodes `57 40` as `TRAPA #0`, although the H8SX §2.4
 TRAPA row fixes bit 6 to zero. It also accepts `0b 08` as `ADDS #1,ER0`
 despite the fixed-zero bit before the three-bit ER field. Those patterns
-remain rejected here. The other binutils-only slots need manual review;
-their count is not a missing-instruction count.
+remain rejected here. Every H8SX GNU-only triple now has a reviewed manual
+reason in tests/data/sx_reverse.tsv; its count is not a missing-instruction count.
 
 `tests/binutils_assemble_back.rs` provides a stronger check for the semantic
 H8/300 subset: it enumerates all 2,692 two-byte words the decoder accepts,

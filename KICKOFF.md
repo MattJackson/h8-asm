@@ -585,3 +585,11 @@ Codecov follow-up: OIDC upload succeeded in run 36263344962; the public API
 confirms activation and a complete 100% report for 0e0cb92. README badge added.
 The publishing token lacks Trusted Publishing configuration permission (403),
 so the protected release environment token path remains selected.
+
+Final reverse-census review found that the legacy GNU probe printed mismatches
+without asserting them. It now pins all counts and exact GNU-only triples:
+5823 later-generation words (3859 300H / 352 S2000 / 33 S2600 / 1579 SX),
+filtered per target, plus the shared 502 reviewed GNU-only refusals. Each
+entry carries a manual citation; all four target probes pass on Rust 1.58.
+Contradictory historical pending statements were removed from current spec/
+and conformance documentation. Source code did not change in this follow-up.

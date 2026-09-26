@@ -2,8 +2,9 @@
 
 Renesas' manuals under `spec/` are the authority. GNU binutils is an
 independent implementation used to check the crate's interpretation.
-These checks cover the implemented subsets; they do not establish complete
-H8 family conformance.
+These checks cover all supported two-byte encodings and the specified longer
+operand corpora. They do not establish hardware behavior or exhaust every
+combination of long extension fields.
 
 ## Reproduce
 
@@ -25,13 +26,13 @@ build script chooses another build root; an optional first argument to the
 conformance script chooses another directory of installed tools.
 
 The tests remain ignored in the normal Rust test suite because they require
-external tools. The conformance script explicitly selects all six oracle
+external tools. The conformance script explicitly selects all seven oracle
 test binaries and runs them with `--ignored`: a missing tool or failed subprocess
 fails the run. QA runs that script as a required job. This explicit invocation
 replaces the proposed environment-variable opt-in in the kickoff; there is
 no successful skip path in the conformance job.
 
-## Assemble back
+## Retained narrow API assemble-back
 
 The stronger check is:
 
@@ -50,8 +51,8 @@ The local 2026-09-26 run with GNU Binutils 2.47.20260726 reproduced:
 
 | Probe | Exact-byte cases |
 |---|---:|
-| Every supported H8/300 two-byte instruction | 2,692 |
-| Every supported H8SX two-byte instruction | 39,297 |
+| Every supported narrow H8/300 two-byte instruction | 2,692 |
+| Every supported narrow H8SX two-byte instruction | 39,297 |
 | Selected H8SX branches, jumps/calls and absolute byte moves | 140 |
 | H8SX word-immediate boundaries, every register and seven operations | 560 |
 | H8SX full-width long-immediate boundaries, every ER register and seven operations | 504 |
@@ -78,15 +79,16 @@ They check the start of each slot, not instructions in its padding.
 
 There were no crate-only decodes or accepted-length disagreements. GNU-only
 patterns are reported, not silently counted as agreement. Some are aliases
-that violate fixed bits in the manual; some expose implementation gaps or
-GNU accepting later instructions in an earlier-core mode. See
-[`../spec/H8-ISA.md`](../spec/H8-ISA.md) for examples. A complete, manually
-reviewed divergence allow-list remains outstanding.
+that violate fixed bits in the manual; others are later-core instructions
+that GNU accepts in an earlier-core mode. The exact sets
+are now pinned in tests/data/legacy_reverse.tsv and sx_reverse.tsv, with
+manual reasons. No crate-only decode or accepted-length mismatch is allowed.
 
 A zero suffix is only one completion of a prefix. These counts cannot prove
 that a rejected first word is undefined, or that an accepted prefix handles
-all its valid continuations. The four-billion-pattern sweeps from the
-kickoff have not been run.
+all its valid continuations. Separately, all five full four-billion-pattern
+sweeps have passed; counts and method are in spec/H8-ISA.md and the sweep is
+mandatory in every QA OS/MSRV cell.
 
 
 ## Internal operand audits
@@ -160,8 +162,8 @@ The conformance script also checks reproducibility of the generated runtime
 table and runs all 16,986 raw manual-row probes. All differences are pinned
 by classification, with no unresolved category accepted. Two inferred AND
 cases and two corrected ADD cases additionally assemble back exactly.
-See [the row intake and constraints](H8SX-TABLE.md). Semantic assembly of all
-H8SX rows remains outstanding.
+See [the row intake and constraints](H8SX-TABLE.md). Independent semantic
+assembly covers every row through the witnesses in the following section.
 
 ## Shared H8SX semantics
 
@@ -255,3 +257,27 @@ to legacy targets that recognize the corresponding encodings. It provides
 with those counts pinned. Normal/advanced typed round trips cover the same
 cases. These supplement the earlier legacy-specific displacement/register
 probes; H8/300 has no instruction longer than four bytes.
+
+
+## Reviewed older-core reverse census
+
+The older-core test now asserts the exact GNU-only triples and all agreement,
+rejection and mismatch counts; merely printing differences is not a gate.
+Its allow-list contains 5,823 later-generation words, partitioned by first
+supported generation, plus the same 502 reserved/non-manual triples reviewed
+in the SX reverse census:
+
+| Introduced generation | Words in this zero-suffix probe | Manual basis |
+|---|---:|---|
+| H8/300H | 3,859 | REJ09B0213 §1.1.2 and §2.5: added En/ER operands, extended arithmetic/logic and addressing, wider branches and TRAPA; compare H8/300 Appendix A |
+| H8S/2000 | 352 | REJ09B0139 §1.1.4 and §2.5: 32 EXR transfers and 320 count-two shift/rotate words |
+| H8S/2600 | 33 | REJ09B0139 §1.1.2: CLRMAC and 16 each STMAC/LDMAC transfers |
+| H8SX | 1,579 | REJ09B0102 §2.4: each allow-list entry records its matching row/page; compare reserved slots in H8S §2.5 |
+
+For a target, only later generations are allowed: 5,823/1,964/1,612/1,579
+words respectively, plus 502 common GNU extensions/refusals, yielding
+6,325/2,466/2,114/2,081. H8SX additions include short immediates, scaled moves,
+additional shifts, PC-indexed/extended-indirect branches, BRA/S, return groups,
+MOVA and block moves. These classifications refer to encodings, not merely
+mnemonics: an older core can have an instruction name without the later
+operand form. Counts cover this fixed-zero probe only.

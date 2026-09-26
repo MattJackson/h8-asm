@@ -72,6 +72,7 @@ fn legacy_zero_suffix_first_word_sweep() {
         let mut binutils_examples = Vec::new();
         let mut ours_examples = Vec::new();
         let mut length_examples = Vec::new();
+        let mut reverse = Vec::new();
         for line in text.lines() {
             let (address, columns) = match line.split_once(':') {
                 Some(parts) => parts,
@@ -100,6 +101,7 @@ fn legacy_zero_suffix_first_word_sweep() {
                 (None, false) => both_reject += 1,
                 (None, true) => {
                     binutils_only += 1;
+                    reverse.push(format!("{first:04x}\t{binutils_len}\t{}", mnemonic.trim()));
                     if binutils_examples.len() < 8 {
                         binutils_examples.push(example);
                     }
@@ -119,6 +121,43 @@ fn legacy_zero_suffix_first_word_sweep() {
             }
         }
         assert_eq!(checked, u16::MAX as usize + 1, "{target:?}");
+        assert_eq!(ours_only, 0, "{target:?}: {ours_examples:?}");
+        assert_eq!(length_diff, 0, "{target:?}: {length_examples:?}");
+        assert_eq!(both_reject, 7_357, "{target:?}");
+        assert_eq!(agree, [51_854, 55_713, 56_065, 56_098][index], "{target:?}");
+        assert_eq!(
+            binutils_only,
+            [6_325, 2_466, 2_114, 2_081][index],
+            "{target:?}"
+        );
+
+        // Objdump recognizes later-core instructions even in these older
+        // machine modes. Pin the complete expected triples, not just totals.
+        // The common reserved-bit/non-manual cases reuse the reviewed SX list.
+        let mut expected = Vec::new();
+        for line in include_str!("data/legacy_reverse.tsv").lines() {
+            if line.starts_with('#') || line.is_empty() {
+                continue;
+            }
+            let columns: Vec<_> = line.split('\t').collect();
+            let introduced: usize = columns[3].parse().unwrap();
+            assert!(!columns[4].is_empty(), "manual reason required");
+            if introduced > index {
+                expected.push(columns[..3].join("\t"));
+            }
+        }
+        for line in include_str!("data/sx_reverse.tsv").lines() {
+            if line.starts_with('#') || line.is_empty() {
+                continue;
+            }
+            expected.push(line.split('\t').take(3).collect::<Vec<_>>().join("\t"));
+        }
+        expected.sort();
+        reverse.sort();
+        assert_eq!(
+            reverse, expected,
+            "{target:?}: reviewed GNU-only set changed"
+        );
         println!(
             "{target:?}: agree={agree} both_reject={both_reject} binutils_only={binutils_only} ours_only={ours_only} length_diff={length_diff}"
         );

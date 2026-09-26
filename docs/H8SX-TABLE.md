@@ -84,4 +84,5 @@ The 42,465 row witnesses include both constrained extremes and three
 asymmetric bit patterns; asymmetry checks independent source/destination
 fields, including nested MOVA displacements. These pass typed round trips.
 The independent semantic oracle is documented in CONFORMANCE.md. Full
-four-byte and wider operand-field sweeps remain separate requirements.
+four-byte and wider operand-field sweeps have passed and are documented
+separately in spec/H8-ISA.md and CONFORMANCE.md.
