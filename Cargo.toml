@@ -1,0 +1,24 @@
+[package]
+name = "h8-asm"
+version = "0.1.0"
+edition = "2021"
+# Same floor as thumb-asm, for the same reason: 1.56 is the edition-2021 floor and
+# inline format-string captures (`format!("{x}")`) need 1.58.0. Raise it only on
+# purpose, and say why here.
+rust-version = "1.58"
+authors = ["Matthew Jackson <dev4@getbusbar.com>"]
+description = "A Renesas H8 family (H8/300, H8/300H, H8S, H8SX) decoder, disassembler, assembler and detour installer in pure safe Rust, checked against Renesas' own software manuals."
+license = "MIT"
+repository = "https://github.com/MattJackson/h8-asm"
+homepage = "https://github.com/MattJackson/h8-asm"
+documentation = "https://docs.rs/h8-asm"
+readme = "README.md"
+keywords = ["h8", "h8sx", "disassembler", "firmware", "reverse-engineering"]
+categories = ["embedded", "development-tools", "parsing"]
+# `spec/` holds Renesas' own manuals and text dumps of them, kept in-tree so every
+# encoding claim in `src/` is checkable against its source. They are Renesas'
+# copyright, ~30 MB, and no use to a downstream build — so they stay out of the
+# published .crate. KICKOFF.md is a working note, not documentation.
+exclude = ["spec/", ".github/", "mutants.out/", "mutants.out.old/", "KICKOFF.md"]
+
+[dependencies]

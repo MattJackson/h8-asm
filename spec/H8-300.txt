@@ -1,0 +1,5626 @@
+===== PDFPAGE 1 =====
+ 
+To our customers, 
+ 
+Old Company Name in Catalogs and Other Documents 
+ 
+On April 1st, 2010, NEC Electronics Corporation merged with Renesas Technology 
+Corporation, and Renesas Electronics Corporation took over all the business of both 
+companies. Therefore, although the old company name remains in this document, it is a valid 
+Renesas Electronics document. We appreciate your understanding. 
+ 
+Renesas Electronics website: http://www.renesas.com 
+ 
+ 
+ 
+ 
+April 1
+st, 2010 
+Renesas Electronics Corporation 
+ 
+ 
+ 
+ 
+ 
+Issued by: Renesas Electronics Corporation (http://www.renesas.com) 
+Send any inquiries to http://www.renesas.com/inquiry. 
+ 
+===== PDFPAGE 2 =====
+Notice 
+1. All information included in this document is current as of th e date this document is issued. Such information, however, is 
+subject to change without any prior notice. Before purchasing or using any Renesas Electronics products listed herein, please 
+confirm the latest product information with a Renesas Electronics sales office. Also, please pay regular and careful attention to 
+additional and different information to be disclosed by Renesas Electronics such as that disclosed through our website. 
+2. Renesas Electronics does not assume any liability for infringement of patents, copyrights, or other intellectual property ri ghts 
+of third parties by or arising from the use of Renesas Electronics products or technical information described in this document.  
+No license, express, implied or otherwise, is granted hereby under any patents, copyrights or other intellectual property rights 
+of Renesas Electronics or others. 
+3. You should not alter, modify, copy, or otherwise misappropriate any Renesas Electronics product, whether in whole or in part . 
+4. Descriptions of circuits, software and other related information in this document are provided only to illustrate the operat ion of 
+semiconductor products and application examples.  You are fully responsible for the incorporation of these circuits, software, 
+and information in the design of your equipment.  Renesas Electronics assumes no responsibility for any losses incurred by 
+you or third parties arising from the use of these circuits, software, or information. 
+5. When exporting the products or technology described in this document, you should comply with the applicable export control 
+laws and regulations and follow the procedures required by such laws and regulations.  You should not use Renesas 
+Electronics products or the technology described in this document for any purpose relating to military applications or use by 
+the military, including but not limited to the development of weapons of mass destruction.  Renesas Electronics products and 
+technology may not be used for or incorporated into any products or systems whose manufacture, use, or sale is prohibited 
+under any applicable domestic or foreign laws or regulations. 
+6. Renesas Electronics has used reasonable care in preparing the information included in this document, but Renesas Electronics  
+does not warrant that such information is error free.  Renesas Electronics assumes no liability whatsoever for any damages 
+incurred by you resulting from errors in or omissions from the information included herein. 
+7. Renesas Electronics products are classified according to the following three quality grades:  “Standard”, “High Quality”, and 
+“Specific”.  The recommended applications for each Renesas Electronics product depends on the product’s quality grade, as 
+indicated below.  You must check the quality grade of each Renesas Electronics product before using it in a particular 
+application.  You may not use any Renesas Electronics product for any application categorized as “Specific” without the prior 
+written consent of Renesas Electronics.  Further, you may not use any Renesas Electronics product for any application for 
+which it is not intended without the prior written consent of Renesas Electronics.  Renesas Electronics shall not be in any way 
+liable for any damages or losses incurred by you or third parties arising from the use of any Renesas Electronics product for an 
+application categorized as “Specific” or for which the product is not intended where you have failed to obtain the prior written 
+consent of Renesas Electronics.  The quality grade of each Renesas Electronics product is “Standard” unless otherwise 
+expressly specified in a Renesas Electronics data sheets or data books, etc. 
+“Standard”: Computers; office equipment; communications equipment; test and measurement equipment; audio and visual 
+equipment; home electronic appliances; machine tools; personal electronic equipment; and industrial robots. 
+“High Quality”: Transportation equipment (automobiles, trains, ship s, etc.); traffic control systems; anti-disaster systems; anti-
+crime systems; safety equipment; and medical equipment not specifically designed for life support. 
+“Specific”:  Aircraft; aerospace equipment; submersible repeaters; nuclear reactor control systems; medical equipment or 
+systems for life support (e.g. artificial life support devices or systems), surgical implantations, or healthcare 
+intervention (e.g. excision, etc.), and any other applications or purposes that pose a direct threat to human life. 
+8. You should use the Renesas Electronics products described in this document within the range specified by Renesas Electronics , 
+especially with respect to the maximum rating, operating supply voltage range, movement power voltage range, heat radiation 
+characteristics, installation and other product characteristics. Renesas Electronics shall have no liability for malfunctions or 
+damages arising out of the use of Renesas Electronics products beyond such specified ranges. 
+9. Although Renesas Electronics endeavors to improve the quality and reliability of its products, semiconductor products have 
+specific characteristics such as the occurrence of failure at a certain rate and malfunctions under certain use conditions. Fur ther, 
+Renesas Electronics products are not subject to radiation resistance design.  Please be sure to implement safety measures to 
+guard them against the possibility of physical injury, and injury or damage caused by fire in the event of the failure of a 
+Renesas Electronics product, such as safety design for hardware and software including but not limited to redundancy, fire 
+control and malfunction prevention, appropriate treatment for aging degradation or any other appropriate measures.  Because 
+the evaluation of microcomputer software alone is very difficult, please evaluate the safety of the final products or system 
+manufactured by you. 
+10. Please contact a Renesas Electronics sales office for details as to environmental matters such as the environmental 
+compatibility of each Renesas Electronics product.  Please use Renesas Electronics products in compliance with all applicable 
+laws and regulations that regulate the inclusion or use of controlled substances, including without limitation, the EU RoHS 
+Directive.  Renesas Electronics assumes no liability for damages or losses occurring as a result of your noncompliance with 
+applicable laws and regulations. 
+11. This document may not be reproduced or duplicated, in any fo rm, in whole or in part, without prior written consent of Renesas 
+Electronics. 
+12. Please contact a Renesas Electronics sales office if you have any questions regarding the information contained in this 
+document or Renesas Electronics products, or if you have any other inquiries. 
+(Note 1) “Renesas Electronics” as used in this document means Renesas Electronics Corporation and also includes its majority-
+owned subsidiaries. 
+(Note 2) “Renesas Electronics product(s)” means any product developed or manufactured by or for Renesas Electronics. 
+===== PDFPAGE 3 =====
+Regarding the change of names mentioned in the document, such as Hitachi 
+Electric and Hitachi XX, to Renesas Technology Corp.
+The semiconductor operations of Mitsubishi Electric and Hitachi were transferred to Renesas 
+Technology Corporation on April 1st 2003. These operations include microcomputer, logic, analog 
+and discrete devices, and memory chips other than DRAMs (flash memory, SRAMs etc.) 
+Accordingly, although Hitachi, Hitachi, Ltd., Hitachi Semiconductors, and other Hitachi brand 
+names are mentioned in the document, these names have in fact all been changed to Renesas 
+Technology Corp. Thank you for your understanding. Except for our corporate trademark, logo and 
+corporate statement, no changes whatsoever have been made to the contents of the document, and 
+these changes do not constitute any alteration to the contents of the document itself.
+Renesas Technology Home Page: http://www.renesas.com
+Renesas Technology Corp.
+Customer Support Dept.
+April 1, 2003
+To all our customers
+===== PDFPAGE 4 =====
+Cautions
+Keep safety first in your circuit designs!
+1. Renesas Technology Corporation puts the maximum effort into making semiconductor products better and more reliable, but
+there is always the possibility that trouble may occur with them. Trouble with semiconductors may lead to personal injury, fire
+or property damage.
+Remember to give due consideration to safety when making your circuit designs, with appropriate measures such as (i)
+placement of substitutive, auxiliary circuits, (ii) use of nonflammable material or (iii) prevention against any malfunction or
+mishap.
+Notes regarding these materials
+1. These materials are intended as a reference to assist our customers in the selection of the Renesas Technology Corporation
+product best suited to the customer's application; they do not convey any license under any intellectual property rights, or any
+other rights, belonging to Renesas Technology Corporation or a third party.
+2. Renesas Technology Corporation assumes no responsibility for any damage, or infringement of any third-party's rights,
+originating in the use of any product data, diagrams, charts, programs, algorithms, or circuit application examples contained in
+these materials.
+3. All information contained in these materials, including product data, diagrams, charts, programs and algorithms represents
+information on products at the time of publication of these materials, and are subject to change by Renesas Technology
+Corporation without notice due to product improvements or other reasons.  It is therefore recommended that customers contact
+Renesas Technology Corporation or an authorized Renesas Technology Corporation product distributor for the latest product
+information before purchasing a product listed herein.
+The information described here may contain technical inaccuracies or typographical errors.
+Renesas Technology Corporation assumes no responsibility for any damage, liability, or other loss rising from these
+inaccuracies or errors.
+Please also pay attention to information published by Renesas Technology Corporation by various means, including the
+Renesas Technology Corporation Semiconductor home page (http://www.renesas.com).
+4. When using any or all of the information contained in these materials, including product data, diagrams, charts, programs, an d
+algorithms, please be sure to evaluate all information as a total system before making a final decision on the applicability of
+the information and products.  Renesas Technology Corporation assumes no responsibility for any damage, liability or other
+loss resulting from the information contained herein.
+5. Renesas Technology Corporation semiconductors are not designed or manufactured for use in a device or system that is used
+under circumstances in which human life is potentially at stake.  Please contact Renesas Technology Corporation or an
+authorized Renesas Technology Corporation product distributor when considering the use of a product contained herein for
+any specific purposes, such as apparatus or systems for transportation, vehicular, medical, aerospace, nuclear, or undersea
+repeater use.
+6. The prior written approval of Renesas Technology Corporation is necessary to reprint or reproduce in whole or in part these
+materials.
+7. If these products or technologies are subject to the Japanese export control restrictions, they must be exported under a lice nse
+from the Japanese government and cannot be imported into a country other than the approved destination.
+Any diversion or reexport contrary to the export control laws and regulations of Japan and/or the country of destination is
+prohibited.
+8. Please contact Renesas Technology Corporation for further details on these materials or the products contained therein.
+===== PDFPAGE 5 =====
+H8/300
+Programming Manual
+User’s Manual
+===== PDFPAGE 6 =====
+1.  Hitachi neither warrants nor grants licenses of any rights of Hitachi’s or any third party’s patent,
+copyright, trademark, or other intellectual property rights for information contained in this document.
+Hitachi bears no responsibility for problems that may arise with third party’s rights, including
+intellectual property rights, in connection with use of the information contained in this document.
+2.  Products and product specifications may be subject to change without notice. Confirm that you have
+received the latest product standards or specifications before final design, purchase or use.
+3.  Hitachi makes every attempt to ensure that its products are of high quality and reliability. However,
+contact Hitachi’s sales office before using the product in an application that demands especially high
+quality and reliability or where its failure or malfunction may directly threaten human life or cause risk 
+of bodily injury, such as aerospace, aeronautics, nuclear power, combustion control, transportation,
+traffic, safety equipment or medical equipment for life support.
+4.  Design your application so that the product is used within the ranges guaranteed by Hitachi particularly
+for maximum rating, operating supply voltage range, heat radiation characteristics, installation
+conditions and other characteristics.  Hitachi bears no responsibility for failure or damage when used
+beyond the guaranteed ranges.  Even within the guaranteed ranges, consider normally foreseeable failure
+rates or failure modes in semiconductor devices and employ systemic measures such as fail-safes, so
+that the equipment incorporating Hitachi product does not cause bodily injury, fire or other
+consequential damage due to operation of the Hitachi product.
+5.  This product is not designed to be radiation resistant.
+6.  No one is permitted to reproduce or duplicate, in any form, the whole or part of this document without
+written approval from Hitachi.
+7.  Contact Hitachi’s sales office for any questions regarding this document or Hitachi semiconductor
+products.
+Cautions
+===== PDFPAGE 7 =====
+Preface
+The H8/300 CPU forms the common core of all chips in the H8/300 Series.  Featuring a
+Hitachi-original, high-speed, RISC-like architecture, it has eight 16-bit (or sixteen 8-bit)
+general registers and a concise, optimized instruction set.
+This manual gives detailed descriptions of the H8/300 instructions.  The descriptions apply to
+all chips in the H8/300 Series.  Assembly-language programmers should also read the separate
+H8/300 Series Cross Assembler User's Manual.
+For hardware details, refer to the hardware manual of the specific chip.
+===== PDFPAGE 8 =====
+Contents
+Section 1.  CPU................................................................................................... 1
+1.1 General CPU Architecture............................................................................................... 2
+1.2 Registers ................................................................................................................... ....... 5
+1.3 Instructions ................................................................................................................ ...... 8
+Section 2.  Instruction Set ................................................................................................. 32
+ADD (ADD binary) (byte) .............................................................................................. 37
+ADD (ADD binary) (word)............................................................................................. 38
+ADDS (ADD with Sign extension) ................................................................................. 39
+ADDX (ADD with eXtend carry) ................................................................................... 40
+AND (AND logical) ........................................................................................................ 41
+ANDC (AND Control register) ....................................................................................... 42
+BAND (Bit AND)............................................................................................................ 43
+Bcc (Branch conditionally) ............................................................................................. 44
+BCLR (Bit CLeaR).......................................................................................................... 47
+BIAND (Bit Invert AND)................................................................................................ 49
+BILD (Bit Invert LoaD)................................................................................................... 50
+BIOR (Bit Invert OR) ...................................................................................................... 51
+BIST (Bit Invert STore) ................................................................................................... 52
+BIXOR (Bit Invert eXclusive OR) .................................................................................. 53
+BLD (Bit LoaD) .............................................................................................................. 54
+BNOT (Bit NOT)............................................................................................................. 55
+BOR (Bit inclusive OR) .................................................................................................. 57
+BSET (Bit SET)............................................................................................................... 59
+BSR (Branch to SubRoutine) .......................................................................................... 61
+BST (Bit STore)............................................................................................................... 62
+BTST (Bit TeST) ............................................................................................................. 63
+BXOR (Bit eXclusive OR).............................................................................................. 65
+CMP (CoMPare) (byte) ................................................................................................... 67
+CMP (CoMPare) (word).................................................................................................. 68
+DAA (Decimal Adjust Add)............................................................................................ 69
+DAS (Decimal Adjust Subtract)...................................................................................... 71
+DEC (DECrement) .......................................................................................................... 73
+DIVXU (DIVide eXtend as Unsigned) ........................................................................... 74
+EEPMOV (MOVe data to EEPROM).............................................................................. 76
+===== PDFPAGE 9 =====
+INC (INCrement) ............................................................................................................ 78
+JMP (JuMP)..................................................................................................................... 79
+JSR (Jump to SubRoutine) .............................................................................................. 80
+LDC (LoaD to Control register)...................................................................................... 81
+MOV(MOVe data) (byte)................................................................................................. 82
+MOV(MOVe data) (word) ............................................................................................... 83
+MOV(MOVe data) (byte)................................................................................................. 84
+MOV(MOVe data) (word) ............................................................................................... 85
+MOV(MOVe data) (byte)................................................................................................. 86
+MOV(MOVe data) (word) ............................................................................................... 87
+MOVFPE (MOVe data From Peripheral with E clock)................................................... 88
+MOVTPE (MOVe data To Peripheral with E clock) ....................................................... 89
+MULXU (MULtiply eXtend as Unsigned) ..................................................................... 90
+NEG (NEGate) ................................................................................................................ 91
+NOP (No OPeration) ....................................................................................................... 92
+NOT (NOT = logical complement) ................................................................................. 93
+OR (inclusive OR logical) ............................................................................................... 94
+ORC (inclusive OR Control register) .............................................................................. 95
+POP (POP data) ............................................................................................................... 96
+PUSH (PUSH data) ......................................................................................................... 97
+ROTL (ROTate Left)........................................................................................................ 98
+ROTR (ROTate Right) ..................................................................................................... 99
+ROTXL (ROTate with eXtend carry Left).......................................................................100
+ROTXR (ROTate with eXtend carry Right) ....................................................................101
+RTE (ReTurn from Exception) ........................................................................................102
+RTS (ReTurn from Subroutine).......................................................................................103
+SHAL (SHift Arithmetic Left) ........................................................................................104
+SHAR (SHift Arithmetic Right)......................................................................................105
+SHLL (SHift Logical Left)..............................................................................................106
+SHLR (SHift Logical Right) ...........................................................................................107
+SLEEP (SLEEP)..............................................................................................................108
+STC (STore from Control register)..................................................................................109
+SUB (SUBtract binary) (byte).........................................................................................110
+SUB (SUBtract binary) (word)........................................................................................112
+SUBS (SUBtract with Sign extension)............................................................................113
+SUBX (SUBtract with eXtend carry)..............................................................................114
+XOR (eXclusive OR logical)...........................................................................................115
+===== PDFPAGE 10 =====
+XORC (eXclusive OR Control register)..........................................................................116
+Appendix A.   Operation Code Map ..............................................................................117
+Appendix B.   Instruction Set List ..................................................................................118
+Appendix C.   Number of Execution States .................................................................124
+===== PDFPAGE 11 =====
+Section 1.  CPU
+This document is a reference manual for programming the H8/300, a high-speed central
+processing unit with a Hitachi-original RISC-like architecture that is employed as a CPU core
+in a series of low-cost single-chip microcomputers intended for applications ranging from
+smart cards to office and factory automation.
+The H8/300 features a concise instruction set in which most frequently-used instructions are
+two bytes long and execute in just two states (0.2µs with a 10MHz system clock).  Its general
+registers can be accessed as 16-bit word registers or 8-bit byte registers.  The instruction set
+includes both 8-bit and 16-bit instructions.
+Section 1 of this manual summarizes the CPU architecture and instruction set.  Section 2 gives
+detailed descriptions of the instructions.  Appendices give an operation code map, a complete
+list of the instruction set, and tables for calculating instruction execution time.  Programmers
+should also refer to the User's Manual  of the chip being programmed for information on bus
+cycles, interrupt service, I/O ports, power-down modes, and on-chip facilities such as memory
+and timers, and for a memory map.
+1
+===== PDFPAGE 12 =====
+1.1  General CPU Architecture
+1.1.1  Features
+Table 1-1 summarizes the CPU architecture.  Figures 1-1 and 1-2 show how data are
+stored in registers and memory.
+Table 1-1.  CPU Architecture
+Notes:
+1. Word data stored in memory must be stored at an even address.
+2. Instructions must be stored at even addresses.
+3. General register R7 is used as the stack pointer (SP).
+1.1.2  Data Structure
+The H8/300 CPU can process 1-bit data, 4-bit (packed BCD) data, 8-bit (byte) data, and 16-bit
+(word) data.
+• Bit manipulation instructions operate on 1-bit data specified as bit n (n = 0, 1, 2, ..., 7) in a
+byte operand.
+• All operational instructions except ADDS and SUBS can operate on byte data.
+Item Description
+Address space 64K bytes, H'0000 to H'FFFF
+Data types Bit, 4-bit (packed BCD), byte, word (2 bytes)
+General registers Sixteen 8-bit general registers (R0H, R0L, ..., R7H, R7L), 
+also accessible as eight 16-bit general registers (R0 to R7)
+Control registers Program counter (PC)
+Condition code register (CCR)
+Addressing modes Rn Register direct 
+@Rn Register indirect
+@(d:16, Rn) Register indirect with 16-bit displacement
+@Rn+ Register indirect with post-increment 
+@–Rn Register indirect with pre-decrement
+@aa:8, @aa:16 Absolute address (8 or 16 bits)
+#xx:8, #xx:16 Immediate (8-, or 16-bit data)
+@(d:8, PC) PC-relative (8-bit displacement)
+@@aa:8 Memory indirect
+Instruction length 2 or 4 bytes
+2
+===== PDFPAGE 13 =====
+• The DAA and DAS instruction perform decimal arithmetic adjustments on byte data in
+packed BCD form.  Each 4-bit of the byte is treated as a decimal digit.
+• The MOV .W, ADD.W, SUB.W, CMP.W, ADDS, SUBS, MULXU (8 bits · 8 bits), and
+DIVXU (16 bits ÷ 8 bits) instructions operate on word data.
+Data Structure in General Registers: Data of all the sizes above can be stored in general
+registers as shown in figure 1-1.
+Figure 1-1.  Register Data Structure
+1-Bit data
+1-Bit data
+Byte data
+Byte data
+Word data
+4-Bit BCD data
+Data type
+Don't-care
+4 37 0
+Data format
+7 0
+7 6 5 4 3 2 1 0 Don't-care
+Don't-care 7 6 5 4 3 2 1 0
+Don't-care
+7 0
+Don't-care
+7 0
+015
+Don't-care
+4 37 0
+RnL
+RnH
+RnL
+RnH
+RnL
+ 
+Rn
+RnH
+Register No.
+7 0
+4-Bit BCD data
+M
+S
+B
+M
+S
+B
+M
+S
+B
+L
+S
+B
+L
+S
+B
+L
+S
+B
+Upper digit Lower digit
+Upper digit Lower digit
+RnH: Upper 8 bits of General Register
+RnL: Lower 8 bits of General Register
+MSB: Most Significant Bit
+LSB: Least Significant Bit
+3
+===== PDFPAGE 14 =====
+Memory Data Structure: Figure 1-2 indicates the data structure in memory.
+Word data stored in memory must always begin at an even address.  In word access the least
+significant bit of the address is regarded as “0.”  If an odd address is specified, no address error
+occurs but the access is performed at the preceding even address.  This rule affects MOV .W
+instructions and branching instructions, and implies that only even addresses should be stored
+in the vector table.
+Figure 1-2.  Memory Data Formats
+The stack is always accessed a word at a time.  When the CCR is pushed on the stack, two
+identical copies of the CCR are pushed to make a complete word.  When they are returned, the
+lower byte is ignored.
+1.1.3  Address Space
+The H8/300 CPU supports a 64K-byte address space.  The memory map differs depending on
+the particular chip in the H8/300 Series and its operating mode.  See the Hardware Manual of
+the chip for details.
+L
+S
+B
+Upper 8 bits
+7 0
+7 6 5 4 3 2 1 01-Bit data
+Byte data
+Word data
+Byte data (CCR) on stack
+Word data on stack
+Data type Data formatAddress
+Address n
+Address n
+Even address
+Odd address
+Even address
+Odd address
+Even address
+Odd address Lower 8 bits
+M
+S
+B
+M
+S
+B
+L
+S
+B
+M
+S
+B
+L
+S
+B
+M
+S
+B
+L
+S
+B
+M
+S
+B
+L
+S
+B
+Upper 8 bits
+Lower 8 bits
+CCR
+CCR *
+CCR: Condition code register.
+Note: Word data must begin at an even address.
+*: Ignored when return.
+4
+===== PDFPAGE 15 =====
+1.2  Registers
+Figure 1-3 shows the register structure of the H8/300 CPU.  There are sixteen 8-bit general
+registers (R0H, R0L, ..., R7H, R7L), which can also be accessed as eight 16-bit registers (R0
+to R7).  There are two control registers:  the 16-bit program counter (PC) and the 8-bit
+condition code register (CCR).
+Figure 1-3.  CPU Registers
+0
+7
+R0H R0L
+R1H R1L
+R2H R2L
+R3LR3H
+R4LR4H
+R5H R5L
+R6H R6L
+R7H R7L(SP)
+0
+15
+PC
+0
+235
+CVZH
+07
+CCR NI
+17
+SP: Stack Pointer
+Program Counter
+Condition Code Register
+Carry flag
+Overflow flag
+Zero flag
+Half-carry flag
+Interrupt mask bit
+User bit
+Negative flag
+U U
+6 4
+5
+===== PDFPAGE 16 =====
+1.2.1  General Registers
+All the general registers can be used as both data registers and address registers.  When used as
+address registers, the general registers are accessed as 16-bit registers (R0 to R7).  When used
+as data registers, they can be accessed as 16-bit registers (R0 to R7), or the high (R0H to R7H)
+and low (R0L to R7L) bytes can be accessed separately as 8-bit registers.  The register length
+is determined by the instruction.
+R7 also functions as the stack pointer, used implicitly by hardware in processing interrupts and
+subroutine calls.  In assembly language, the letters SP can be coded as a synonym for R7.  As
+indicated in figure 1-4, R7 (SP) points to the top of the stack.
+Figure 1-4.  Stack Pointer
+1.2.2  Control Registers
+The CPU has a 16-bit program counter (PC) and an 8-bit condition code register (CCR).
+(1)  Program Counter (PC): This 16-bit register indicates the address of the next instruction
+the CPU will execute.  Instructions are fetched by 16-bit (word) access, so the least significant
+bit of the PC is ignored (always regarded as 0).
+(2)  Condition Code Register (CCR): This 8-bit register indicates the internal status of the
+CPU with an interrupt mask (I) bit and five flag bits:  half-carry (H), negative (N), zero (Z),
+overflow (V), and carry (C) flags.  The two unused bits are available to the user.  The bit
+configuration of the condition code register is shown below.
+Unused area
+Stack area
+SP (R7)
+6
+===== PDFPAGE 17 =====
+* Undetermined
+Bit 7—Interrupt Mask Bit (I): When this bit is set to "1," all interrupts except NMI are
+masked.  This bit is set to "1" automatically by a reset and at the start of interrupt handling.
+Bits 6 and 4—User Bits (U): These bits can be written and read by software for its own
+purposes.
+Bit 5—Half-Carry (H):  This bit is used by add, subtract, and compare instructions to indicate
+a borrow or carry out of bit 3 or bit 11.  It is referenced by the decimal adjust instructions.
+Bit 3—Negative  (N):  This bit indicates the most significant bit (sign bit) of the result of an
+instruction.
+Bit 2—Zero (Z): This bit is set to "1" to indicate a zero result and cleared to "0" to indicate a
+nonzero result.
+Bit 1—Overflow  (V): This bit is set to "1" when an arithmetic overflow occurs, and cleared
+to "0" at other times.
+Bit 0—Carry  (C):  This bit is used by:
+• Add, subtract, and compare instructions, to indicate a carry or borrow at the most
+significant bit
+• Shift and rotate instructions, to store the value shifted out of the most or least significant
+bit
+• Bit manipulation instructions, as a bit accumulator
+System control instructions can load and store the CCR, and perform logic operations to set,
+clear, or toggle selected bits.
+1.2.3  Initial Register Values
+When the CPU is reset, the program counter (PC) is loaded from the vector table and the
+interrupt mask bit (I) in the CCR is set to “1.”  The other CCR bits and the general registers are
+not initialized.  
+Bit 7 6 5 4 3 2 1 0
+IU H U N Z V C
+Initial value 1 * * * * * * *
+Read/Write R/W R/W R/W R/W R/W R/W R/W R/W
+7
+===== PDFPAGE 18 =====
+In particular, the stack pointer (R7) is not initialized.  To prevent program crashes the stack
+pointer should be initialized by software, by the first instruction executed after a reset.
+1.3  Instructions
+Features:
+• The H8/300 has a concise set of 57 RISC-like instructions.
+• Arithmetic and logic are performed as register-to-register operations, or with immediate
+data.
+• All instructions are 2 or 4 bytes long.
+• Fast multiply/divide instructions; extensive bit manipulation instructions.
+• Eight addressing modes.
+1.3.1  Types of Instructions
+Table 1-2 classifies the H8/300 instructions by type.  Tables 1-3 to 1-10 briefly describe their
+functions.  Section 2, Instruction Set, gives detailed descriptions.
+Table 1-2.  Instruction Classification
+* POP Rn is equivalent to MOV .W @SP+, Rn.
+PUSH Rn is equivalent to MOV .W Rn, @-SP.
+** Bcc is a conditional branch instruction in which cc represents a condition .
+Function Instructions Types
+Data transfer MOV, MOVFPE, MOVTPE, POP*, PUSH*3
+Arithmetic operationsADD, SUB, ADDX, SUBX, INC, DEC, ADDS, SUBS, 14
+DAA, DAS, MULXU, DIVXU, CMP, NEG
+Logic operations AND, OR, XOR, NOT 4
+Shift SHAL, SHAR, SHLL, SHLR, ROTL, ROTR, ROTXL, 8
+ROTXR
+Bit manipulation BSET, BCLR, BNOT, BTST,BAND, BIAND, BOR 14
+BIOR, BXOR, BIXOR, BLD, BILD, BST, BIST
+Branch Bcc**, JMP, BSR, JSR, RTS 5
+System control RTE, SLEEP, LDC, STC, ANDC, ORC, XORC, NOP 8
+Block data transfer EEPMOV 1
+Total   57
+8
+===== PDFPAGE 19 =====
+1.3.2  Instruction Functions
+Tables 1-3 to 1-10 give brief descriptions of the instructions in each functional group.
+The following notation is used.
+:3, :8, :16 3-bit, 8-bit, or 16-bit length.
+Notation
+Rd General register  (destination)
+Rs General register  (source)
+Rn General register
+(EAd) Destination operand
+(EAs) Source operand
+CCR Condition code register
+N N (negative) bit of CCR
+Z Z (zero) bit of CCR
+V V (overflow) bit of CCR
+C C (carry) bit of CCR
+PC Program counter
+SP Stack pointer (R7)
+#Imm Immediate data
+#xx:3 3-Bit immediate data
+#xx:8 8-Bit immediate data
+#xx:16 16-Bit immediate data
+op Operation field
+disp Displacement
++ Addition
+– Subtraction
+· Multiplication
+÷ Division
+Ù AND logical
+Ú OR logical
+¯ Exclusive OR logical
+ﬁ Move
+¬ Not
+9
+===== PDFPAGE 20 =====
+Table 1-3.  Data Transfer Instructions
+Instruction Size* Function
+MOV B/W (EAs) ﬁ Rd,     Rs ﬁ (EAd)
+Moves data between two general registers or between a general
+register and memory, or moves immediate data to a general register.
+The Rn, @Rn, @(d:16, Rn), @aa:16, #xx:8 or #xx:16, @–Rn, and
+@Rn+ addressing modes are available for byte or word data.  The
+@aa:8 addressing mode is available for byte data only.
+The @–R7 and @R7+ modes require word operands.  Do not
+specify byte size for these two modes.
+MOVFPE B (EAs) ﬁ Rd
+Transfers data from memory to a general register in
+synchronization with the E clock.
+MOVTPE BR s ﬁ (EAd)
+Transfers data from a general register to memory in
+synchronization with the E clock.
+POP W @SP+ ﬁ Rn
+Pops a 16-bit general register from the stack.
+Equivalent to MOV .W @SP+, Rn.
+PUSH W Rn ﬁ @–SP
+Pushes a 16-bit general register onto the stack.
+Equivalent to MOV .W Rn, @-SP.
+* Size:  Operand size
+B:  Byte
+W:  Word
+10
+===== PDFPAGE 21 =====
+Table 1-4.  Arithmetic Instructions
+Instruction Size* Function
+ADD B/W Rd ± Rs ﬁ Rd,   Rd + #Imm ﬁ Rd
+SUB Performs addition or subtraction on data in two general registers,
+or addition on immediate data and data in a general register.
+Immediate data cannot be subtracted from data in a general register.
+Word data can be added or subtracted only when both words are in
+general registers.
+ADDX B Rd ± Rs ± C ﬁ Rd,   Rd ± #Imm ± C ﬁ Rd
+SUBX Performs addition or subtraction with carry or borrow on byte data
+in two general registers, or addition or subtraction on immediate data
+and data in a general register.
+INC B Rd ± 1 ﬁ Rd
+DEC Increments or decrements a general register.
+ADDS W Rd ± 1 ﬁ Rd, Rd ± 2 ﬁ Rd
+SUBS Adds or subtracts immediate data to or from data in a general
+register.  The immediate data must be 1 or 2.
+DAA B Rd decimal adjust ﬁ Rd
+DAS Decimal-adjusts (adjusts to packed BCD) an addition or
+subtraction result in a  general register by referring to the CCR.
+MULXU BR d · Rs ﬁ Rd
+Performs 8-bit · 8-bit unsigned multiplication on data in two
+general registers, providing a 16-bit result.  
+DIVXU B Rd ÷ Rs ﬁ Rd
+Performs 16-bit ÷ 8-bit unsigned division on data in two general
+registers, providing an 8-bit quotient and 8-bit remainder.
+CMP B/W Rd – Rs,      Rd – #Imm
+Compares data in a general register with data in another general
+register or with immediate data.  Word data can be compared only
+between two general registers.
+NEG B 0 – Rd ﬁ Rd
+Obtains the two’s complement (arithmetic complement) of data in
+a general register.
+* Size:  Operand size
+B:  Byte
+W:  Word
+11
+===== PDFPAGE 22 =====
+Table 1-5.  Logic Operation Instructions
+Instruction Size* Function
+AND BR d Ù Rs ﬁ Rd,      Rd Ù #Imm ﬁ Rd
+Performs a logical AND operation on a general register and
+another general register or immediate data.
+OR B Rd  Ú Rs  ﬁ Rd,      Rd   Ú #Imm ﬁ Rd
+Performs a logical OR operation on a general register and another
+general register or immediate data.
+XOR B Rd  ¯ Rs ﬁ Rd,      Rd ¯ #Imm ﬁ Rd
+Performs a logical exclusive OR operation on a general register
+and another general register or immediate data.
+NOT B ¬ Rd  ﬁ Rd
+Obtains the one’s complement (logical complement) of general
+register contents.
+* Size:  Operand size
+B:  Byte
+Table 1-6.  Shift Instructions
+Instruction Size* Function
+SHAL B Rd shift ﬁ Rd
+SHAR Performs an arithmetic shift operation on general register contents.
+SHLL B Rd shift ﬁ Rd
+SHLR Performs a logical shift operation on general register contents.
+ROTL B Rd rotate ﬁ Rd
+ROTR Rotates general register contents.
+ROTXL B Rd rotate through carry ﬁ Rd
+ROTXR Rotates general register contents through the C (carry) bit.
+* Size:  Operand size
+B:  Byte
+12
+===== PDFPAGE 23 =====
+Table 1-7.  Bit-Manipulation Instructions
+Instruction Size* Function
+BSET B1 ﬁ (<bit-No.> of <EAd>)  
+Sets a specified bit in a general register or memory to “1.”  The bit
+is specified by a bit number, given in 3-bit immediate data or the lower
+three bits of a general register.
+BCLR B0  ﬁ (<bit-No.> of <EAd>)
+Clears a specified bit in a general register  or memory to “0.”  The
+bit is specified by a bit number, given in 3-bit immediate data or the
+lower three bits of a general register.
+BNOT B ¬(<bit-No.> of <EAd>) ﬁ (<bit-No.> of <EAd>)
+Inverts a specified bit in a general register or memory.  The bit is
+specified by a bit number, given in 3-bit immediate data or the lower
+three bits of a general register.
+BTST B ¬ (<bit-No.> of <EAd>) ﬁ Z
+Tests a specified bit in a general register or memory and sets or
+clears the Z flag accordingly.  The bit is specified by a bit number,
+given in 3-bit immediate data or the lower three bits of a general
+register.
+BAND BC  Ù (<bit-No.> of <EAd>) ﬁ C
+ANDs the C flag with a specified bit in a general register or
+memory.
+BIAND BC Ù [¬ (<bit-No.> of <EAd>)] ﬁ C
+ANDs the C flag with the inverse of a specified bit in a general
+register or memory.
+The bit number is specified by 3-bit immediate data.
+BOR BC  Ú (<bit-No.> of <EAd>) ﬁ C
+ORs the C flag with a specified bit in a general register or memory.
+BIOR BC Ú [¬ (<bit-No.> of <EAd>)] ﬁ C
+ORs the C flag with the inverse of a specified bit in a general
+register or memory.
+The bit number is specified by 3-bit immediate data.
+13
+===== PDFPAGE 24 =====
+Table 1-7.  Bit-Manipulation Instructions (Cont.)
+Instruction Size* Function
+BXOR BC  ¯ (<bit-No.> of <EAd>) ﬁ C
+Exclusive-ORs the C flag with a specified bit in a general register
+or memory.
+BIXOR BC ¯ [¬ (<bit-No.> of <EAd>)] ﬁ C
+Exclusive-ORs the C flag with the inverse of a specified bit in a
+general register or memory.
+The bit number is specified by 3-bit immediate data.
+BLD B (<bit-No.> of <EAd>) ﬁ C
+Copies a specified bit in a general register or memory to the C flag.
+BILD B ¬ (<bit-No.> of <EAd>) ﬁ C
+Copies the inverse of a specified bit in a general register or
+memory to the C flag.
+The bit number is specified by 3-bit immediate data.
+BST BC  ﬁ (<bit-No.> of <EAd>)
+Copies the C flag to a specified bit in a general register or memory.
+BIST B¬ C  ﬁ (<bit-No.> of <EAd>)
+Copies the inverse of the C flag to a specified bit in a general
+register or memory.
+The bit number is specified by 3-bit immediate data.
+* Size:  Operand size
+B:  Byte
+14
+===== PDFPAGE 25 =====
+Table 1-8.  Branching Instructions 
+Instruction Size Function
+Bcc — Branches if condition cc is true.
+Mnemonic cc Field Description Condition
+BRA (BT) 0 0 0 0 Always (True) Always
+BRN (BF) 0 0 0 1 Never (False) Never
+BHI 0 0 1 0 High C Ú Z = 0
+BLS 0 0 1 1 Low or Same C Ú Z = 1
+BCC (BHS) 0 1 0 0 Carry Clear C = 0
+(High or Same)
+BCS (BLO) 0 1 0 1 Carry Set (Low) C = 1
+BNE 0 1 1 0 Not Equal Z = 0
+BEQ 0 1 1 1 Equal Z = 1
+BVC 1 0 0 0 Overflow Clear V = 0
+BVS 1 0 0 1 Overflow Set V = 1
+BPL 1 0 1 0 Plus N = 0
+BMI 1 0 1 1 Minus N = 1
+BGE 1 1 0 0 Greater or Equal N ¯ V = 0
+BLT 1 1 0 1 Less Than N ¯ V = 1
+BGT 1 1 1 0 Greater Than Z Ú (N ¯ V) = 0
+BLE 1 1 1 1 Less or Equal Z Ú (N ¯ V) = 1
+JMP — Branches unconditionally to a specified address.
+BSR — Branches to a subroutine at a specified address.
+JSR — Branches to a subroutine at a specified displacement from the current
+address.
+RTS — Returns from a subroutine.
+15
+===== PDFPAGE 26 =====
+Table 1-9.  System Control Instructions
+Instruction Size* Function
+RTE — Returns from an exception-handling routine.
+SLEEP — Causes a transition to the power-down state.
+LDC B Rs ﬁ CCR,   #Imm ﬁ CCR
+Moves immediate data or general register contents to the condition
+code register.
+STC B CCR ﬁ Rd
+Copies the condition code register to a specified general register.
+ANDC B CCR Ù #Imm ﬁ CCR
+Logically ANDs the condition code register with immediate data.
+ORC B CCR Ú #Imm ﬁ CCR
+Logically ORs the condition code register with immediate data.
+XORC B CCR ¯ #Imm ﬁ CCR
+Logically exclusive-ORs the condition code register with immediate
+data.
+NOP — PC + 2 ﬁ PC
+Only increments the program counter.
+* Size:  Operand size
+B:  Byte
+Table 1-10.  Block Data Transfer Instruction
+Instruction Size Function
+EEPMOV — if R4L ≠ 0 then
+repeat @R5+ ﬁ @R6+
+R4L – 1 ﬁ R4L
+until  R4L = 0
+else next;
+Moves a data block according to parameters set in general registers
+R4L, R5, and R6.
+R4L: size of block (bytes)
+R5: starting source address
+R6: starting destination address
+Execution of the next instruction starts as soon as the block transfer is
+completed.
+16
+===== PDFPAGE 27 =====
+Notes on Bit Manipulation Instructions:  BSET, BCLR, BNOT, BST, and BIST are read-
+modify-write instructions.  They read a byte of data, modify one bit in the byte, then write the
+byte back.  Care is required when these instructions are applied to registers with write-only bits
+and to the I/O port registers.
+Example 1:  BCLR is executed to clear bit 0 in the port 4 data direction register (P4DDR)
+under the following conditions.
+P4
+7: Input pin, Low, MOS pull-up transistor on
+P46: Input pin, High, MOS pull-up transistor off
+P45 – P40: Output pins, Low
+The intended purpose of this BCLR instruction is to switch P40 from output to input.
+Before Execution of BCLR Instruction
+Execution of BCLR Instruction
+BCLR  #0  @P4DDR ; clear bit 0 in data direction register
+After Execution of BCLR Instruction
+Sequence Operation
+1 Read Read one data byte at the specified address
+2 Modify Modify one bit in the data byte
+3 Write Write the modified data byte back to the specified address
+P47 P46 P45 P44 P43 P42 P41 P40
+Input/output Input Input Output Output Output Output Output Output
+Pin state Low High Low Low Low Low Low Low
+D D R 001 1111 1
+D R 100 0000 0
+Pull-up On Off Off Off Off Off Off Off
+P47 P46 P45 P44 P43 P42 P41 P40
+Input/output Output Output Output Output Output Output Output Input
+Pin state Low High Low Low Low Low Low High
+D D R 111 1111 0
+D R 100 0000 0
+Pull-up Off Off Off Off Off Off Off Off
+17
+===== PDFPAGE 28 =====
+Explanation:  To execute the BCLR instruction, the CPU begins by reading P4DDR.  Since
+P4DDR is a write-only register, it is read as H'FF, even though its true value is H'3F.
+Next the CPU clears bit 0 of the read data, changing the value to H'FE.
+Finally, the CPU writes this value (H'FE) back to P4DDR to complete the BCLR instruction.
+As a result, P4
+0DDR is cleared to "0," making P40 an input pin.  In addition, P47DDR and
+P46DDR are set to "1," making P47 and P46 output pins.
+Example 2:  BSET is executed to set bit 0 in the port 4 data register (P4DR) under the
+following conditions.
+P4
+7: Input pin, Low, MOS pull-up transistor on
+P46: Input pin, High, MOS pull-up transistor off
+P45 – P40: Output pins, Low
+The intended purpose of this BSET instruction is to switch the output level at P40 from Low to
+High.
+Before Execution of BSET Instruction
+Execution of BSET Instruction
+BSET  #0  @PORT4 ; set bit 0 in port-4 data register
+P47 P46 P45 P44 P43 P42 P41 P40
+Input/output Input Input Output Output Output Output Output Output
+Pin state Low High Low Low Low Low Low Low
+D D R 001 1111 1
+D R 100 0000 0
+Pull-up On Off Off Off Off Off Off Off
+18
+===== PDFPAGE 29 =====
+After Execution of BSET Instruction
+Explanation:  To execute the BSET instruction, the CPU begins by reading port 4.  Since P47
+and P46 are input pins, the CPU reads the level of these pins directly, not the value in the data
+register.  It reads P47 as Low ("0") and P46 as High ("1").
+Since P45 to P40 are output pins, for these pins the CPU reads the value in the data register
+("0").  The CPU therefore reads the value of port 4 as H'40, although the actual value in P4DR
+is H'80.
+Next the CPU sets bit 0 of the read data to "1," changing the value to H'41.
+Finally, the CPU writes this value (H'41) back to P4DR to complete the BSET instruction.
+As a result, bit P4
+0 is set to "1," switching pin P40 to High output.  In addition, bits P47 and
+P46 are both modified, changing the on/off settings of the MOS pull-up transistors of pins P47
+and P46.
+Programming Solution:  The switching of the pull-ups for P47 and P46 in example 2 can be
+avoided by storing the same data in both the port-4 data register and in a work area in RAM.
+Bit manipulations are performed on the data in the work area, after which the result is moved
+into the port-4 data register.  In the following example RAM0 is a symbol for the user-selected
+address of the work area.
+Before Execution of BSET Instruction
+MOV.B  #80   R0L ; write data (H'80) for data register
+MOV.B  R0L   @RAM0 ; write to DR work area (RAM0)
+MOV.B  R0L   @PORT4 ; write to DR
+P47 P46 P45 P44 P43 P42 P41 P40
+Input/output Input Input Output Output Output Output Output Output
+Pin state Low High Low Low Low Low Low High
+D D R 001 1111 1
+D R 010 0000 1
+Pull-up Off On Off Off Off Off Off Off
+19
+===== PDFPAGE 30 =====
+Execution of BSET Instruction
+BSET  #0  @RAM0 ; set bit 0 in DR work area (RAM0)
+After Execution of BSET Instruction
+MOV.B  @RAM0  R0L ; get value in work area (RAM0)
+MOV.B  R0L    @PORT4 ;write value to DR
+P47 P46 P45 P44 P43 P42 P41 P40
+Input/output Input Input Output Output Output Output Output Output
+Pin state Low High Low Low Low Low Low Low
+D D R 001 1111 1
+D R 100 0000 0
+Pull-up On Off Off Off Off Off Off Off
+RAM0 1 0 0 0 0 0 0 0
+P47 P46 P45 P44 P43 P42 P41 P40
+Input/output Input Input Output Output Output Output Output Output
+Pin state Low High Low Low Low Low Low High
+D D R 001 1111 1
+D R 100 0000 1
+Pull-up On Off Off Off Off Off Off Off
+RAM0 1 0 0 0 0 0 0 1
+20
+===== PDFPAGE 31 =====
+1.3.3   Machine-Language Coding
+Figure 1-5.   Machine-Language Coding of Data Transfer Instructions
+15 8 7 0 MOV
+op r r Rm ﬁ  Rn
+r r Rn ﬁ  @Rm, or @Rm ﬁ  Rn
+r r @(d:16, Rm) ﬁ  Rn, or
+disp. Rn ﬁ  @(d:16, Rm)
+r @Rm+ ﬁ  Rn, or Rn ﬁ  @–Rm
+abs. @aa:8 ﬁ  Rn, or Rn ﬁ  @aa:8
+r @aa:16 ﬁ  Rn, or
+abs. Rn ﬁ  @aa:16
+IMM #xx:8 ﬁ  Rn
+#xx:16 ﬁ  Rn
+IMM
+r MOVFPE, MOVTPE
+abs.
+r
+m n
+m
+m
+rn
+n
+n
+n
+n
+rn
+rn
+n
+m
+15 8 7 0
+op
+15 8 7 0
+op
+15 8 7 0
+op
+15 8 7 0
+op
+15 8 7 0
+op
+15 8 7 0
+op
+15 8 7 0
+op
+15 8 7 0
+op
+15 0
+op rn POP, PUSH
+8 7
+Notation
+op: Operation field
+rm, rn: Register field
+disp: Displacement
+abs.: Absolute address
+IMM: Immediate data
+21
+===== PDFPAGE 32 =====
+Figure 1-6.  Machine-Language Coding of Arithmetic, Logic, and Shift Instruction Codes
+r ADD, SUB, CMP (Rm)
+ADDX, SUBX (Rm)
+r m n
+15 8 7 0
+op
+r ADDS, SUBS, INC, DEC, DAA,
+DAS, NEG, NOT
+n
+15 8 7 0
+op
+r IMM ADD, ADDX, SUBX, CMP
+(#xx:8)
+r IMM AND, OR, XOR (#xx:8)
+n
+n
+15 8 7 0
+op
+r r AND, OR, XOR (Rm)m n
+15 8 7 0
+op
+15 8 7 0
+op
+r SHAL, SHAR, SHLL, SHLR,
+ROTL, ROTR, ROTXL, ROTXR
+n
+15 8 7 0
+op
+r MULXU, DIVXUn
+15 0
+op r m
+8 7
+Notation
+op: Operation field
+rm, rn: Register field
+IMM: Immediate data
+22
+===== PDFPAGE 33 =====
+Figure 1-7.  Machine-Language Coding of Bit Manipulation Instructions 
+BSET, BCLR, BNOT, BTST
+IMM r Operand:  register direct (Rn)
+Bit No.:  immediate (#xx:3)
+r r Operand:  register direct (Rn)
+r Operand:  register indirect (@Rn)
+r Bit No.:  register direct (Rm)
+abs. Operand:  absolute (@aa:8)
+IMM Bit No.:  immediate (#xx:3)
+abs. Operand:  absolute (@aa:8)
+r Bit No.:  register direct (Rm)
+BAND, BOR, BXOR, BLD, BST
+IMM Operand:  register direct (Rn)
+Bit No.:  immediate (#xx:3)
+r Operand:  register indirect (@Rn)
+IMM Bit No.:  immediate (#xx:3)
+abs. Operand:  absolute (@aa:8)
+IMM Bit No.:  immediate (#xx:3)
+m
+n
+m
+n
+n
+m
+r n
+n
+15 8 7 0
+op
+15 8 7 0
+op
+Bit No.:  register direct (Rm)
+r Operand:  register indirect (@Rn)
+IMM Bit No.:  immediate (#xx:3)
+n
+15 8 7 0
+op
+op
+15 8 7 0
+op
+15 8 7 0
+op
+op
+15 8 7 0
+op
+op
+15 8 7 0
+op
+15 8 7 0
+op
+op
+15 8 7 0
+op
+op
+op
+0   0   0   0
+0   0   0   0
+0   0   0   0
+0   0   0   0
+0   0   0   0
+0   0   0   0
+0   0   0   0
+0   0   0   0
+0   0   0   0
+Notation
+op: Operation field
+rm, rn: Register field
+abs.: Absolute address
+IMM: Immediate data
+23
+===== PDFPAGE 34 =====
+Figure 1-7.  Machine-Language Coding of Bit Manipulation Instructions  (Cont.)
+BIAND, BIOR, BIXOR, BILD, BIST
+IMM Operand:  register direct (Rn)
+Bit No.:  immediate (#xx:3)
+r Operand:  register indirect (@Rn)
+IMM Bit No.:  immediate (#xx:3)
+abs. Operand:  absolute (@aa:8)
+IMM Bit No.:  immediate (#xx:3)
+rn
+n
+15 8 7 0
+op
+op
+15 8 7 0
+op
+op
+15 8 7 0
+op
+0   0   0   0
+0   0   0   0
+0   0   0   0
+Notation
+op: Operation field
+rm, rn: Register field
+abs.: Absolute address
+IMM: Immediate data
+24
+===== PDFPAGE 35 =====
+and to the I/O port registers.
+Example 1:  BCLR is executed to clear bit 0 in the port 4 data direction register (P4DDR)
+under the following conditions.
+P4
+7: Input pin, Low, MOS pull-up transistor on
+P46: Input pin, High, MOS pull-up transistor off
+P45 – P40: Output pins, Low
+The intended purpose of this BCLR instruction is to switch P40 from output to input.
+cc disp. Bcc
+r JMP (@Rm)
+JMP (@aa:16)
+abs.
+abs. JMP (@@aa:8)
+disp. BSR
+JSR (@Rm)
+JSR (@aa:16)
+abs.
+abs. JSR (@@aa:8)
+RTS
+rm
+m
+15 8 7 0
+op
+15 8 7 0
+op
+15 8 7 0
+op
+15 8 7 0
+op
+15 8 7 0
+op
+15 8 7 0
+op
+15 8 7 0
+op
+15 8 7 0
+op
+15 8 7 0
+op
+0 0 0 0
+0   0   0   0
+Notation
+op: Operation field
+cc: Condition field
+rm: Register field
+disp.: Displacement
+abs.: Absolute address
+25
+===== PDFPAGE 36 =====
+Figure 1-9.  Machine-Language Coding of System Control Instructions
+Figure 1-10.  Machine-Language Coding of Block Data Transfer Instruction
+15 8 7 0
+RTE, SLEEP, NOP
+r LDC, STC (Rn)
+IMM ANDC, ORC, XORC, LDC
+(#xx:8)
+n
+op
+15 8 7 0
+op
+15 8 7 0
+op
+Notation
+op: Operation field
+rn: Register field
+IMM: Immediate data
+26
+15 8 7 0
+EEPMOV
+op
+op
+===== PDFPAGE 37 =====
+1.3.4  Addressing Modes and Effective Address Calculation
+Table 1-11 lists the eight addressing modes and their assembly-language notation.  Each
+instruction can use a specific subset of these addressing modes.
+Table 1-11.  Addressing Modes
+(1)  Register Direct—Rn:  The register field of the instruction specifies an 8- or 16-bit general
+register containing the operand.  In most cases the general register is accessed as an 8-bit
+register.  Only the MOV .W, ADD.W, SUB.W, CMP.W, ADDS, SUBS, MULXU (8 bits · 8
+bits), and DIVXU (16 bits ÷ 8 bits) instructions have 16-bit operands.
+(2)  Register indirect—@Rn: The register field of the instruction specifies a 16-bit general
+register containing the address of the operand.
+(3)  Register Indirect with Displacement—@(d:16, Rn):  This mode, which is used only in
+MOV instructions, is similar to register indirect but the instruction has a second word (bytes 3
+and 4) which is added to the contents of the specified general register to obtain the operand
+address.  For the MOV .W instruction, the resulting address must be even.
+(4)  Register Indirect with Post-Increment or Pre-Decrement—@Rn+ or @–Rn:
+• Register indirect with post-increment—@Rn+
+The @Rn+ mode is used with MOV instructions that load register from memory.
+It is similar to the register indirect mode, but the 16-bit general register specified in the
+register field of the instruction is incremented after the operand is accessed.  The size of
+the increment is 1 or 2 depending on the size of the operand:  1 for a byte operand; 2 for a
+No. Mode Notation
+(1) Register direct Rn
+(2) Register indirect @Rn
+(3) Register indirect with 16-bit displacement @(d:16, Rn)
+(4) Register indirect with post-increment @Rn+
+Register indirect with pre-decrement @–Rn
+(5) Absolute address (8 or 16 bits) @aa:8, @aa:16
+(6) Immediate (3-, 8-, or 16-bit data) #xx:3, #xx:8, #xx:16
+(7) PC-relative (8-bit displacement) @(d:8, PC)
+(8) Memory indirect @@aa:8
+27
+===== PDFPAGE 38 =====
+word operand.  For a word operand, the original contents of the 16-bit general register
+must be even.
+• Register indirect with pre-decrement—@–Rn
+The @–Rn mode is used with MOV instructions that store registers contents to memory.
+It is similar to the register indirect mode, but the 16-bit general register specified in the
+register field of the instruction is decremented before the operand is accessed.  The size of
+the decrement is 1 or 2 depending on the size of the operand:  1 for a byte operand; 2 for a
+word operand.  For a word operand, the original contents of the 16-bit general register
+must be even.
+(5)  Absolute Address—@aa:8 or @aa:16:  The instruction specifies the absolute address of
+the operand in memory.  The @aa:8 mode uses an 8-bit absolute address of the form H’FFxx.
+The upper 8 bits are assumed to be 1, so the possible address range is H’FF00 to H’FFFF
+(65280 to 65535).  The MOV .B, MOV .W, JMP, and JSR instructions can use 16-bit absolute
+addresses.
+(6)  Immediate—#xx:8 or #xx:16:  The instruction contains an 8-bit operand in its second
+byte, or a 16-bit operand in its third and fourth bytes.  Only MOV .W instructions can contain
+16-bit immediate values.
+The ADDS and SUBS instructions implicitly contain the value 1 or 2 as immediate data.
+Some bit manipulation instructions contain 3-bit immediate data (#xx:3) in the second or
+fourth byte of the instruction, specifying a bit number.
+(7)  PC-Relative—@(d:8, PC):  This mode is used to generate branch addresses in the Bcc
+and BSR instructions.  An 8-bit value in byte 2 of the instruction code is added as a sign-
+extended value to the program counter contents.  The result must be an even number.  The
+possible branching range is –126 to +128 bytes (–63 to +64 words) from the current address.
+(8)  Memory Indirect—@@aa:8:  This mode can be used by the JMP and JSR instructions.
+The second byte of the instruction code specifies an 8-bit absolute address from H’0000 to
+H’00FF (0 to 255).  Note that the initial part of the area from H'0000 to H'00FF contains the
+exception vector table.  See the hardware manual of the specific chip for details.  The word
+located at this address contains the branch address.
+If an odd address is specified as a branch destination or as the operand address of a MOV .W
+instruction, the least significant bit is regarded as “0,” causing word access to be performed at
+the address preceding the specified address.  See the memory data structure description in
+section 1.1.2, Data Structure.
+28
+===== PDFPAGE 39 =====
+Calculation of Effective Address:  Table 1-12 shows how the H8/300 calculates effective
+addresses in each addressing mode.
+Arithmetic, logic, and shift instructions use register direct addressing (1).  The ADD.B,
+ADDX, SUBX, CMP.B, AND, OR, and XOR instructions can also use immediate addressing
+(6).
+The MOV instruction uses all the addressing modes except program-counter relative (7) and
+memory indirect (8).
+Bit manipulation instructions use register direct (1), register indirect (2), or absolute (5)
+addressing to identify a byte operand and 3-bit immediate addressing to identify a bit within
+the byte.  The BSET, BCLR, BNOT, and BTST instructions can also use register direct
+addressing (1) to identify the bit.
+Effective Address Calculation
+Table 1-12 explains how the effective address is calculated in each addressing mode.
+Table 1-12, Effective Address Calculation (1)
+Addressing mode, Effective address Effective
+No. instruction format calculation address
+1 Register direct Rn. None
+2 Register indirect @Rn
+Operand is at address
+indicated by register
+15 07 6 4 3
+OP reg
+16-bit register contents
+15 0
+15 0
+15 8 7 0
+OP reg m reg n
+4 3
+3 0 3 0
+reg m reg n
+Operand are contained in
+registers m and n
+29
+===== PDFPAGE 40 =====
+Table 1-12, Effective Address Calculation (2)
+Addressing mode, Effective address Effective
+No. instruction format calculation address
+3 Register indirect with displacement
+@(d:16, Rn)
+4 Register indirect with pre-decrement
+@-Rn
+Register indirect with post-increment
+@Rn+
+5 Immediate #xx:8. None
+Immediate #xx:16 None
+16-bit register contents
+15 0
+15 0
+16-bit displacement
++
+15 0
+disp
+Operand address is sum
+of register contents and
+displacement
+OP reg
+7 6 4 3
+15 07 6 4 3
+OP reg
+16-bit register contents
+15 0
+-
+1 or 2*
+15 0
+Register is decremented
+before operand access
+15 07 6 4 3
+OP reg
+16-bit register contents
+15 0
++
+1 or 2*
+15 0
+Register is incremented
+after operand access
+Register is incremented
+after operand access
+OP
+15 8 7 0
+IMM Operand is 1-byte
+immediate data
+15 0
+OP
+IMM
+Operand is 2-byte
+immediate data
+30
+* 1 for a byte operand,
+2 for a word operand
+===== PDFPAGE 41 =====
+Table 1-12, Effective Address Calculation (3)
+Addressing mode, Effective address Effective
+No. instruction format calculation address
+6 Absolute address None
+@aa:8
+Absolute address
+@aa:16
+7 PC-relative @(d:8, PC)
+8 Memory indirect @@aa:8
+reg, regm, regn: General register
+op: Operation field
+disp: Displacement
+abs: Absolute address
+IMM: Immediate data
+OP
+15 8 7 0
+abs
+H'FF
+15 8 7 0
+Operand address is in range
+from H'FF00 to H'FFFF
+15 0
+OP
+15 0
+Arbitrary address
+abs
+PC contents
+15 0
+15 0
+Destination address
++
+OP
+15 8 7 0
+disp
+dispSign extension
+OP
+15 8 7 0
+abs
+H'00
+15 8 7 0
+16-bit memory contents
+15 0 15 0
+Destination address
+31
+===== PDFPAGE 42 =====
+Section 2.  Instruction Set
+Section 2 gives full descriptions of all the H8/300 instructions, presenting them in alphabetic
+order.  Each instruction is explained in a table like the following:
+ADD (ADD binary) (byte) ADD
+<Description>
+This instruction adds the source operand to the contents of an 8-bit general register and places
+the result in the 8-bit general register .
+The source operand can be an 8-bit register value or immediate byte data.
+Immediate ADD.B #xx:8, Rd 8 rd IMM 2
+Register direct ADD.B Rs, Rd 0 8 rs rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+<Operation>
+Rd + (EAs)  ﬁ Rd
+<Assembly-Language Format>
+ADD.B <EAs>, Rd
+<Examples>
+ADD.B R0H, R1H
+ADD.B #H'64, R2L
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Set to "1" when there is a carry from bit
+3; otherwise cleared to "0."
+N: Set to "1" when the result is negative;
+otherwise cleared to "0."
+Z: Set to "1" when the result is zero;
+otherwise cleared to "0."
+V: Set to "1" if an overflow occurs;
+otherwise cleared to "0."
+C: Set to "1" if there is a carry from bit 7;
+otherwise cleared to "0."
+IH N Z V C  
+—— × — ×××× 
+32
+===== PDFPAGE 43 =====
+<Instruction Formats>
+Name:  The full and mnemonic names of the instruction are given at the top of the page.
+Operation:  Describes the instruction in symbolic notation.  The following symbols are used.
+Symbol Meaning
+(EAs) Source operand
+(EAd) Destination operand
+Rs, Rd, Rn 8-bit or 16-bit general register (s—source; d—destination)
+#xx:3, #xx:8, #xx:16 3-bit, 8-bit, or 16-bit immediate data
+d:8, d:16 8-bit or 16-bit displacement
+PC Program counter
+SP Stack pointer
+CCR Condition code register
+Z Zero flag in CCR
+C Carry flag in CCR
+ﬁ The result of the operation on the left is assigned to the operand on the 
+right  (For compare instructions, the resulting condition code is
+assigned.)
++ Addition
+– Subtraction
+· Multiplication
+÷ Division
+Ù AND logical
+Ú OR logical
+¯ Exclusive OR logical
+« Exchange
+¬ Not
+Assembly-Language
+Format:  The assembly-
+language coding of the
+instruction.  An example is:
+ADD. B  <EAs>,  Rd
+Mnemonic Size Source Destination
+33
+===== PDFPAGE 44 =====
+The operand size is indicated by the letter B (byte) or W (word).  The size is indicated
+explicitly in this manual, but for instructions that permit only one size, the size designation can
+be omitted in source-program coding.
+The abbreviation EAs or EAd (effective address of source or destination) is used for operands
+that permit more than one addressing mode.
+Examples:  Examples of the assembly-language coding of the instruction are given.
+Operand size:  Word or byte.  Byte size is indicated for bit-manipulation instructions because
+these instructions access a full byte in order to read or write one bit.
+Condition code:  The effect of instruction execution on the flag bits in the CCR is indicated.
+The following notation is used:
+Symbol Meaning
+×The flag is altered according to the result of the instruction.
+0 The flag is cleared to "0."
+— The flag is not changed.
+* Undetermined; the flag is left in an unpredictable state.
+Description:  A detailed explanation is given of the action of the instruction.
+Instruction Formats:  Each possible format of the instruction is shown explicitly, indicating
+the addressing mode, the object code, and the number of states required for execution when the
+instruction and its operands are located in on-chip memory.  The following symbols are used:
+Symbol Meaning
+Imm. Immediate data (3, 8, or 16 bits)
+abs. An absolute address (8 bits or 16 bits)
+disp. Displacement (8 bits or 16 bits)
+r
+s, rd, rn General register number (3 bits or 4 bits)  The  s, d, and n  correspond to the letters
+in the operand notation
+34
+===== PDFPAGE 45 =====
+16-bit general registers are indicated by a 3-bit rs, rd, or rn value.  8-bit registers are indicated
+by a 4-bit rs, rd, or rn value.  Address registers used in the @Rn, @(disp:16, Rn), @Rn+, and
+@–Rn addressing modes are always 16-bit registers.  Data registers are 8-bit or 16-bit registers
+depending on the size of the operand.  For 8-bit registers, the lower three bits of r
+s, rd, or rn
+give the register number.  The most significant bit is "1" if the lower byte of the register is
+used, or "0" if the upper byte is used.  Registers are thus indicated as follows:
+16-Bit register
+r
+s, rd, or rn
+Register
+0 0 0 R0
+0 0 1 R1
+::
+1 1 1 R7
+Bit Data Access:  Bit data are accessed as the n-th bit of a byte operand in a general register or
+memory.  The bit number is given by 3-bit immediate data, or by a value in a general register.
+When a bit number is specified in a general register, only the lower three bits of the register are
+significant.  Two examples are shown below.
+BSET R1L, R2H
+8-Bit registers
+rs, rd, or rn Register
+0 0 0 0 R0H
+0 0 0 1 R1H
+::
+0 1 1 1 R7H
+1 0 0 0 R0L
+1 0 0 1 R1L
+::
+1 1 1 1 R7L
+R1L don't care 011
+R 2 H 01100101
+Bit number = 3
+Bit 3 is set to "1"
+35
+===== PDFPAGE 46 =====
+BLD #5, @H'FF02:8
+The addressing mode and operand size apply to the register or memory byte containing the bit.
+Number of States Required for Execution:  The number of states indicated is the number
+required when the instruction and any memory operands are located in on-chip ROM or RAM.
+If the instruction or an operand is located in external memory or the on-chip register field,
+additional states are required for each access.  See Appendix C.
+1  0  1  0  0  1  1  0H'FF02
+Loaded to C (carry)
+flag in CCR
+C
+Bit No. 5
+36
+===== PDFPAGE 47 =====
+ADD (ADD binary) (byte) ADD
+<Description>
+This instruction adds the source operand to the contents of an 8-bit general register and places
+the result in the 8-bit general register .
+The source operand can be an 8-bit register value or immediate byte data.
+<Instruction Formats>
+Immediate ADD.B #xx:8, Rd 8 rd IMM 2
+Register direct ADD.B Rs, Rd 0 8 rs rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+<Operation>
+Rd + (EAs)  ﬁ Rd
+<Assembly-Language Format>
+ADD.B <EAs>, Rd
+<Examples>
+ADD.B R0H, R1H
+ADD.B #H'64, R2L
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Set to "1" when there is a carry from bit
+3; otherwise cleared to "0."
+N: Set to "1" when the result is negative;
+otherwise cleared to "0."
+Z: Set to "1" when the result is zero;
+otherwise cleared to "0."
+V: Set to "1" if an overflow occurs;
+otherwise cleared to "0."
+C: Set to "1" if there is a carry from bit 7;
+otherwise cleared to "0."
+IH N Z V C  
+—— × — ×××× 
+37
+===== PDFPAGE 48 =====
+ADD (ADD binary) (word) ADD
+<Description>
+This instruction adds word data in two general registers and places the result in the second
+general register.
+<Instruction Formats>
+Register direct ADD.W Rs, Rd 0 9 0  rs 0  rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+<Operation>
+Rd + Rs  ﬁ Rd
+<Assembly-Language Format>
+ADD.W Rs, Rd
+<Examples>
+ADD.W R0, R1
+<Operand Size>
+Word
+<Condition Code>
+I: Previous value remains unchanged.
+H: Set to "1" when there is a carry from bit
+11; otherwise cleared to "0."
+N: Set to "1" when the result is negative;
+otherwise cleared to "0."
+Z: Set to "1" when the result is zero;
+otherwise cleared to "0."
+V: Set to "1" if an overflow occurs;
+otherwise cleared to "0."
+C: Set to "1" if there is a carry from bit 15;
+otherwise cleared to "0."
+IH N Z V C  
+—— × — ×××× 
+38
+===== PDFPAGE 49 =====
+ADDS (ADD with Sign extension) ADDS
+<Description>
+This instruction adds the immediate value 1 or 2 to word data in a general register.  Differing
+from the ADD instruction, it does not affect the condition code flags.
+<Instruction Formats>
+Note:  This instruction cannot access byte size data.
+<Operation>
+Rd + 1 ﬁ Rd
+Rd + 2 ﬁ Rd
+<Assembly-Language Format>
+ADDS #1, Rd
+ADDS #2, Rd
+<Examples>
+ADDS #1, R4
+ADDS #2, R5
+<Operand Size>
+Word
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Previous value remains unchanged.
+Z: Previous value remains unchanged.
+V: Previous value remains unchanged.
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ————  
+Register direct ADDS #1, Rd 0 B 0 0  rd 2
+Register direct ADDS #2, Rd 0 B 8 0  rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+39
+===== PDFPAGE 50 =====
+ADDX (ADD with eXtend carry) ADDX
+<Description>
+This instruction adds the source operand and carry flag to the contents of an 8-bit general
+register and places the result in the 8-bit general register.
+The source operand can be an 8-bit register value or immediate byte data.
+<Instruction Formats>
+<Operation>
+Rd + (EAs) + C ﬁ Rd
+<Assembly-Language Format>
+ADDX <EAs>, Rd
+<Examples>
+ADDX R0L, R1L
+ADDX #H'0A, R2H
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Set to "1" if there is a carry from bit 3;
+otherwise cleared to "0."
+N: Set to "1" when the result is negative;
+otherwise cleared to "0."
+Z: Set to "1" when the result is zero;
+otherwise cleared to "0."
+V: Set to "1" if an overflow occurs;
+otherwise cleared to "0."
+C: Set to "1" if there is a carry from bit 7;
+otherwise cleared to "0."
+IH N Z V C  
+—— × — ×××× 
+Immediate ADDX #xx:8, Rd 9 rd IMM 2
+Register direct ADDX Rs, Rd 0 E rs rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+40
+===== PDFPAGE 51 =====
+AND (AND logical) AND
+<Description>
+This instruction ANDs the source operand with the contents of an 8-bit general register and
+places the result in the 8-bit general register.
+The source operand can be an 8-bit register value or immediate byte data.
+<Instruction Formats>
+Immediate AND #xx:8, Rd E rd IMM 2
+Register direct AND Rs, Rd 1 6 rs rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+<Operation>
+Rd Ù (EAs) ﬁ Rd
+<Assembly-Language Format>
+AND <EAs>, Rd
+<Examples>
+AND R6H, R6L
+AND #H'FD, R0H
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Set to "1" when the result is negative;
+otherwise cleared to "0."
+Z: Set to "1" when the result is zero;
+otherwise cleared to "0."
+V: Cleared to "0."
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ×× 0—  
+ 
+41
+===== PDFPAGE 52 =====
+ANDC  (AND Control register) ANDC
+<Description>
+This instruction ANDs the condition code register (CCR) with immediate data and places the
+result in the condition code register.  Bits 6 and 4 are ANDed as well as the flag bits.
+No interrupt requests are accepted immediately after this instruction.  All interrupts, including
+the nonmaskable interrupt (NMI), are deferred until after the next instruction.
+<Instruction Formats>
+Immediate ANDC #xx:8, CCR 0 6 IMM 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+<Operation>
+CCR Ù #IMMﬁ CCR
+<Assembly-Language Format>
+ANDC #xx:8, CCR
+<Examples>
+ANDC #H'7F, CCR
+<Operand Size>
+Byte
+<Condition Code>
+I: ANDed with bit 7 of the immediate data.
+H: ANDed with bit 5 of the immediate data.
+N: ANDed with bit 3 of the immediate data.
+Z: ANDed with bit 2 of the immediate data.
+V: ANDed with bit 1 of the immediate data.
+C: ANDed with bit 0 of the immediate data.
+IH N Z V C  
+××××××××  
+42
+===== PDFPAGE 53 =====
+BAND (Bit AND) BAND
+<Description>
+This instruction ANDs a specified bit with the carry flag and places the result in the carry flag.
+The specified bit can be located in a general register or memory.  The bit number is specified
+by 3-bit immediate data.  The operation is shown schematically below.
+The value of the specified bit is not changed.
+<Instruction Formats>
+*  Register direct, register indirect, or absolute addressing.
+Register direct BAND #xx:3, Rd 7 6 0 IMM rd 2
+Register indirect BAND #xx:3,@Rd 7 C 0  rd 0 76 0 IMM 0 6
+Absolute address BAND #xx:3,@aa:8 7 E abs 7 6 0 IMM 0 6
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+<Operation>
+C Ù (<Bit No.> of <EAd>) ﬁ C
+<Assembly-Language Format>
+BAND #xx:3, <EAd>
+<Examples>
+BAND #0, R1L
+BAND #4, @R3
+BAND #7, @H'FFE0:8
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Previous value remains unchanged.
+Z: Previous value remains unchanged.
+V: Previous value remains unchanged.
+C: ANDed with the specified bit.
+IH N Z V C  
+———— ——— × 
+C Ù C
+Bit No. 7 0#xx:3
+Byte data in register or memory<EAd>*ﬁ
+43
+===== PDFPAGE 54 =====
+Bcc (Branch conditionally) Bcc
+<Operation>
+If cc then 
+PC + d:8 ﬁ PC
+else next;
+<Assembly-Language Format>
+(For mnemonics, see the table on the
+next page.)
+<Examples>
+BHI H'42
+BEQ H'–7E
+<Operand Size>
+—
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Previous value remains unchanged.
+Z: Previous value remains unchanged.
+V: Previous value remains unchanged.
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ————  
+ÙBcc
+Condition code field
+d:8
+44
+===== PDFPAGE 55 =====
+Bcc (Branch conditionally) Bcc
+<Description>
+If the specified condition is false, this instruction does nothing; the next instruction is executed.
+If the specified condition is true, a signed displacement is added to the address of the next
+instruction and execution branches to the resulting address.
+The displacement is a signed 8-bit value which must be even.  The branch destination address
+can be located in the range –126 to +128 bytes from the address of the Bcc instruction.
+The available conditions and their mnemonics are given below.
+BT, BF, BHS, and BLO are synonyms for BRA, BRN, BCC, and BCS, respectively.
+Mnemonic cc Field Description Condition Meaning 
+BRA (BT) 0 0 0 0 Always (True) Always true
+BRN (BF) 0 0 0 1 Never (False) Never
+BHI 0 0 1 0 HIgh C Ú Z = 0 X > Y  (Unsigned)
+BLS 0 0 1 1 Low or Same C Ú Z = 1 X ≤ Y  (Unsigned) 
+BCC (BHS) 0 1 0 0 Carry Clear C = 0 X ‡ Y  (Unsigned)
+(High or Same)
+BCS (BLO) 0 1 0 1 Carry Set (LOw) C = 1 X < Y  (Unsigned)
+BNE 0 1 1 0 Not Equal Z = 0 X ≠ Y  (Signed or
+unsigned)
+BEQ 0 1 1 1 EQual Z = 1 X = Y  (Signed or
+unsigned)
+BVC 1 0 0 0 oVerflow Clear V = 0
+BVS 1 0 0 1 oVerflow Set V = 1
+BPL 1 0 1 0 PLus N = 0
+BMI 1 0 1 1 MInus N = 1
+BGE 1 1 0 0 Greater or Equal N ¯ V = 0 X ‡ Y  (Signed)
+BLT 1 1 0 1 Less Than N ¯ V = 1 X < Y  (Signed)
+BGT 1 1 1 0 Greater Than Z Ú (N ¯ V) = 0 X > Y  (Signed)
+BLE 1 1 1 1 Less or Equal Z Ú (N ¯ V) = 1 X ≤ Y  (Signed)
+45
+===== PDFPAGE 56 =====
+Bcc (Branch conditionally) Bcc
+<Instruction Formats>
+*  The branch address must be even.
+1st byte 2nd byte 3rd byte 4th byteMnem. Operands
+Instruction  code No . ofAdressing
+mode states
+BRA (BT)
+BRN (BF)
+PC relative
+PC relative
+PC relative
+PC relative
+PC relative
+PC relative
+PC relative
+PC relative
+PC relative
+PC relative
+PC relative
+PC relative
+4
+4
+4
+4
+4
+4
+PC relative
+PC relative
+PC relative
+PC relative
+4
+4
+4
+4
+d:8
+d:8
+d:8
+d:8
+d:8
+d:8
+d:8
+d:8
+d:8
+d:8
+d:8
+d:8
+d:8
+d:8
+d:8
+d:8
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+0
+1
+2
+3
+4
+5
+6
+8
+7
+9
+A
+B
+C
+D
+E
+F
+disp.
+disp.
+disp.
+disp.
+disp.
+disp.
+disp.
+disp.
+disp.
+disp.
+disp.
+disp.
+disp.
+disp.
+disp.
+disp.
+BHI
+BLS
+BCC (BHS)
+BCS (BLO)
+BNE
+BEQ
+BVC
+BVS
+BPL
+BMI
+BGE
+BLT
+BGT
+BLE
+46
+===== PDFPAGE 57 =====
+BCLR (Bit CLeaR) BCLR
+<Description>
+This instruction clears a specified bit in the destination operand to "0."  The bit number can be
+specified by 3-bit immediate data, or by the lower three bits of an 8-bit general register.  The
+destination operand can be located in a general register or memory.
+The specified bit is not tested before being cleared.  The condition code flags are not altered.
+*Register direct, register indirect, or absolute addressing.
+#xx:3 or Rn
+Bit No. 7 0
+0
+Byte data in register or memory<EAd>*ﬁ
+<Operation>
+0 ﬁ (<Bit No.> of <EAd>)
+<Assembly-Language Format>
+BCLR #xx:3, <EAd>
+BCLR Rn, <EAd>
+<Examples>
+BCLR #0, ROL
+BCLR #1, @R5
+BCLR R6L, @H'FFCO:8
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Previous value remains unchanged.
+Z: Previous value remains unchanged.
+V: Previous value remains unchanged.
+C: Previous value remains unchanged.
+47
+IH N Z V C  
+———— ————  
+===== PDFPAGE 58 =====
+BCLR (Bit CLeaR) BCLR
+<Instruction Formats>
+Register direct BCLR #xx:3, Rd 7 2 0  IMM rd 2
+Register indirect BCLR #xx:3,@Rd 7 D 0    rd 0 72 0  IMM 0 8
+Absolute address BCLR #xx:3,@aa:8 7 F abs 7 2 0  IMM 0 8
+Register direct BCLR Rn, Rd 6 2 rn rd 2
+Register indirect BCLR Rn, @Rd 7 D 0    rd 0 62 r n 0 8
+Absolute address BCLR Rn, @aa:8 7 F abs 6 2 rn 0 8
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states
+2nd byte 3rd byte 4th byte
+48
+===== PDFPAGE 59 =====
+BIAND (Bit Invert AND) BIAND
+<Description>
+This instruction ANDs the inverse of a specified bit with the carry flag and places the result in
+the carry flag.  The specified bit can be located in a general register or memory.  The bit
+number is specified by 3-bit immediate data.  The operation is shown schematically below.
+The value of the specified bit is not changed.
+<Instruction Formats>
+*Register direct, register indirect, or absolute addressing.
+IH N Z V C  
+———— ——— × 
+<Operation>
+C Ù[ ¬ (<Bit No.> of <EAd>)] ﬁ C
+<Assembly-Language Format>
+BIAND #xx:3, <EAd>
+<Examples>
+BIAND #0, R1H
+BIAND #2, @R5
+BIAND #4, @H'FFDE:8
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Previous value remains unchanged.
+Z: Previous value remains unchanged.
+V: Previous value remains unchanged.
+C: ANDed with the inverse of the specified
+bit.
+IH N Z V C  
+———— ——— × 
+Register direct BIAND #xx:3, Rd 7 6 1  IMM rd 2
+Register indirect BIAND #xx:3,@Rd 7 C 0   rd 0 76 1  IMM 0 6
+Absolute address BIAND #xx:3,@aa:8 7 E abs 7 6 1  IMM 0 6
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+Bit No.
+Byte data in register or memory<EAd>*ﬁ
+7 0
+C Ù C
+#xx:3
+Invert
+49
+===== PDFPAGE 60 =====
+BILD (Bit Invert LoaD) BILD
+<Description>
+This instruction loads the inverse of a specified bit into the carry flag.  The specified bit can be
+located in a general register or memory.  The bit number is specified by 3-bit immediate data.
+The operation is shown schematically below.
+The value of the specified bit is not changed.
+<Instruction Formats>
+*Register direct, register indirect, or absolute addressing.
+<Operation>
+¬ (<Bit No.> of <EAd>) ﬁ C
+<Assembly-Language Format>
+BILD #xx:3, <EAd>
+<Examples>
+BILD #3, R4L
+BILD #5, @R5
+BILD #7, @H'FFA2:8
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Previous value remains unchanged.
+Z: Previous value remains unchanged.
+V: Previous value remains unchanged.
+C: Loaded with the inverse of the specified
+bit.
+IH N Z V C  
+———— ——— × 
+Bit No. 7 0
+C
+#xx:3
+Invert
+Byte data in register or memory<EAd>*ﬁ
+Register direct BILD #xx:3, Rd 7 7 1  IMM rd 2
+Register indirect BILD #xx:3,@Rd 7 C 0   rd 0 77 1 IMM 0 6
+Absolute address BILD #xx:3,@aa:8 7 E abs 7 7 1 IMM 0 6
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+50
+===== PDFPAGE 61 =====
+BIOR (Bit Invert OR) BIOR
+<Description>
+This instruction ORs the inverse of a specified bit with the carry flag and places the result in
+the carry flag.  The specified bit can be located in a general register or memory.  The bit
+number is specified by 3-bit immediate data.  The operation is shown schematically below.
+The value of the specified bit is not changed.
+<Instruction Formats>
+*Register direct, register indirect, or absolute addressing.
+#xx:3Bit No.
+Byte data in register or memory<EAd>*ﬁ
+7 0
+C C
+Invert
+Ù
+Register direct BIOR #xx:3, Rd 7 4 1  IMM rd 2
+Register indirect BIOR #xx:3,@Rd 7 C 0   rd 0 74 1  IMM 0 6
+Absolute address BIOR #xx:3,@aa:8 7 E abs 7 4 1  IMM 0 6
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+<Operation>
+C Ú [¬ (<Bit No.> of <EAd>)] ﬁ C
+<Assembly-Language Format>
+BIOR #xx:3, <EAd>
+<Examples>
+BIOR #6, R1H
+BIOR #3, @R2
+BIOR #0, @H'FFF0:8
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Previous value remains unchanged.
+Z: Previous value remains unchanged.
+V: Previous value remains unchanged.
+C: ORed with the inverse of the specified
+bit.
+IH N Z V C  
+———— ——— × 
+51
+===== PDFPAGE 62 =====
+BIST (Bit Invert STore) BIST
+<Description>
+This instruction stores the inverse of the carry flag to a specified bit location in a general
+register or memory.  The bit number is specified by 3-bit immediate data.  The operation is
+shown schematically below.
+The values of the unspecified bits are not changed.
+<Instruction Formats>
+*  Register direct, register indirect, or absolute addressing.
+Bit No. 7 0
+C
+#xx:3
+Invert
+Byte data in register or memory<EAd>*ﬁ
+<Operation>
+¬C  ﬁ (<Bit No.> of <EAd>)
+<Assembly-Language Format>
+BIST #xx:3, <EAd>
+<Examples>
+BIST #0, R0L
+BIST #6, @R3
+BIST #7, @H'FFBB:8
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Previous value remains unchanged.
+Z: Previous value remains unchanged.
+V: Previous value remains unchanged.
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ————  
+Register direct BIST #xx:3, Rd 6 7 1  IMM rd 2
+Register indirect BIST #xx:3,@Rd 7 D 0   rd 0 67 1  IMM 0 8
+Absolute address BIST #xx:3,@aa:8 7 F abs 6 7 1  IMM 0 8
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+52
+===== PDFPAGE 63 =====
+BIXOR (Bit Invert eXclusive OR) BIXOR
+<Description>
+This instruction exclusive-ORs the inverse of a specified bitwith the carry flag and places the
+result in the carry flag.  The specified bit can be located in a general register or memory.  The
+bit number is specified by 3-bit immediate data.  The operation is shown schematically below.
+The value of the specified bit is not changed.
+<Instruction Formats>
+*  Register direct, register indirect, or absolute addressing.
+¯
+Bit No.
+Byte data in register or memory<EAd>*ﬁ
+7 0
+C C
+#xx:3
+Invert
+Register direct BIXOR #xx:3, Rd 7 5 1  IMM rd 2
+Register indirect BIXOR #xx:3,@Rd 7 C 0   rd 0 75 1  IMM 0 6
+Absolute address BIXOR #xx:3,@aa:8 7 E abs 7 5 1  IMM 0 6
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+<Operation>
+C ¯ [¬ (<Bit No.> of <EAd>)] ﬁ C
+<Assembly-Language Format>
+BIXOR #xx:3, <EAd>
+<Examples>
+BIXOR #1, R4L
+BIXOR #2, @R5
+BIXOR #3, @H'FF60:8
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Previous value remains unchanged.
+Z: Previous value remains unchanged.
+V: Previous value remains unchanged.
+C: Exclusive-ORed with the inverse of the
+specified bit.
+IH N Z V C  
+———— ——— × 
+53
+===== PDFPAGE 64 =====
+BLD (Bit LoaD) BLD
+<Description>
+This instruction loads a specified bit into the carry flag.  The specified bit can be located in a
+general register or memory.  The bit number is specified by 3-bit immediate data.  The
+operation is shown schematically below.
+The value of the specified bit is not changed.
+<Instruction Formats>
+*  Register direct, register indirect, or absolute addressing.
+Bit No. 7 0
+C
+#xx:3
+Byte data in register or memory<EAd>*ﬁ
+<Operation>
+(<Bit No.> of <EAd>) ﬁ C
+<Assembly-Language Format>
+BLD #xx:3, <EAd>
+<Examples>
+BLD #1, R3H
+BLD #2, @R2
+BLD #4, @H'FF90:8
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Previous value remains unchanged.
+Z: Previous value remains unchanged.
+V: Previous value remains unchanged.
+C: Loaded with the specified bit.
+IH N Z V C  
+———— ——— × 
+Register direct BLD #xx:3, Rd 7 7 0  IMM rd 2
+Register indirect BLD #xx:3,@Rd 7 C 0   rd 0 77 0  IMM 0 6
+Absolute address BLD #xx:3,@aa:8 7 E abs 7 7 0  IMM 0 6
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+54
+===== PDFPAGE 65 =====
+BNOT (Bit NOT) BNOT
+<Description>
+This instruction inverts a specified bit in a general register or memory location.  The bit
+number is specified by 3-bit immediate data, or by the lower three-bits of a general register.
+The operation is shown schematically below.
+The bit is not tested before being inverted.  The condition code flags are not altered.
+*Register direct, register indirect, or absolute addressing.
+#xx:3 or Rn
+Bit No. 7 0
+Invert
+Byte data in register or memory<EAd>*ﬁ
+<Operation>
+¬ (<Bit No.> of <EAd>)
+ﬁ (<Bit No.> of <EAd>)
+<Assembly-Language Format>
+BNOT #xx:3, <EAd>
+BNOT Rn, <EAd>
+<Examples>
+BNOT #7, R1H
+BNOT R1L, @R6
+BNOT #3, @H'FFB4:8
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Previous value remains unchanged.
+Z: Previous value remains unchanged.
+V: Previous value remains unchanged.
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ————  
+55
+===== PDFPAGE 66 =====
+BNOT (Bit NOT) BNOT
+<Instruction Formats>
+Register direct BNOT #xx:3, Rd 7 1 0  IMM rd 2
+Register indirect BNOT #xx:3,@Rd 7 D 0    rd 0 71 0  IMM 0 8
+Absolute address BNOT #xx:3,@aa:8 7 F abs 7 1 0  IMM 0 8
+Register direct BNOT Rn, Rd 6 1 rn rd 2
+Register indirect BNOT Rn, @Rd 7 D 0    rd 0 61 rn 0 8
+Absolute address BNOT Rn, @aa:8 7 F abs 6 1 rn 0 8
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states
+2nd byte 3rd byte 4th byte
+56
+===== PDFPAGE 67 =====
+BOR (Bit inclusive OR) BOR
+<Description>
+This instruction ORs a specified bit with the carry flag and places the result in the carry flag.
+The specified bit can be located in a general register or memory.  The bit number is specified
+by 3-bit immediate data.  The operation is shown schematically below.
+The value of the specified bit is not changed.
+*Register direct, register indirect, or absolute addressing.
+<Operation>
+C Ú (<Bit No.> of <EAd>) ﬁ C
+<Assembly-Language Format>
+BOR #xx:3, <EAd>
+<Examples>
+BOR #5, R2H
+BOR #4, @R1
+BOR #5, @H'FFB6:8
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Previous value remains unchanged.
+Z: Previous value remains unchanged.
+V: Previous value remains unchanged.
+C: ORed with the specified bit.
+IH N Z V C  
+———— ——— × 
+C C
+Bit No. 7 0#xx:3
+Byte data in register or memory<EAd>*ﬁ
+Ú
+57
+===== PDFPAGE 68 =====
+BOR (Bit inclusive OR) BOR
+<Instruction Formats>
+Register direct BOR #xx:3, Rd 7 4 0  IMM rd 2
+Register indirect BOR #xx:3,@Rd 7 C 0   rd 0 74 0  IMM 0 6
+Absolute address BOR #xx:3,@aa:8 7 E abs 7 4 0  IMM 0 6
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+58
+===== PDFPAGE 69 =====
+BSET (Bit SET) BSET
+<Description>
+This instruction sets a specified bit in the destination operand to "1."  The bit number can be
+specified by 3-bit immediate data, or by the lower three-bits of an 8-bit general register.  The
+destination operand can be located in a general register or memory.
+The specified bit is not tested before being cleared.  The condition code flags are not altered.
+*Register direct, register indirect, or absolute addressing.
+<Operation>
+1 ﬁ (<Bit No.> of <EAd>)
+<Assembly-Language Format>
+BSET #xx:3,<EAd>
+BSET Rn,<EAd>
+<Examples>
+BSET #3, R2L
+BSET R2H, @R6
+BSET #7, @H'FFE4:8
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Previous value remains unchanged.
+Z: Previous value remains unchanged.
+V: Previous value remains unchanged.
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ————  
+1
+#xx:3 or Rn
+Bit No. 7 0
+Byte data in register or memory<EAd>*ﬁ
+59
+===== PDFPAGE 70 =====
+BSET (Bit SET) BSET
+<Instruction Formats>
+60
+Register direct BSET #xx:3, Rd 7 0 0  IMM rd 2
+Register indirect BSET #xx:3,@Rd 7 D 0    rd 0 70 0  IMM 0 8
+Absolute address BSET #xx:3,@aa:8 7 F abs 7 0 0  IMM 0 8
+Register direct BSET Rn, Rd 6 0 rn rd 2
+Register indirect BSET Rn, @Rd 7 D 0    rd 0 60 rn 0 8
+Absolute address BSET Rn, @aa:8 7 F abs 6 0 rn 0 8
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states
+2nd byte 3rd byte 4th byte
+===== PDFPAGE 71 =====
+BSR (Branch to SubRoutine) BSR
+<Description>
+This instruction pushes the program counter (PC) value onto the stack, then adds a specified
+displacement to the program counter value and branches to the resulting address.  The program
+counter value used is the address of the instruction following the BSR instruction.
+The displacement is a signed 8-bit value which must be even.  The possible branching range is 
+–126 to +128 bytes from the address of the BSR instruction.
+<Instruction Formats>
+<Operation>
+PC ﬁ @–SP
+PC + d:8 ﬁ PC
+<Assembly-Language Format>
+BSR d:8
+<Examples>
+BSR H'76
+<Operand Size>
+—
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Previous value remains unchanged.
+Z: Previous value remains unchanged.
+V: Previous value remains unchanged.
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ————  
+PC-relative BSR d:8 5 5 disp 6
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+61
+===== PDFPAGE 72 =====
+BST (Bit STore) BST
+<Description>
+This instruction stores the carry flag to a specified flag location in a general register or
+memory.  The bit number is specified by 3-bit immediate data.  The operation is shown
+schematically below.
+<Instruction Formats>
+*  Register direct, register indirect, or absolute addressing.
+<Operation>
+C ﬁ (<Bit No.> of <EAd>)
+<Assembly-Language Format>
+BST #xx:3, <EAd>
+<Examples>
+BST #7, R4L
+BST #2, @R3
+BST #6, @H'FFD1:8
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Previous value remains unchanged.
+Z: Previous value remains unchanged.
+V: Previous value remains unchanged.
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ————  
+Bit No. 7 0
+C
+#xx:3
+Byte data in register or memory<EAd>*ﬁ
+Register direct BST #xx:3, Rd 6 7 0  IMM rd 2
+Register indirect BST #xx:3,@Rd 7 D 0   rd 0 67 0  IMM 0 8
+Absolute address BST #xx:3,@aa:8 7 F abs 6 7 0  IMM 0 8
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+62
+===== PDFPAGE 73 =====
+BTST (Bit TeST) BTST
+<Description>
+This instruction tests a specified bit in a general register or memory location and sets or clears
+the Zero flag accordingly.  The bit number can be specified by 3-bit immediate data, or by the
+lower three bits of an 8-bit general register.  The operation is shown schematically below.
+The value of the specified bit is not altered.
+*Register direct, register indirect, or absolute addressing.
+<Operation>
+¬ (<Bit No.> of <EAd>) ﬁ Z
+<Assembly-Language Format>
+BTST #xx:3, <EAd>
+BTST Rn, <EAd>
+<Examples>
+BTST #4, R6L
+BTST R1H, @R5
+BTST #7, @H'FF6C:8
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Previous value remains unchanged.
+Z: See to "1" if the specified bit is zero;
+otherwise cleared to "0".
+V: Previous value remains unchanged.
+C: Previous value remains unchanged.
+IH N Z V C  
+———— — ×——  
+#xx:3 or Rn
+Bit No. 7 0
+Test
+Byte data in register or memory<EAd>*ﬁ
+63
+===== PDFPAGE 74 =====
+BTST (Bit TeST) BTST
+<Instruction Formats>
+Register direct BTST #xx:3, Rd 7 3 0  IMM rd 2
+Register indirect BTST #xx:3,@Rd 7 C 0    rd 0 73 0  IMM 0 6
+Absolute address BTST #xx:3,@aa:8 7 E abs 7 3 0  IMM 0 6
+Register direct BTST Rn, Rd 6 3 rn rd 2
+Register indirect BTST Rn, @Rd 7 C 0    rd 0 63 rn 0 6
+Absolute address BTST Rn, @aa:8 7 E abs 6 3 rn 0 6
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states
+2nd byte 3rd byte 4th byte
+64
+===== PDFPAGE 75 =====
+BXOR (Bit eXclusive OR) BXOR
+<Description>
+This instruction exclusive-ORs a specified bit with the carry flag and places the result in the
+carry flag.  The specified bit can be located in a general register or memory.  The bit number is
+specified by 3-bit immediate data.  The operation is shown schematically below.
+The value of the specified bit is not changed.
+*Register direct, register indirect, or absolute addressing.
+<Operation>
+C ¯ (<Bit No.> of <EAd>) ﬁ C
+<Assembly-Language Format>
+BXOR #xx:3, <EAd>
+<Examples>
+BXOR #4, R6H
+BXOR #2, @R0
+BXOR #1, @H'FFA0:8
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Previous value remains unchanged.
+Z: Previous value remains unchanged.
+V: Previous value remains unchanged.
+C: Exclusive-ORed with the specified bit.
+IH N Z V C  
+———— ——— × 
+Bit No.
+Byte data in register or memory<EAd>*ﬁ
+7 0
+¯C C
+#xx:3
+65
+===== PDFPAGE 76 =====
+BXOR (Bit eXclusive OR) BXOR
+<Instruction Formats>
+Register direct BXOR #xx:3, Rd 7 5 0  IMM rd 2
+Register indirect BXOR #xx:3,@Rd 7 C 0   rd 0 75 0  IMM 0 6
+Absolute address BXOR #xx:3,@aa:8 7 E abs 7 5 0  IMM 0 6
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+66
+===== PDFPAGE 77 =====
+CMP (CoMPare) (byte) CMP
+<Description>
+This instruction subtracts an 8-bit source register or immediate data from an 8-bit destination
+register and sets the condition code flags according to the result.  The destination register is not
+altered.
+<Instruction Formats>
+Immediate CMP.B #xx:8,Rd A rd IMM 2
+Register direct CMP.B Rs, Rd 1 C rs rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+67
+<Operation>
+Rd – (EAs);   set condition code
+<Assembly-Language Format>
+CMP.B <EAs>, Rd
+<Examples>
+CMP.B #H'E5, R1H
+CMP.B R3L, R4L
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Set to "1" when there is a borrow from
+bit 3; otherwise cleared to "0."
+N: Set to "1" when the result is negative;
+otherwise cleared to "0."
+Z: Set to "1" when the result is zero;
+otherwise cleared to "0."
+V: Set to "1" if an overflow occurs;
+otherwise cleared to "0."
+C: Set to "1" if there is a borrow from bit 7;
+otherwise cleared to "0."
+IH N Z V C  
+—— × — ×××× 
+===== PDFPAGE 78 =====
+CMP (CoMPare) (word) CMP
+<Description>
+This instruction subtracts a source register from a destination register and sets the condition
+code flags according to the result.  The destination register is not altered.
+<Instruction Formats>
+Register direct CMP.W Rs, Rd 1 D 0  rs 0  rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+<Operation>
+Rd – Rs;   set condition code
+<Assembly-Language Format>
+CMP.W Rs, Rd
+<Examples>
+CMP.W R5, R6
+<Operand Size>
+Word
+<Condition Code>
+I: Previous value remains unchanged.
+H: Set to "1" when there is a borrow from
+bit 11; otherwise cleared to "0."
+N: Set to "1" when the result is negative;
+otherwise cleared to "0."
+Z: Set to "1" when the result is zero;
+otherwise cleared to "0."
+V: Set to "1" if an overflow occurs;
+otherwise cleared to "0."
+C: Set to "1" if there is a borrow from bit
+15; otherwise cleared to "0."
+IH N Z V C  
+—— × — ×××× 
+68
+===== PDFPAGE 79 =====
+DAA (Decimal Adjust Add) DAA
+<Description>
+Given that the result of an addition operation performed by the ADD.B or ADDX instruction
+on 4-bit BCD data is contained in an 8-bit general register and the carry and half-carry flags,
+the DAA instruction adjusts the result by adding H'00, H'06, H'60, or H'66 to the general
+register according to the table below.
+Valid results are not assured if this instruction is executed under conditions other than those
+stated above.
+<Operation>
+Rd (decimal adjust) ﬁ Rd
+<Assembly-Language Format>
+DAA Rd
+<Examples>
+DAA R5L
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Unpredictable.
+N: Set to "1" if the adjusted result is
+negative; otherwise cleared to "0."
+Z: Set to "1" if the adjusted result is zero;
+otherwise cleared to "0."
+V: Unpredictable.
+C: Set to "1" if there is a carry from bit 7;
+otherwise left unchanged.
+IH N Z V C  
+—— * — ×× * × 
+0 0 – 9 0 0 – 9 H'00 0
+0 0 – 8 0 A – F H'06 0
+0 0 – 9 1 0 – 3 H'06 0
+0 A – F 0 0 – 9 H'60 1
+0 9 – F 0 A – F H'66 1
+0 A – F 1 0 – 3 H'66 1
+1 0 – 2 0 0 – 9 H'60 1
+1 0 – 2 0 A – F H'66 1
+1 0 – 3 1 0 – 3 H'66 1
+C flag Upper nibble H flag Lower nibble
+Value
+added
+Resulting
+C flag
+Status before adjustment
+69
+===== PDFPAGE 80 =====
+DAA (Decimal Adjust Add) DAA
+<Instruction Formats>
+Register direct DAA Rd 0 F 0 rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+70
+===== PDFPAGE 81 =====
+DAS (Decimal Adjust Subtract) DAS
+<Description>
+Given that the result of a subtraction operation performed by the SUB.B, SUBX, or NEG
+instruction on 4-bit BCD data is contained in an 8-bit general register and the carry and half-
+carry flags, the DAA instruction adjusts the result by adding H'00, H'FA, H'A0, or H'9A to the
+general register according to the table below.
+Valid results are not assured if this instruction is executed under conditions other than those
+stated above.
+<Operation>
+Rd (decimal adjust) ﬁ Rd
+<Assembly-Language Format>
+DAS Rd
+<Examples>
+DAS R0H
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Unpredictable.
+N: Set to "1" if the adjusted result is
+negative; otherwise cleared to "0."
+Z: Set to "1" if the adjusted result is zero;
+otherwise cleared to "0."
+V: Unpredictable.
+C: Previous value remains unchanged.
+IH N Z V C  
+—— * — ×× *—  
+0 0 – 9 0 0 – 9 H'00 0
+0 0 – 8 1 6 – F H'FA 0
+1 7 – F 0 0 – 9 H'A0 1
+1 6 – F 1 6 – F H'9A 1
+C flag Upper nibble H flag Lower nibble
+Value
+added
+Resulting
+C flag
+Status before adjustment
+71
+===== PDFPAGE 82 =====
+DAS (Decimal Adjust Subtract) DAS
+<Instruction Formats>
+Register direct DAS Rd 1 F 0 rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+72
+===== PDFPAGE 83 =====
+DEC (DECrement) DEC
+<Description>
+This instruction decrements an 8-bit general register and places the result in the 8-bit general
+register.
+<Instruction Formats>
+<Operation>
+Rd – 1 ﬁ Rd
+<Assembly-Language Format>
+DEC Rd
+<Examples>
+DEC R2L
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Set to "1" if the result is negative;
+otherwise cleared to "0."
+Z: Set to "1" if the result is zero; otherwise
+cleared to "0."
+V: Set to "1" if an overflow occurs (the
+previous value in Rd was H'80);
+otherwise cleared to "0."
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ××× — 
+73
+Register direct DEC Rd 1 A 0 rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+===== PDFPAGE 84 =====
+DIVXU (DIVide eXtend as Unsigned) DIVXU
+<Description>
+This instruction divides a 16-bit general register by an 8-bit general register and places the
+result in the 16-bit general register.  The quotient is placed in the lower byte.  The remainder is
+placed in the upper byte.  The operation is shown schematically below.
+Valid results are not assured if division by zero is attempted or an overflow occurs.  Division
+by zero is indicated in the Zero flag.  Overflow can be avoided by the coding shown on the
+next page.
+<Instruction Formats>
+<Operation>
+Rd ÷ Rs ﬁ Rd
+<Assembly-Language Format>
+DIVXU Rs, Rd
+<Examples>
+DIVXU R0L, R1
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Set to "1" if the divisor is negative;
+otherwise cleared to "0."
+Z: Set to "1" if the divisor is zero;
+otherwise cleared to "0."
+V: Previous value remains unchanged.
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ×× ——  
+Rd Rs (RdH)  
+Dividend ÷ Divisor  ﬁ Remainder Quotient  
+16 88 8  
+(RdL)
+Rd
+Register direct DIVXU Rs, Rd 5 1 rs 0  rd 14
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+74
+===== PDFPAGE 85 =====
+DIVXU (DIVide eXtend as Unsigned) DIVXU
+<Note:  DIVXU Overflow>
+Since the DIVXU instruction performs 16-bit ÷ 8-bit ﬁ 8-bit division, an overflow will occur
+if the divisor byte is equal to or less than the upper byte of the dividend.  For example, H'FFFF
+÷ H'01 ﬁ H'FFFF causes an overflow.  (The quotient has more than 8 bits.)
+Overflows can be avoided by using a subprogram like the following.  A work register is
+required.
+R0L Divisor
+R1 Dividend
+R1 Remainder Quotient (*1)
+R1  
+R2 H'00 Dividend (High) (*2)
+R1 Partial remainder Dividend  (Low)
+R2
+ R1
+ 
+R2 (*4)
+Dividend
+Partial remainder Quotient (High)
+Remainder Quotient (Low)
+Quotient
+(*3)
+DIVXU R0L, R1:
+MOV.B #H'00, R2H
+CMP.B R0L, R1H
+BCC L1
+DIVXU R0L, R1 (*1)
+MOV.B R1L, R2L
+BRA L2
+L1 MOV.B R1H, R2L (*2)
+DIVXU R0L, R2
+ MOV.B R2H, R1H (*3)
+ 
+DIVXU R0L, R1
+MOV.B R2L, R2H
+MOV.B R1L, R2L
+L2 RTS (*4)  
+To perform
+75
+===== PDFPAGE 86 =====
+EEPMOV (MOVe data to EEPROM) EEPMOV
+<Description>
+This instruction moves a block of data from the memory location specified in general register
+R5 to the memory location specified in general register R6.  General register R4L gives the
+byte length of the block.
+Data are transferred a byte at a time.  After each byte transfer, R5 and R6 are incremented and
+R4L is decremented.  When R4L reaches 0, the transfer ends and the next instruction is
+executed.  No interrupt requests are accepted during the data transfer.
+At the end of this instruction, R4L contains H'00. R5 and R6 contain the last transfer address
++1.
+Chips in the H8/300 Series having large on-chip EEPROM memories use this instruction to
+write data in the EEPROM.  For details, see the hardware manual for the particular chip.
+The memory locations specified by general registers R5 and R6 are read before the block
+transfer is performed.
+<Operation>
+if R4L ≠ 0 then
+repeat @R5+ ﬁ @R6+
+R4L – 1 ﬁ R4L
+until R4L = 0
+else next;
+<Assembly-Language Format>
+EEPMOV
+<Examples>
+MOV.B #H'20, R4L
+MOV.W #H'FEC0, R5
+MOV.W #H'6000, R6
+EEPMOV
+<Operand Size>
+—
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Previous value remains unchanged.
+Z: Previous value remains unchanged.
+V: Previous value remains unchanged.
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ————  
+76
+===== PDFPAGE 87 =====
+EEPMOV (MOV data to EEPROM) EEPMOV
+<Instruction Formats>
+* n is the initial value in R4L (0 ≤ n ≤ 255).  Although n bytes of data are transferred, memory
+is accessed 2(n+1) times, requiring 4(n+1) states.
+Notes on EEPMOV Instruction
+1. The EEPMOV instruction is a block data transfer instruction.  It moves the number of bytes
+specified by R4L from the address specified by R5 to the address specified by R6.
+2. When setting R4L and R6, make sure that the final destination address (R6 + R4L) does not
+exceed H'FFFF.  The value in R6 must not change from H'FFFF to H'0000 during execution
+of the instruction.
+R5 ﬁ
+R5 + R4L ﬁ
+‹ R6
+‹ R6 + R4L
+H'FFFF
+Not allowed
+R5 ﬁ
+R5 + R4L ﬁ
+‹ R6
+‹ R6 + R4L
+77
+EEPMOV 7 B 5 C 5 9 8 F 8+4n*
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+===== PDFPAGE 88 =====
+INC (INCrement) INC
+<Description>
+This instruction increments an 8-bit general register and places the result in the 8-bit general
+register.
+<Instruction Formats>
+<Operation>
+Rd + 1 ﬁ Rd
+<Assembly-Language Format>
+INC Rd
+<Examples>
+INC R3L
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Set to "1" if the result is negative;
+otherwise cleared to "0."
+Z: Set to "1" if the result is zero; otherwise
+cleared to "0."
+V: Set to "1" if an overflow occurs (the
+previous value in Rd was H'7F);
+otherwise cleared to "0."
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ××× — 
+Register direct INC Rd 0 A 0 rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+78
+===== PDFPAGE 89 =====
+JMP (JuMP) JMP
+<Description>
+This instruction branches unconditionally to a specified destination address.
+The destination address must be even.
+<Instruction Formats>
+Register indirect JMP @Rn 5 9 0  rn 0 4
+Absolute address JMP @aa:16 5 A 0 0 abs. 6
+Memory indirect JMP @@aa:8 5 B abs. 8
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+79
+<Operation>
+(EAd) ﬁ PC
+<Assembly-Language Format>
+JMP <EA>
+<Examples>
+JMP @R6
+JMP @H'2000
+JMP @@H'9A
+<Operand Size>
+—
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Previous value remains unchanged.
+Z: Previous value remains unchanged.
+V: Previous value remains unchanged.
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ————  
+===== PDFPAGE 90 =====
+JSR (Jump to SubRoutine) JSR
+<Description>
+This instruction pushes the program counter onto the stack, then branches to a specified
+destination address.  The program counter value pushed on the stack is the address of the
+instruction following the JSR instruction.  The destination address must be even.
+<Instruction Formats>
+<Operation>
+PC ﬁ @-SP
+(EAd) ﬁ PC
+<Assembly-Language Format>
+JSR <EA>
+<Examples>
+JSR @R3
+JSR @H'1D26
+JSR @@H'F0
+<Operand Size>
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Previous value remains unchanged.
+Z: Previous value remains unchanged.
+V: Previous value remains unchanged.
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ————  
+Register indirect JSR @Rn 5 D 0  rn 0 6
+Absolute address JSR @aa:16 5 E 0 0 abs. 8
+Memory indirect JSR @@aa:8 5 F abs. 8
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+80
+===== PDFPAGE 91 =====
+LDC (LoaD to Control register) LDC
+<Description>
+This instruction loads the source operand contents into the condition code register (CCR).  The
+source operand can be an 8-bit general register or 8-bit immediate data.  Bits 4 and 6 are
+loaded as well as the flag bits.
+No interrupt requests are accepted immediately after this instruction.  All interrupts, including
+the nonmaskable interrupt (NMI), are deferred until after the next instruction.
+<Instruction Formats>
+<Operation>
+(EAs) ﬁ CCR
+<Assembly-Language Format>
+LDC <EAs>, CCR
+<Examples>
+LDC #H'80, CCR
+LDC R4H, CCR
+<Operand Size>
+Byte
+<Condition Code>
+I: Loaded from the source operand.
+H: Loaded from the source operand.
+N: Loaded from the source operand.
+Z: Loaded from the source operand.
+V: Loaded from the source operand.
+C: Loaded from the source operand.
+IH N Z V C  
+××××××××  
+Immediate LDC #xx:8, CCR 0 7 IMM 2
+Register direct LDC Rs, CCR 0 3 0 rs 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+81
+===== PDFPAGE 92 =====
+82
+MOV (MOVe data) (byte) MOV
+<Description>
+This instruction moves one byte of data from a source register to a destination register and sets
+condition code flags according to the data value.
+<Instruction Formats>
+<Operation>
+Rs ﬁ Rd
+<Assembly-Language Format>
+MOV.B Rs, Rd
+<Examples>
+MOV.B R1L, R2H
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Set to "1" if the data value is negative;
+otherwise cleared to "0."
+Z: Set to "1" if the data value is zero;
+otherwise cleared to "0."
+V: Cleared to "0."
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ×× 0—  
+Register direct MOV.B Rs, Rd 0 C rs rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+===== PDFPAGE 93 =====
+MOV (MOVe data) (word) MOV
+<Description>
+This instruction moves one word of data from a source register to a destination register and
+sets condition code flags according to the data value.
+<Instruction Formats>
+<Operation>
+Rs ﬁ Rd
+<Assembly-Language Format>
+MOV.W Rs, Rd
+<Examples>
+MOV.W R3, R4
+<Operand Size>
+Word
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Set to "1" if the data value is negative;
+otherwise cleared to "0."
+Z: Set to "1" if the data value is zero;
+otherwise cleared to "0."
+V: Cleared to "0."
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ×× 0—  
+Register direct MOV.W Rs, Rd 0 D 0  rs 0  rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+83
+===== PDFPAGE 94 =====
+MOV (MOVe data) (byte) MOV
+<Description>
+This instruction moves one byte of data from a source operand to a destination register and sets
+condition code flags according to the data value.  The source operand can be memory contents
+or immediate data.
+The MOV .B @R7+, Rd instruction should never be used, because it leaves an odd value in the
+stack pointer.  This may result in loss of data, since the stack is always accessed a word at a
+time at an even address.
+<Instruction Formats>
+<Operation>
+(EAs) ﬁ Rd
+<Assembly-Language Format>
+MOV.B <EAs>, Rd
+<Examples>
+MOV.B @R1, R2H
+MOV.B @R5+, R0L
+MOV.B @H'FFF1, R1H
+MOV.B #H'A5, R3L
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Set to "1" if the data value is negative;
+otherwise cleared to "0."
+Z: Set to "1" if the data value is zero;
+otherwise cleared to "0."
+V: Cleared to "0."
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ×× 0—  
+Immediate MOV.B #xx:8, Rd F rd IMM 2
+Register indirect MOV.B @RS, Rd 6 8 0  rs rd 4
+Register indirect
+with displacement MOV.B @(d:16,Rs),Rd 6 E 0  rs rd disp. 6
+Register indirect
+with post-increment MOV.B @Rs+, Rd 6 C 0  rs rd 6
+Absolute address MOV.B @aa:8, Rd 2 rd abs 4
+Absolute address MOV.B @aa:16, Rd 6 A 0 rd abs. 6
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+84
+===== PDFPAGE 95 =====
+MOV (MOVe data) (word) MOV
+<Description>
+This instruction moves one word of data from a source operand to a destination register and
+sets condition code flags according to the data value.
+If the source operand is in memory, it must be located at an even address.
+MOV .W @R7+, Rd is identical in machine language to POP.W Rd.
+<Instruction Formats>
+Immediate MOV.W #xx:16, Rd 7 9 0 0  rd IMM 4
+Register indirect MOV.W @RS, Rd 6 9 0  rs 0  rd 4
+Register indirect
+with displacement MOV.W @(d:16,Rs),Rd 6 F 0  rs 0  rd disp. 6
+Register indirect
+with post-increment MOV.W @Rs+, Rd 6 D 0  rs 0  rd 6
+Absolute address MOV.W @aa:16, Rd 6 B 0 0  rd abs. 6
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+<Operation>
+(EAs) ﬁ Rd
+<Assembly-Language Format>
+MOV.W <EAs>, Rd
+<Examples>
+MOV.W @R3, R4
+MOV.W @(H'0004,R5), R6
+MOV.W @R7+, R0
+MOV.W #H'B00A, R1
+<Operand Size>
+Word
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Set to "1" if the data value is negative;
+otherwise cleared to "0."
+Z: Set to "1" if the data value is zero;
+otherwise cleared to "0."
+V: Cleared to "0."
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ×× 0—  
+85
+===== PDFPAGE 96 =====
+MOV (MOVe data) (byte) MOV
+<Description>
+This instruction moves one byte of data from a source register to memory and sets condition
+code flags according to the data value.
+The MOV .B Rs, @–R7 instruction should never be used, because it leaves an odd value in the
+stack pointer.  This may result in loss of data, since the stack is always accessed a word at a
+time at an even address.
+The instruction MOV .B RnH, @–Rn or MOV .B RnL, @–Rn decrements register Rn, then
+moves the upper or lower byte of the decremented result to memory.
+<Instruction Formats>
+<Operation>
+Rs ﬁ (EAd)
+<Assembly-Language Format>
+MOV.B Rs, <EAd>
+<Examples>
+MOV.B R1L, @R0
+MOV.B R3H, @(H'8001, R0)
+MOV.B R5H, @–R4
+MOV.B R6L, @H'FE77
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Set to "1" if the data value is negative;
+otherwise cleared to "0."
+Z: Set to "1" if the data value is zero;
+otherwise cleared to "0."
+V: Cleared to "0."
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ×× 0—  
+Register indirect MOV.B Rs, @Rd 6 8 1  rd rs 4
+Register indirect Rs,
+with displacement MOV.B @(d:16,Rd) 6 E 1  rd rs disp. 6
+Register indirect
+with pre-decrement MOV.B Rs, @-Rd 6 C 1  rs rs 6
+Absolute address MOV.B Rs,@aa:8 3 rs abs 4
+Absolute address MOV.B Rs,@aa:16 6 A 8 rs abs. 6
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+86
+===== PDFPAGE 97 =====
+MOV (MOVe data) (word) MOV
+<Description>
+This instruction moves one word of data from a general register to memory and sets condition
+code flags according to the data value.  
+The destination  address in memory must be even.
+MOV .W Rs, @–R7 is identical in machine language to PUSH.W Rs.
+The instruction MOV .W Rn, @–Rn decrements register Rn by 2, then moves the decremented
+result to memory.
+<Instruction Formats>
+<Operation>
+Rs ﬁ (EAd)
+<Assembly-Language Format>
+MOV.W Rs, <EAd>
+<Examples>
+MOV.W R3, @R4
+MOV.W R2, @(H,0030,R5)
+MOV.W R1, @–R7
+MOV.W R0, @H'FED6
+<Operand Size>
+Word
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Set to "1" if the data value is negative;
+otherwise cleared to "0."
+Z: Set to "1" if the data value is zero;
+otherwise cleared to "0."
+V: Cleared to "0."
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ×× 0—  
+Register indirect MOV.W Rs, @Rd 6 9 1  rd 0  rs 4
+Register indirect Rs,
+with displacement MOV.W @(d:16, Rd) 6 F 1  rd 0  rs disp. 6
+Register indirect
+with pre-decrement MOV.W Rs, @-Rd 6 D 1  rd 0  rs 6
+Absolute address MOV.W Rs, @aa:16 6 B 8 0  rs abs. 6
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+87
+===== PDFPAGE 98 =====
+MOVFPE (MOVe data From Peripheral with E clock) MOVFPE
+<Description>
+This instruction moves one byte of data from an absolute address location to a destination
+register, and sets the condition code flags according to the data value.  The transfer is
+performed in synchronization with the E (enable) clock used by peripheral devices.  The
+transfer requires 9 to 16 states, so the execution time is variable.  For further information on
+basic timing,  See the each Hardware Manuals .
+This instruction should not be used with chips not having an E clock output pin or in single-
+chip mode.
+When the source operand is located in on-chip memory or the on-chip register field, the
+MOVFPE instruction is identical in operation to MOV .B @aa:16, Rd.
+Note that only 16-bit absolute addressing can be used, and word data cannot be transferred.
+<Instruction Formats>
+Absolute address MOVFPE @aa:16, Rd 6 A 4 rd abs. 13-20
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+<Operation>
+synchronization with the E clock
+(EAs) ﬁ Rd
+<Assembly-Language Format>
+MOVFPE @aa:16, Rd
+<Examples>
+MOVFPE @H'FF81, R0H
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Set to "1" if the data value is negative;
+otherwise cleared to "0."
+Z: Set to "1" if the data value is zero;
+otherwise cleared to "0."
+V: Cleared to "0."
+C: Previous value remains unchanged
+IH N Z V C  
+———— ×× 0—  
+88
+===== PDFPAGE 99 =====
+MOVTPE (MOVe data To Peripheral with E clock) MOVTPE
+<Description>
+This instruction moves one byte of data from a source register to an absolute address location,
+and sets the condition code flags according to the data value.  The transfer is performed in
+synchronization with the E (enable) clock used by peripheral devices.  The transfer requires 9
+to 16 states, so the execution time is variable.  For further information on basic timing,  see the
+each Hardware Manuals .
+This instruction should not be used with chips not having an E clock output pin or in single-
+chip mode.
+When the destination operand is located in on-chip memory or the on-chip register field, the
+MOVTPE instruction is identical in operation to MOV .B Rs, @aa:16.
+Note that only 16-bit absolute addressing can be used, and word data cannot be transferred.
+<Instruction Formats>
+<Operation>
+synchronization with the E clock
+Rs ﬁ (EAd)
+<Assembly-Language Format>
+MOVTPE Rs, @aa:16
+<Examples>
+MOVTPE R2L, @H'FF8D
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Set to "1" if the data value is negative;
+otherwise cleared to "0."
+Z: Set to "1" if the data value is zero;
+otherwise cleared to "0."
+V: Cleared to "0."
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ×× 0—  
+Absolute address MOVTPE Rs, @aa:16 6 A C rs abs. 13-20
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+89
+===== PDFPAGE 100 =====
+MULXU (MULtiply eXtend as Unsigned) MULXU
+<Description>
+This instruction performs 8-bit · 8-bit ﬁ 16-bit multiplication.  It multiplies a destination
+register by a source register and places the result in the destination register.  The source
+register is an 8-bit register.  The destination register is a 16-bit register containing the data to
+be multiplied in the lower byte.  (The upper byte is ignored).  The result is placed in both bytes
+of the destination register.  The operation is shown schematically below.
+The multiplier can occupy either the upper or lower byte of the source register.
+<Instruction Formats>
+<Operation>
+Rd · Rs ﬁ Rd
+<Assembly-Language Format>
+MULXU Rs, Rd
+<Examples>
+MULXU R0H, R3
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Previous value remains unchanged.
+Z: Previous value remains unchanged.
+V: Previous value remains unchanged.
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ————  
+Rd Rs Rd
+Don't-care  · Multiplier  ﬁ Product
+88 16
+Multiplicand
+90
+Register direct MULXU Rs, Rd 5 0 rs 0  rd 14
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+===== PDFPAGE 101 =====
+NEG (NEGate) NEG
+<Description>
+This instruction replaces the contents of an 8-bit general register with its two's complement.
+(subtracts the register contents from H'00).
+If the original contents of the destination register was H'80, the register value remains H'80 and
+the overflow flag is set.
+<Instruction Formats>
+<Operation>
+0 – Rd ﬁ Rd
+<Assembly-Language Format>
+NEG Rd
+<Examples>
+NEG R0L
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Set to "1" when there is a borrow from
+bit 3; otherwise cleared to "0."
+N: Set to "1" when the result is negative;
+otherwise cleared to "0."
+Z: Set to "1" when the result is zero;
+otherwise cleared to "0."
+V: Set to "1" if an overflow occurs (the
+previous contents of the destination
+register was H'80); otherwise cleared to
+"0."
+C: Set to "1" if there is a borrow from bit 7
+(the previous contents of the destination
+register was not H'00); otherwise
+cleared to "0."
+IH N Z V C  
+—— × — ×××× 
+Register direct NEG Rd 1 7 8 rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+91
+===== PDFPAGE 102 =====
+NOP (No OPeration) NOP
+<Description>
+This instruction only increments the program counter, causing the next instruction to be
+executed.  The internal state of the CPU does not change.
+The NOP instruction can be used to fill in gaps in programs, or for software synchronization.
+<Instruction Formats>
+NOP 0 0 0 0 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+92
+<Operation>
+PC + 2  ﬁ PC
+<Assembly-Language Format>
+NOP
+<Examples>
+NOP
+<Operand Size>
+___
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Previous value remains unchanged.
+Z: Previous value remains unchanged.
+V: Previous value remains unchanged.
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ————  
+===== PDFPAGE 103 =====
+NOT (NOT = logical complement) NOT
+<Description>
+This instruction replaces the contents of an 8-bit general register with its one's complement
+(subtracts the register contents from H'FF). 
+<Instruction Formats>
+<Operation>
+¬ Rd ﬁ Rd
+<Assembly-Language Format>
+NOT Rd
+<Examples>
+NOT R4L
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Set to "1" if the result is negative;
+otherwise cleared to "0."
+Z: Set to "1" if the result is zero; otherwise
+cleared to "0."
+V: Cleared to "0."
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ×× 0—  
+93
+Register direct NOT Rd 1 7 0 rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+===== PDFPAGE 104 =====
+OR (inclusive OR logical) OR
+<Description>
+This instruction ORs the source operand with the contents of an 8-bit general register and
+places the result in the general register .
+The source operand can be an 8-bit register value or immediate byte data.
+<Instruction Formats>
+<Operation>
+Rd Ú (EAs) ﬁ Rd
+<Assembly-Language Format>
+OR <EAs>, Rd
+<Examples>
+OR R2H, R3H
+OR #H'C0, R0H
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Set to "1" when the result is negative;
+otherwise cleared to "0."
+Z: Set to "1" when the result is zero;
+otherwise cleared to "0."
+V: Cleared to "0."
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ×× 0—  
+Immediate OR #xx:8, Rd C rd IMM 2
+Register direct OR Rs, Rd 1 4 rs rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+94
+===== PDFPAGE 105 =====
+ORC  (inclusive OR Control register) ORC
+<Description>
+This instruction ORs the condition code register (CCR) with immediate data and places the
+result in the condition code register.  Bits 6 and 4 are ORed as well as the flag bits.
+No interrupt requests are accepted immediately after this instruction.  All interrupts, including
+the nonmaskable interrupt (NMI), are deferred until after the next instruction.
+<Instruction Formats>
+<Operation>
+CCR Ú #IMM ﬁ CCR
+<Assembly-Language Format>
+ORC #xx:8, CCR
+<Examples>
+ORC #H'80, CCR
+<Operand Size>
+Byte
+<Condition Code>
+I: ORed with bit 7 of the immediate data.
+H: ORed with bit 5 of the immediate data.
+N: ORed with bit 3 of the immediate data.
+Z: ORed with bit 2 of the immediate data.
+V: ORed with bit 1 of the immediate data.
+C: ORed with bit 0 of the immediate data.
+IH N Z V C  
+××××××××  
+Immediate ORC #xx:8, CCR 0 4 IMM 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+95
+===== PDFPAGE 106 =====
+POP (POP data) POP
+<Description>
+This instruction pops data from the stack to a 16-bit general register and sets condition code
+flags according to the data value.
+POP.W Rn is identical in machine language to MOV .W @SP+, Rn.
+<Instruction Formats>
+<Operation>
+@SP+ ﬁ Rn
+<Assembly-Language Format>
+POP Rn
+<Examples>
+POP R1
+<Operand Size>
+Word
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Set to "1" if the data value is negative;
+otherwise cleared to "0."
+Z: Set to "1" if the data value is zero;
+otherwise cleared to "0."
+V: Cleared to "0."
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ×× 0—  
+POP Rd 6 D 7 0  rn 6
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+96
+===== PDFPAGE 107 =====
+PUSH (PUSH data) PUSH
+<Description>
+This instruction pushes data from a 16-bit general register onto the stack and sets condition
+code flags according to the data value.
+PUSH.W Rn is identical in machine language to MOV .W Rn, @–SP.
+<Instruction Formats>
+PUSH Rs 6 D F 0  rn 6
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+<Operation>
+Rn ﬁ @–SP
+<Assembly-Language Format>
+PUSH Rn
+<Examples>
+PUSH R2
+<Operand Size>
+Word
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Set to "1" if the data value is negative;
+otherwise cleared to "0."
+Z: Set to "1" if the data value is zero;
+otherwise cleared to "0."
+V: Cleared to "0."
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ×× 0—  
+97
+===== PDFPAGE 108 =====
+ROTL (ROTate Left) ROTL
+<Description>
+This instruction rotates an 8-bit general register one bit to the left.  The most significant bit is
+rotated to the least significant bit, and also copied to the carry flag.
+The operation is shown schematically below.
+<Instruction Formats>
+<Operation>
+Rd (rotated left) ﬁ Rd
+<Assembly-Language Format>
+ROTL Rd
+<Examples>
+ROTL R2L
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Set to "1" if the result is negative;
+otherwise cleared to "0."
+Z: Set to "1" if the result is zero; otherwise
+cleared to "0."
+V: Cleared to "0."
+C: Receives the previous value in bit 7.
+IH N Z V C  
+———— ×× 0 × 
+Register direct ROTL Rd 1 2 8 rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+C Bit 7 Bit 0
+Ù
+Ù
+MSB LSB
+98
+===== PDFPAGE 109 =====
+ROTR (ROTate Right) ROTR
+<Description>
+This instruction rotates an 8-bit general register one bit to the right.  The least significant bit is
+rotated to the most significant bit, and also copied to the carry flag.
+The operation is shown schematically below.
+<Instruction Formats>
+<Operation>
+Rd (rotated right) ﬁ Rd
+<Assembly-Language Format>
+ROTR Rd
+<Examples>
+ROTR R5L
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Set to "1" if the result is negative;
+otherwise cleared to "0."
+Z: Set to "1" if the result is zero; otherwise
+cleared to "0."
+V: Cleared to "0."
+C: Receives the previous value in bit 0.
+IH N Z V C  
+———— ×× 0 × 
+Ù
+CBit 7 Bit 0Ù
+MSB LSB
+Register direct ROTR Rd 1 3 8 rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+99
+===== PDFPAGE 110 =====
+ROTXL (ROTate with eXtend carry Left) ROTXL
+<Description>
+This instruction rotates an 8-bit general register one bit to the left through the carry flag.  The
+carry flag is rotated into the least significant bit of the register.  The most significant bit rotates
+into the carry flag.
+The operation is shown schematically below.
+<Instruction Formats>
+<Operation>
+Rd (rotated with carry left) ﬁ Rd
+<Assembly-Language Format>
+ROTXL Rd
+<Examples>
+ROTXL R1H
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Set to "1" if the result is negative;
+otherwise cleared to "0."
+Z: Set to "1" if the result is zero; otherwise
+cleared to "0."
+V: Cleared to "0."
+C: Receives the previous value in bit 7.
+IH N Z V C  
+———— ×× 0 × 
+Register direct ROTXL Rd 1 2 0 rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+C Bit 7 Bit 0
+MSB LSB
+100
+===== PDFPAGE 111 =====
+ROTXR (ROTate with eXtend carry Right) ROTXR
+<Description>
+This instruction rotates an 8-bit general register one bit to the right through the carry flag.  The
+least significant bit is rotated into the carry flag.  The carry flag rotates into the most
+significant bit.
+The operation is shown schematically below
+<Instruction Formats>
+<Operation>
+Rd (rotated with carry right) ﬁ Rd
+<Assembly-Language Format>
+ROTXR Rd
+<Examples>
+ROTXR R5L
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Set to "1" if the result is negative;
+otherwise cleared to "0."
+Z: Set to "1" if the result is zero; otherwise
+cleared to "0."
+V: Cleared to "0."
+C: Receives the previous value in bit 0.
+IH N Z V C  
+———— ×× 0 × 
+Ù
+CBit 7 Bit 0Ù
+Ù
+MSB LSB
+Register direct ROTXR Rd 1 3 0 rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+101
+===== PDFPAGE 112 =====
+RTE (ReTurn from Exception) RTE
+<Description>
+This instruction returns from an interrupt-handling routine.  It pops the condition code register
+(CCR) and program counter (PC) from the stack.  Program execution continues from the
+address restored to the program counter.
+The CCR and PC contents at the time of execution of this instruction are lost.
+The CCR is one byte in size, but it is popped from the stack as a word (in which the lower 8
+bits are ignored).
+This instruction therefore adds 4 to the value of the stack pointer (R7).
+<Instruction Formats>
+<Operation>
+@SP+ ﬁ CCR
+@SP+ ﬁ PC
+<Assembly-Language Format>
+RTE
+<Examples>
+RTE
+<Operand Size>
+—
+<Condition Code>
+I: Restored from stack.
+H: Restored from stack.
+N: Restored from stack.
+Z: Restored from stack.
+V: Restored from stack.
+C: Restored from stack.
+IH N Z V C  
+××××××××  
+RTE 5 6 7 0 10
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+102
+===== PDFPAGE 113 =====
+RTS (ReTurn from Subroutine) RTS
+<Description>
+This instruction returns from a subroutine.  It pops the program counter (PC) from the stack.
+Program execution continues from the address restored to the program counter.
+The PC contents at the time of execution of this instruction are lost.
+<Instruction Formats>
+<Operation>
+@SP+ ﬁ PC
+<Assembly-Language Format>
+RTS
+<Examples>
+RTS
+<Operand Size>
+—
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Previous value remains unchanged.
+Z: Previous value remains unchanged.
+V: Previous value remains unchanged.
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ————  
+RTS 5 4 7 0 8
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+103
+===== PDFPAGE 114 =====
+SHAL (SHift Arithmetic Left) SHAL
+<Description>
+This instruction shifts an 8-bit general register one bit to the left.  The most significant bit
+shifts into the carry flag, and the least significant bit is cleared to "0."
+The operation is shown schematically below.
+The SHAL instruction is identical to the SHLL instruction except for its effect on the overflow
+(V) flag.
+<Instruction Formats>
+<Operation>
+Rd (shifted arithmetic left ) ﬁ Rd
+<Assembly-Language Format>
+SHAL Rd
+<Examples>
+SHAL R5H
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Set to "1" if the result is negative;
+otherwise cleared to "0."
+Z: Set to "1" if the result is zero; otherwise
+cleared to "0."
+V: Set to "1" if an overflow occurs;
+otherwise cleared to "0."
+C: Receives the previous value in bit 7.
+IH N Z V C  
+———— ×××× 
+C Bit 7 Bit 0
+Ù
+Ù 0
+Ù
+MSB LSB
+Register direct SHAL Rd 1 0 8 rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+104
+===== PDFPAGE 115 =====
+SHAR (SHift Arithmetic Right) SHAR
+<Description>
+This instruction shifts an 8-bit general register one bit to the right.  The most significant bit
+remains unchanged.  The sign of the result does not change.  The least significant bit shifts into
+the carry flag.
+The operation is shown schematically below.
+<Instruction Formats>
+<Operation>
+Rd (shifted arithmetic right ) ﬁ Rd
+<Assembly-Language Format>
+SHAR Rd
+<Examples>
+SHAR R5H
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Set to "1" if the result is negative;
+otherwise cleared to "0."
+Z: Set to "1" if the result is zero; otherwise
+cleared to "0."
+V: Cleared to "0."
+C: Receives the previous value in bit 0.
+IH N Z V C  
+———— ×× 0 × 
+Ù
+CBit 7 Bit 0Ù
+Ù
+MSB LSB
+Register direct SHAR Rd 1 1 8 rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+105
+===== PDFPAGE 116 =====
+SHLL (SHift Logical Left) SHLL
+<Description>
+This instruction shifts an 8-bit general register one bit to the left.  The least significant bit is
+cleared to "0."  The most significant bit shifts into the carry flag.
+The operation is shown schematically below.
+The SHLL instruction is identical to the SHAL instruction except for its effect on the overflow
+(V) flag.
+<Instruction Formats>
+<Operation>
+Rd (shifted logical left ) ﬁ Rd
+<Assembly-Language Format>
+SHLL Rd
+<Examples>
+SHLL R2L
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Set to "1" if the result is negative;
+otherwise cleared to "0."
+Z: Set to "1" if the result is zero; otherwise
+cleared to "0."
+V: Cleared to "0."
+C: Receives the previous value in bit 0.
+IH N Z V C  
+———— ×× 0 × 
+C Bit 7 Bit 0
+Ù
+Ù 0
+Ù
+MSB LSB
+Register direct SHLL Rd 1 0 0 rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+106
+===== PDFPAGE 117 =====
+SHLR (SHift Logical Right) SHLR
+<Description>
+This instruction shifts an 8-bit general register one bit to the right.  The most significant bit is
+cleared to 0.  The least significant bit shifts into the carry flag.
+The operation is shown schematically below.
+<Instruction Formats>
+<Operation>
+Rd (shifted logical right ) ﬁ Rd
+<Assembly-Language Format>
+SHLR Rd
+<Examples>
+SHLR R3L
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Set to "1" if the result is negative;
+otherwise cleared to "0."
+Z: Set to "1" if the result is zero; otherwise
+cleared to "0."
+V: Cleared to "0."
+C: Receives the previous value in bit 0.
+IH N Z V C  
+———— ×× 0 × 
+CBit 7 Bit 0
+Ù
+Ù
+Ù
+0
+MSB LSB
+Register direct SHLR Rd 1 1 0 rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+107
+===== PDFPAGE 118 =====
+SLEEP (SLEEP) SLEEP
+<Description>
+When the SLEEP instruction is executed, the CPU enters a power-down mode.  Its internal
+state remains unchanged, but the CPU stops executing instructions and waits for an exception-
+handling request (interrupt or reset).  When it receives an exception-handling request, the CPU
+exits the power-down mode and begins the exception-handling sequence.
+If the interrupt mask (I) bit is set to "1," the power-down mode can be released only by a
+nonmaskable interrupt (NMI) or reset.
+For information about the power-down modes, see the Hardware Manual for the particular
+chip.
+<Instruction Formats>
+<Operation>
+Program execution state ﬁ power-
+down mode
+<Assembly-Language Format>
+SLEEP
+<Examples>
+SLEEP
+<Operand Size>
+—
+<Condition Code
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Previous value remains unchanged.
+Z: Previous value remains unchanged.
+V: Previous value remains unchanged.
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ————  
+SLEEP 0 1 8 0 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+108
+===== PDFPAGE 119 =====
+STC (STore from Control register) STC
+<Description>
+This instruction copies the condition code register (CCR) to a specified general register.  Bits 6
+and 4 are copied as well as the flag bits.
+<Instruction Formats>
+<Operation>
+CCR ﬁ Rd
+<Assembly-Language Format>
+STC CCR, Rd
+<Examples>
+STC CCR, R6H
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Previous value remains unchanged.
+Z: Previous value remains unchanged.
+V: Previous value remains unchanged.
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ————  
+Register direct STC CCR, Rd 0 2 0 rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+109
+===== PDFPAGE 120 =====
+SUB (SUBtract binary) (byte) SUB
+<Description>
+This instruction subtracts an 8-bit source register from an 8-bit destination register and places
+the result in the destination register.
+Only register direct addressing is supported.  To subtract immediate data it is necessary to use
+the SUBX.B instruction, first setting the zero flag to "1" and clearing the carry flag to "0".
+The following codings can also be used to subtract nonzero immediate data.
+(1) ORC  #H'05, CCR (2) ADD  #(0 – Imm), Rd
+SUBX #(Imm – 1), Rd XORC #H'01, CCR
+<Operation>
+Rd – Rs ﬁ Rd
+<Assembly-Language Format>
+SUB.B Rs, Rd
+<Examples>
+SUB.B R0L, R2L
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Set to "1" when there is a borrow from
+bit 3; otherwise cleared to "0."
+N: Set to "1" when the result is negative;
+otherwise cleared to "0."
+Z: Set to "1" when the result is zero;
+otherwise cleared to "0."
+V: Set to "1" if an overflow occurs;
+otherwise cleared to "0."
+C: Set to "1" if there is a borrow from bit 7;
+otherwise cleared to "0."
+IH N Z V C  
+—— × — ×××× 
+110
+===== PDFPAGE 121 =====
+SUB (SUBtract binary) (byte) SUB
+<Instruction Formats>
+Register direct SUB.B Rs, Rd 1 8 rs rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+111
+===== PDFPAGE 122 =====
+SUB (SUBtract binary) (word) SUB
+<Description>
+This instruction subtracts a 16-bit source register from a 16-bit destination register and places
+the result in the destination register.
+<Instruction Formats>
+Register direct SUB.W Rs, Rd 1 9 0  rs 0  rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+<Operation>
+Rd - Rs ÕRd
+<Assembly-Language Format>
+SUB.W Rs, Rd
+<Examples>
+SUB.W R0, R1
+<Operand Size>
+Word
+<Condition Code>
+I: Previous value remains unchanged.
+H: Set to "1" when there is a borrow from
+bit 11; otherwise cleared to "0."
+N: Set to "1" when the result is negative;
+otherwise cleared to "0."
+Z: Set to "1" when the result is zero;
+otherwise cleared to "0."
+V: Set to "1" if an overflow occurs;
+otherwise cleared to "0."
+C: Set to "1" if there is a borrow from bit
+15; otherwise cleared to "0."
+IH N Z V C  
+—— × — ×××× 
+112
+===== PDFPAGE 123 =====
+SUBS (SUBtract with Sign extension) SUBS
+<Description>
+This instruction subtracts the immediate value 1 or 2 from word data in a general register.
+Differing from the SUB instruction, it does not affect the condition code flags.
+The SUBS instruction does not permit byte operands.
+<Instruction Formats>
+<Operation>
+Rd – 1 ﬁ Rd
+Rd – 2 ﬁ Rd
+<Assembly-Language Format>
+SUBS #1, Rd
+SUBS #2, Rd
+<Examples>
+SUBS #1, R3
+SUBS #2, R5
+<Operand Size>
+Word
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Previous value remains unchanged.
+Z: Previous value remains unchanged.
+V: Previous value remains unchanged.
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ————  
+Register direct SUBS #1, Rd 1 B 0 0  rd 2
+Register direct SUBS #2, Rd 1 B 8 0  rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+113
+===== PDFPAGE 124 =====
+SUBX (SUBtract with eXtend carry) SUBX
+<Description>
+This instruction subtracts the source operand and carry flag from the contents of an 8-bit
+general register and places the result in the general register.
+The source operand can be an 8-bit register value or immediate byte data.
+<Instruction Formats>
+<Operation>
+Rd – (EAs) – C ﬁ Rd
+<Assembly-Language Format>
+SUBX <EAs>, Rd
+<Examples>
+SUBX R0L, R3L
+SUBX #H'32, R5H
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Set to "1" if there is a borrow from bit 3;
+otherwise cleared to "0."
+N: Set to "1" when the result is negative;
+otherwise cleared to "0."
+Z: Previous value remains unchanged when
+the result is zero; otherwise cleared to
+"0."
+V: Set to "1" if an overflow occurs;
+otherwise cleared to "0."
+C: Set to "1" if there is a borrow from bit 7;
+otherwise cleared to "0."
+IH N Z V C  
+—— × — ×××× 
+Immediate SUBX #xx:8, Rd B rd IMM 2
+Register direct SUBX Rs, Rd 1 E rs rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+114
+===== PDFPAGE 125 =====
+XOR (eXclusive OR logical) XOR
+<Description>
+This instruction exclusive-ORs the source operand with the contents of an 8-bit general
+register and places the result in the general register.
+The source operand can be an 8-bit register value or immediate byte data.
+<Instruction Formats>
+<Operation>
+Rd ¯ (EAs) ﬁ Rd
+<Assembly-Language Format>
+XOR <EAs>, Rd
+<Examples>
+XOR R0H, R1H
+XOR #H'F0, R2L
+<Operand Size>
+Byte
+<Condition Code>
+I: Previous value remains unchanged.
+H: Previous value remains unchanged.
+N: Set to "1" when the result is negative;
+otherwise cleared to "0."
+Z: Set to "1" when the result is zero;
+otherwise cleared to "0."
+V: Cleared to "0."
+C: Previous value remains unchanged.
+IH N Z V C  
+———— ×× 0—  
+Immediate XOR #xx:8, Rd D rd IMM 2
+Register direct XOR Rs, Rd 1 5 rs rd 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+115
+===== PDFPAGE 126 =====
+XORC  (eXclusive OR Control register) XORC
+<Description>
+This instruction exclusive-ORs the condition code register (CCR) with immediate data and
+places the result in the condition code register.  Bits 6 and 4 are exclusive-ORed as well as the
+flag bits.
+No interrupt requests are accepted immediately after this instruction.  All interrupts, including
+the nonmaskable interrupt (NMI), are deferred until after the next instruction.
+<Instruction Formats>
+<Operation>
+CCR ¯ #IMM ﬁ CCR
+<Assembly-Language Format>
+XORC #xx:8, CCR
+<Examples>
+XORC #H'50, CCR
+<Operand Size>
+Byte
+<Condition Code>
+I: Exclusive-ORed with bit 7 of the
+immediate data.
+H: Exclusive-ORed with bit 5 of the
+immediate data.
+N: Exclusive-ORed with bit 3 of the
+immediate data.
+Z: Exclusive-ORed with bit 2 of the
+immediate data.
+V: Exclusive-ORed with bit 1 of the
+immediate data.
+C: Exclusive-ORed with bit 0 of the
+immediate data.
+IH N Z V C  
+××××××××  
+Immediate XORC #xx:8, CCR 0 5 IMM 2
+Addressing
+mode Mnem. Operands
+1st byte
+Instruction code No. of
+states2nd byte 3rd byte 4th byte
+116
+===== PDFPAGE 127 =====
+117
+Appendix A.  Operation Code Map
+The table in this appendix is a map of the operation codes contained in the first byte of the instruction code (bits 15 to 8 of the first
+instruction word).
+Some pairs of instructions have indentical first bytes. These instructions are differentiated by the first bit of the second byte (bit 7 of the first
+instruction word).
+                   Instruction when first bit of byte 2 (bit 7 of first instruction word) is "0."
+                   Instruction when first bit of byte 2 (bit 7 of first instruction word) is "1."
+Operation Code Map
+HILO
+0
+01 23 4 5
+1
+2
+3
+4
+5
+6
+7
+8
+9
+A
+B
+C
+D
+E
+F
+NOP
+BRA BRN BHI BLS BCC BCS BNE BEQ BVC BVS BPL BMI BGE BLT BGT BLE
+JSR
+Bit manipulation instruction
+JMP
+MOV*
+MOV EEPMOV
+RTEBSRRTS
+BOR
+BIOR
+BXOR
+BIXOR
+BAND
+BIAND
+BST
+BIST
+BLD
+BILD
+BTSTBCLR
+DIVXUMULXU
+BSET BNOT
+SLEEP STC LDC
+OR
+ORC
+XOR
+XORC
+6 7 89A BC DEF
+AND
+ANDC LDC ADD
+ADD
+ADDX
+CMP
+SUBX
+OR
+XOR
+AND
+MOV
+MOV
+INC ADDS MOV ADDX DAA
+DASSUBXCMPSUBSDECSUBNOT
+NEG
+SHLL
+SHAL
+SHLR
+SHAR
+ROTXL
+ROTL
+ROTXR
+ROTR
+*   The MOVFPE and MOVTPE instructions are identical to MOV instructions in the first byte and first bit of the second byte (bits 15 to 7 of the instruction word). They are
+     differentiated in the next bit (bit 6 of the instruction word). See section 2.
+===== PDFPAGE 128 =====
+118
+Appendix. B Instruction Set List
+Mnemonic Operation
+Operand size
+Addressing mode/
+instruction length
+Condition code
+No. of statesCVZNHI
+Implied
+@@aa
+@(d:8, PC)
+@(d:16, Rn)
+@Rn
+Rn
+#xx: 8/16
+@aa: 8/16
+@–Rn/@Rn+
+MOV .B #xx:8,Rd #xx:8     Rd8
+MOV .B Rs,Rd
+MOV .B @Rs,Rd
+MOV .B @(d:16,Rs),Rd
+MOV .B @Rs+,Rd
+MOV .B @aa:8,Rd
+MOV .B @aa:16,Rd
+MOV .B Rs,@Rd
+MOV .B Rs,@(d:16,Rd)
+MOV .B Rs,@–Rd
+MOV .B Rs,@aa:8
+MOV .B Rs,@aa:16
+MOV .W #xx:16,Rd
+MOV .W Rs,Rd
+MOV .W @Rs,Rd
+MOV .W @(d:16,Rs),Rd
+MOV .W @Rs+,Rd
+MOV .W @aa:16,Rd
+MOV .W Rs,@Rd
+MOV .W Rs,@(d:16,Rd)
+MOV .W Rs,@–Rd
+MOV .W Rs,@aa:16
+POP Rd
+PUSH Rs
+MOVFPE @aa:16,Rd
+MOVTPE Rs,@aa:16
+@aa:16     Rd (Synchroniza-                         tion with E
+                         clock)
+Rs     @aa:16  (Synchroniza-                         tion with E
+                         clock)
+SP–2     SP
+Rs16     @SP
+@SP     Rd16
+SP+2     SP
+Rs16     @aa:16
+Rs16–2     Rd16
+Rs16     @Rd16
+Rs16     @(d:16,Rd16)
+Rs16     @Rd16
+@aa:16     Rd16
+@Rs16     Rd16
+Rs16+2     Rs16
+@(d:16,Rs16)     Rd16
+@Rs16     Rd16
+Rs16     Rd16
+#xx:16     Rd
+Rd16–1     Rd16
+Rs8     @Rd16
+Rs8     @aa:8
+Rs8     @aa:16
+Rs8     @Rd16
+Rs8     @(d:16,Rd16)
+@aa:16     Rd8
+@aa:8     Rd8
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+B
+B
+Rs8     Rd8
+@Rs16     Rd8
+@(d:16,Rs16)     Rd8
+@Rs16     Rd8
+Rs16+1     Rs16
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+– – –
+02
+– – –02
+– – –04
+– – –06
+– – –06
+– – –04
+– – –04
+– – –04
+– – –0
+– – –0
+– – –0
+– – –0
+– – –0
+– – –0
+– – –0
+– – –0
+– – –0
+– – –0
+– – –0
+– – –0
+– – –0
+– – –0
+4
+2
+4
+6
+6
+6
+4
+6
+6
+6
+6
+6
+5
+– – –06
+– – –06
+– – –06
+– – –06
+5
+===== PDFPAGE 129 =====
+119
+Mnemonic Operation
+Operand size
+Addressing mode/
+instruction length
+Condition code
+No. of statesCVZNHI
+@@aa
+@(d:8, PC)
+@(d:16, Rn)
+@Rn
+Rn
+#xx: 8/16
+@aa: 8/16
+@–Rn/@Rn+
+ADD.B #xx:8,Rd
+ADD.B Rs,Rd
+ADD.W Rs,Rd
+ADDX.B #xx:8,Rd
+ADDX.B Rs,Rd
+ADDS.W #1,Rd
+ADDS.W #2,Rd
+INC.B Rd
+DAA.B Rd
+SUB.B Rs,Rd
+SUB.W Rs,Rd
+SUBS.W #1,Rd
+SUBS.W #2,Rd
+DEC.B Rd
+DAS.B Rd
+NEG.B Rd
+CMP.B #xx:8,Rd
+CMP.B Rs,Rd
+CMP.W Rs,Rd
+MULXU.B Rs,Rd
+DIVXU.B Rs,Rd
+AND.B #xx:8,Rd
+AND.B Rs,Rd
+OR.B Rs,Rd
+XOR.B Rs,Rd
+NOT.B Rd
+OR.B #xx:8,Rd
+XOR.B #xx:8,Rd
+SUBX.B #xx:8,Rd
+SUBX.B Rs,Rd
+Rd8+#xx:8     Rd8
+Rs8+Rd8     Rd8
+Rs16+Rd16     Rd16
+Rd8+#xx:8+C     Rd8
+Rd8+Rs8+C     Rd8
+Rd16+1     Rd16
+Rd16+2     Rd16
+Rd8+1     Rd8
+Rd8–Rs8     Rd8
+Rd8–#xx:8–C     Rd8
+Rd8–#xx:8
+Rd8–Rs8
+Rd16–Rs16
+Rd8   Rs8     Rd16
+Rd8   #xx:8     Rd8
+Rd8   #xx:8     Rd8
+Rd8   #xx:8     Rd8
+Rd8   Rs8     Rd8
+Rd8   Rs8     Rd8
+Rd8   Rs8     Rd8
+Rd     Rd
+Rd16+Rs8     Rd16
+(RdH:remainder,RdL:quotient)
+Rd8–Rs8–C     Rd8
+Rd16–1     Rd16
+Rd8–1     Rd8
+Rd8 decimal adjust     Rd8
+Rd16–2     Rd16
+0–Rd     Rd
+Rd16–Rs16     Rd16
+Rd8 decimal adjust     Rd8
+B
+B
+W
+W
+W
+W
+W
+W
+W
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2–
+2–
+2–
+<<<<
++
++
+2–
+2
+2
+–
+–– – –– –
+2–– – –– –
+2–– – –– –
+2–– – –– –
+14–– – –– –
+14–– – –
+–
+– 2––
+2– * *
+2–
+2–
+2–
+2–
+2– –
+– 2– * *
+2–
+2–
+2–
+2–
+2–– –0
+2–– –0
+2–– –0
+2–– –0
+2–– –0
+2–– –0
+2–– –0
+1
+2
+3
+1
+1
+2
+2
+2
+6 7
+===== PDFPAGE 130 =====
+120
+Mnemonic Operation
+Operand size
+Addressing mode/
+instruction length
+Condition code
+No. of statesCVZNHI
+@@aa
+@(d:8, PC)
+@(d:16, Rn)
+@Rn
+Rn
+#xx: 8/16
+@aa: 8/16
+@–Rn/@Rn+
+SHAL.B Rd B
+b
+SHAR.B Rd B
+SHLL.B Rd B
+SHLR.B Rd B
+ROTXL.B Rd B
+ROTXR.B Rd B
+ROTL.B Rd B
+ROTR.B Rd
+BSET #xx:3,Rd (#xx:3 of Rd8)     1
+BCLR #xx:3,Rd
+BNOT #xx:3,Rd
+BNOT #xx:3,@Rd
+BNOT #xx:3,@aa:8
+BCLR #xx:3,@Rd
+BCLR #xx:3,@aa:8
+BSET #xx:3,@Rd
+BSET #xx:3,@aa:8
+BSET Rn,Rd
+BCLR Rn,Rd
+BCLR Rn,@Rd
+BCLR Rn,@aa:8
+BSET Rn,@Rd
+BSET Rn,@aa:8
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+22
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+––
+20––
+20––
+200––
+20––
+20––
+20–
+20–
+2–– – –––
+2–– – –––
+8–– – –––
+8–– – –––
+8–– – –––
+8–– – –––
+2–– – –––
+8–– – –––
+8–– – –––
+2–– – –––
+8–– – –––
+8–– – –––
+2–– – –––
+8–– – –––
+8–– – –––
+–
+(#xx:3 of @Rd16)     1
+(#xx:3 of @aa:8)     1
+(Rn8 of Rd8)     1
+(Rn8 of Rd8)     0
+(Rn8 of @Rd16)     1
+(Rn8 of @Rd16)     0
+(Rn8 of @aa:8)     1
+(Rn8 of @aa:8)     0
+(#xx:3 of Rd8)     0
+(#xx:3 of Rd8)     (#xx:3 of Rd8)
+(#xx:3 of @aa:8)     (#xx:3 of @aa:8)
+(#xx:3 of @Rd16)     0
+(#xx:3 of @aa:8)     0
+C
+C
+0
+7 b0
+b
+C 0
+0
+7 b0
+b
+C 0
+7 b0
+b7 b0
+b7 b0
+C
+C
+b7 b0
+b
+C
+C
+7 b0
+b7 b0
+(#xx:3 of @Rd16)     (#xx:3 of @Rd16)
+===== PDFPAGE 131 =====
+121
+Mnemonic Operation
+Operand size
+Addressing mode/
+instruction length
+Condition code
+No. of statesCVZNHI
+@@aa
+@(d:8, PC)
+@(d:16, Rn)
+@Rn
+Rn
+#xx: 8/16
+@aa: 8/16
+@–Rn/@Rn+
+BNOT Rn,Rd
+BNOT Rn,@Rd
+BNOT Rn,@aa:8
+BTST #xx:3,Rd
+BTST #xx:3,@Rd
+BTST #xx:3,@aa:8
+BLD #xx:3,Rd
+BLD #xx:3,@Rd
+BLD #xx:3,@aa:8
+BILD #xx:3,Rd
+BILD #xx:3,@Rd
+BILD #xx:3,@aa:8
+BST #xx:3,Rd
+BST #xx:3,@Rd
+BST #xx:3,@aa:8
+BIST #xx:3,Rd
+BIST #xx:3,@Rd
+BIST #xx:3,@aa:8
+BAND #xx:3,Rd
+BAND #xx:3,@Rd
+BAND #xx:3,@aa:8
+BTST Rn,Rd
+BTST Rn,@Rd
+BTST Rn,@aa:8
+(Rn8 of Rd8)     (Rn8 of Rd8)
+(#xx:3 of Rd8)     Z
+(Rn8 of @Rd16)     (Rn8 of @Rd16)
+(Rn8 of @aa:8)     (Rn8 of @aa:8)
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+2
+4
+4
+2
+4
+4
+2
+4
+4
+2
+4
+4
+2
+4
+4
+2
+4
+4
+2
+4
+4
+2
+4
+4
+2
+4
+4
+2
+2
+4
+4
+–––––– 2
+–––––– 8
+–––––– 8
+–––––– 2
+–––––– 8
+–––––– 8
+–––––– 2
+–––––– 8
+–––––– 8
+––– –– 2
+––– –– 6
+––– –– 6
+––– –– 2
+––– –– 6
+––– –– 6
+––––– 2
+––– – – 6
+––––– 6
+––––– 2
+––– – – 6
+––––– 6
+––––– 2
+––– – – 6
+––––– 6
+––––– 2
+––––– 2
+––– – – 6
+––––– 6
+––––– 2
+––– – – 6
+––––– 6
+(#xx:3 of @Rd16)     Z
+(#xx:3 of @aa:8)     Z
+(#xx:3 of Rd8)     C
+(#xx:3 of @Rd16)     C
+(#xx:3 of @aa:8)     C
+(#xx:3 of Rd8)     C
+(#xx:3 of @Rd16)     C
+(#xx:3 of @aa:8)     C
+C   (#xx:3 of Rd8)     C
+C   (#xx:3 of @Rd16)     C
+C   (#xx:3 of @aa:8)     C
+C     (#xx:3 of Rd8)
+C     (#xx:3 of @Rd16)
+C     (#xx:3 of @aa:8)
+C     (#xx:3 of Rd8)
+C     (#xx:3 of @Rd16)
+C     (#xx:3 of @aa:8)
+(Rn8 of Rd8)     Z
+(Rn8 of @Rd16)     Z
+(Rn8 of @aa:8)     Z
+<<<
+BIAND #xx:3,Rd
+BIAND #xx:3,@Rd
+BIAND #xx:3,@aa:8
+B
+B
+B
+C   (#xx:3 of Rd8)     C
+C   (#xx:3 of @Rd16)     C
+C   (#xx:3 of @aa:8)     C
+<<<
+BOR #xx:3,Rd
+BOR #xx:3,@Rd
+BOR #xx:3,@aa:8
+B
+B
+B
+C   (#xx:3 of Rd8)     C
+C   (#xx:3 of @Rd16)     C
+C   (#xx:3 of @aa:8)     C
+<
+BIOR #xx:3,Rd B C   (#xx:3 of Rd8)     C
+< <<
+===== PDFPAGE 132 =====
+122
+Mnemonic Operation
+Operand size
+Addressing mode/
+instruction length
+Condition code
+No. of statesCVZNHI
+@@aa
+@(d:8, PC)
+@(d:16, Rn)
+@Rn
+Rn
+#xx: 8/16
+@aa: 8/16
+@–Rn/@Rn+
+BIOR #xx:3,@Rd
+BXOR #xx:3,Rd
+BXOR #xx:3,@Rd
+BXOR #xx:3,@aa:8
+BIXOR #xx:3,Rd
+BRA d:8 (BTd:8)
+BHI d:8
+BNE d:8
+BEQ d:8
+BVC d:8
+BVS d:8
+BPL d:8
+BMI d:8
+BGE d:8
+BLT d:8
+BGT d:8
+BLE d:8
+JMP @Rn
+JMP @aa:16
+JMP @@aa:8
+BSR
+JSR @Rn
+BLS d:8
+BRN d:8 (BFd:8)
+BCC d:8 (BHS d:8)
+BCS d:8 (BLO d:8)
+BIXOR #xx:3,@Rd
+BIOR #xx:3,@aa:8
+BIXOR #xx:3,@aa:8
+C   (#xx:3 of @Rd16)     CB
+B
+B
+B
+B
+B
+B
+–
+–
+–
+–
+–
+–
+–
+–
+–
+–
+–
+–
+–
+–
+–
+–
+–
+–
+–
+–
+–
+B
+46
+4
+4
+4
+2
+4
+4
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+4
+2
+2
+–––––
+6–––––
+2–––––
+6–––––
+6–––––
+2–––––
+6–––––
+6–––––
+4––––––
+4––––––
+4––––––
+4––––––
+4––––––
+4––––––
+4––––––
+4––––––
+4––––––
+4––––––
+4––––––
+4––––––
+4––––––
+4––––––
+4––––––
+4––––––
+4––––––
+6––––––
+6––––––
+6––––––
+8––––––
+>
+>
+C   (#xx:3 of @aa:8)     C
+C   (#xx:3 of @Rd16)     C
+C   (#xx:3 of @aa:8)     C
+C   (#xx:3 of Rd8)     C
+C   (#xx:3 of @Rd16)     C
+C   (#xx:3 of @aa:8)     C
+PC    PC+d:8
+PC    PC+2
+PC    Rn16
+SP–2     SP
+PC     @SP
+PC     PC+d:8
+SP–2     SP
+PC     @SP
+PC     Rn16
+PC    aa:16
+PC    @aa:8
+C   Z=0>C   Z=1
+C=0
+C=1
+Z=0
+Z=1
+V=0
+V=1
+N=0
+N=1
+N   V=0
+N   V=1
+Z   (N  V)=0
+Z   (N  V)=1
+C   (#xx:3 of Rd8)     C>
+if true then
+else next
+PC     PC+d:8
+>>
+===== PDFPAGE 133 =====
+123
+Mnemonic Operation
+Operand size
+Addressing mode/
+instruction length
+Condition code
+No. of statesCVZNHI
+@@aa
+Implied
+@(d:8, PC)
+@(d:16, Rn)
+@Rn
+Rn
+#xx: 8/16
+@aa: 8/16
+@–Rn/@Rn+
+JSR @aa:16
+JSR @@aa:8
+RTS
+RTE
+NOP
+EEPMOV
+SLEEP Transit to sleep mode.
+LDC #xx:8,CCR #xx:8     CCR
+Rs8     CCR
+CCR     Rd8
+CCR   #xx:8     CCR
+CCR   #xx:8     CCR
+CCR   #xx:8     CCR
+PC     PC+2
+if R4L=0 then
+   Repeat @R5     @R6
+   R5+1     R5
+    R6+1     R6
+    R4L–1     R4L
+    Until R4L=0
+else next
+LDC Rs,CCR
+STC CCR,Rd
+ANDC #xx:8,CCR
+ORC #xx:8,CCR
+XORC #xx:8,CCR
+SP–2     SP
+PC     @SP
+PC     aa:16
+SP–2     SP
+PC     @SP
+PC     @aa:8
+CCR     @SP
+SP+2     SP
+PC     @SP
+SP+2     SP
+PC     @SP
+SP+2     SP
+2
+2
+2 10
+2
+22
+2
+2
+2
+2
+2
+2
+4
+4–
+–
+–
+–
+–
+–
+–
+B
+B
+B
+B
+B
+B
+2
+2
+2
+2
+4
+4
+1
+2
+3
+5
+6
+> >
+8––––––
+8––––––
+8––––––
+2––––––
+2––––––
+2––––––
+––––––
+Notes: The number of states is the number of states required for execution when the instructions and its
+            operands are located in on-chip memory.
+                       Set to "1" when there is a carry or borrow from bit 11; otherwise cleared to "0."
+                       If the result is zero, the previous value of the flag is retained; otherwise the flag is cleared to "0."
+                       Set to "1" if decimal adjustment produces a carry; otherwise cleared to "0."
+                       The number of states is 4n+8 (n: initial value of R4L)
+                       These instructions transfer data in synchronization with the E clock. The number of states varies
+                       depending on the synchronization delay.
+                       Set to "1" if the divisor is negative; otherwise cleared to "0."
+                       Set to "1" if the divisor is zero; otherwise cleared to "0."
+7
+===== PDFPAGE 134 =====
+Appendix C.  Number of Execution States
+The tables in this appendix can be used to calculate the number of states required for
+instruction execution.  Table C-1 indicates the number of states required for each cycle
+(instruction fetch, branch address read, stack operation, byte data access, word data access,
+internal operation).  Table C-2 indicates the number of cycles of each type occurring in each
+instruction.  The total number of states required for execution of an instruction can be
+calculated from these two tables as follows:
+Execution states = I · S
+I + J · SJ + K · SK + L · SL + M · SM + N · SN
+Examples: Mode 1 (on-chip ROM disabled), stack located in external memory, 1 wait state
+inserted in external memory access.
+1. BSET #0, @'FFC7
+From table C-2:
+I = L = 2,     J = K = M = N= 0
+From table C-1:
+S
+I = 8,     SL = 3
+Number of states required for execution =  2 · 8 + 2 · 3 =22
+2. JSR @@ 30
+From table C-2:
+I = 2,     J = K = 1,     L = M = N = 0
+From table C-1:
+S
+I = SJ = SK = 8
+Number of states required for execution =  2 · 8 + 1 · 8 + 1 · 8 = 32
+124
+===== PDFPAGE 135 =====
+Table C-1.  Number of States Taken by Each Cycle in Instruction Execution
+Notes: 1. m:  Number of wait states inserted in access to external device.
+2. The byte data access cycle to an external device by the MOVFPE and MOVTPE
+instructions requires 9 to 16 states since it is synchronized with the E clock.  See
+the Hardware Manual for timing details.
+Execution Status Access Location
+(instruction cycle) On-Chip Memory On-Chip Reg. Field External Memory
+Instruction fetch S I
+Branch address read S J 6 6 + 2m
+Stack operation S K 2
+Byte data access S L 3 3 + m
+Word data access S M 6 6 + 2m
+Internal operation S N 2
+125
+===== PDFPAGE 136 =====
+Table C-2.   Number of Cycles in Each Instruction
+ADD ADD.B #xx:8, Rd 1
+ADD.B Rs, Rd 1
+ADD.W Rs, Rd 1
+ADDS ADDS.W #1/2, Rd 1
+ADDX ADDX.B #xx:8, Rd 1
+ADDX.B Rs, Rd 1
+AND AND.B #xx:8, Rd 1
+AND.B Rs, Rd 1
+ANDC ANDC #xx:8, CCR 1
+BAND BAND #xx:3, Rd 1
+BAND #xx:3, @Rd 2 1
+BAND #xx:3, @aa:8 2 1
+Bcc BRA d:8 (BT d:8) 2
+BRN d:8 (BF d:8) 2
+BHI d:8 2
+BLS d:8 2
+BCC d:8 (BHS d:8) 2
+BCS d:8 (BLO d:8) 2
+BNE d:8 2
+BEQ d:8 2
+BVC d:8 2
+BVS d:8 2
+BPL d:8 2
+BMI d:8 2
+BGE d:8 2
+BLT d:8 2
+BGT d:8 2
+BLE d:8 2
+BCLR BCLR #xx:3, Rd 1
+BCLR #xx:3, @Rd 2 2
+BCLR #xx:3, @aa:8 2 2
+BCLR Rn, Rd 1
+Instruction Branch Stack Byte Data Word Data Internal
+Instruction Mnemonic Fetch Addr. Read Operation Access Access Operation
+IJ K L M N
+126
+===== PDFPAGE 137 =====
+BCLR BCLR Rn, @Rd 2 2
+BCLR Rn, @aa:8 2 2
+BIAND BIAND #xx:3, Rd 1
+BIAND #xx:3, @Rd 2 1
+BIAND #xx:3, @aa:8 2 1
+BILD BILD #xx:3, Rd 1
+BILD #xx:3, @Rd 2 1
+BILD #xx:3, @aa:8 2 1
+BIOR BIOR #xx:3, Rd 1
+BIOR #xx:3, @Rd 2 1
+BIOR #xx:3, @aa:8 2 1
+BIST BIST #xx:3, Rd 1
+BIST #xx:3, @Rd 2 2
+BIST #xx:3, @aa:8 2 2
+BIXOR BIXOR #xx:3, Rd 1
+BIXOR #xx:3, @Rd 2 1
+BIXOR #xx:3, @aa:8 2 1
+BLD BLD #xx:3, Rd 1
+BLD #xx:3, @Rd 2 1
+BLD #xx:3, @aa:8 2 1
+BNOT BNOT #xx:3, Rd 1
+BNOT #xx:3, @Rd 2 2
+BNOT #xx:3, @aa:8 2 2
+BNOT Rn, Rd 1
+BNOT Rn, @Rd 2 2
+BNOT Rn, @aa:8 2 2
+BOR BOR #xx:3, Rd 1
+BOR #xx:3, @Rd 2 1
+BOR #xx:3, @aa:8 2 1
+BSET BSET #xx:3, Rd 1
+BSET #xx:3, @Rd 2 2
+BSET #xx:3, @aa:8 2 2
+BSET Rn, Rd 1
+BSET Rn, @Rd 2 2
+Instruction Branch Stack Byte Data Word Data Internal
+Instruction Mnemonic Fetch Addr. Read Operation Access Access Operation
+IJ K L M N
+127
+===== PDFPAGE 138 =====
+BSET BSET Rn, @aa:8 2 2
+BSR BSR d:8  2 1
+BST BST #xx:3, Rd 1
+BST #xx:3, @Rd 2 2
+BST #xx:3, @aa:8 2 2
+BTST BTST #xx:3, Rd 1
+BTST #xx:3, @Rd 2 1
+BTST #xx:3, @aa:8 2 1
+BTST Rn, Rd 1
+BTST Rn, @Rd 2 1
+BTST Rn, @aa:8 2 1
+BXOR BXOR #xx:3, Rd 1
+BXOR #xx:3, @Rd 2 1
+BXOR #xx:3, @aa:8 2 1
+CMP CMP. B #xx:8, Rd 1
+CMP. B Rs, Rd 1
+CMP.W Rs, Rd 1
+DAA DAA.B Rd 1
+DAS DAS.B Rd 1
+DEC DEC.B Rd 1
+DIVXU DIVXU.B Rs, Rd 1 6
+EEPMOV EEPMOV 2 2n+2
+*1
+INC INC.B Rd 1
+JMP JMP @Rn 2
+JMP @aa:16 2 1
+JMP @@aa:8 2 1 1
+JSR JSR @Rn 2 1
+JSR @aa:16 2 1 1
+JSR @@aa:8 2 1 1
+LDC LDC #xx:8, CCR 1
+LDC Rs, CCR 1
+MOV MOV .B #xx:8, Rd 1
+MOV .B Rs, Rd 1
+MOV .B @Rs, Rd 1 1
+Instruction Branch Stack Byte Data Word Data Internal
+Instruction Mnemonic Fetch Addr. Read Operation Access Access Operation
+IJ K L M N
+128
+===== PDFPAGE 139 =====
+MOV MOV .B @(d:16, Rs), Rd 2 1
+MOV .B @Rs+, Rd 1 1 1
+MOV .B @aa:8, Rd 1 1
+MOV .B @aa:16, Rd 2 1
+MOV .B Rs, @Rd 1 1
+MOV .B Rs, @(d:16, Rd) 2 1
+MOV .B Rs, @–Rd 1 1 1
+MOV .B Rs, @aa:8 1 1
+MOV .B Rs, @aa:16 2 1
+MOV .W #xx:16, Rd 2
+MOV .W Rs, Rd 1
+MOV .W @Rs, Rd 1 1
+MOV .W @(d:16, Rs), Rd 2 1
+MOV .W @Rs+, Rd 1 1 1
+MOV .W @aa:16, Rd 2 1
+MOV .W Rs, @Rd 1 1
+MOV .W Rs, @(d:16, Rd) 2 1
+MOV .W Rs, @-Rd 1 1 1
+MOV .W Rs, @aa:16 2 1
+MOVFPE MOVFPE @aa:16, Rd 2 1
+*2
+MOVTPE MOVTPE Rs, @aa:16 2 1 *2
+MULXU MULXU.B Rs, Rd 1 6
+NEG NEG.B Rd 1
+NOP NOP 1
+NOT NOT.B Rd 1
+OR OR.B #xx:8, Rd 1
+OR.B Rs, Rd 1
+ORC ORC #xx:8, CCR 1
+ROTL ROTL.B Rd 1
+ROTR ROTR.B Rd 1
+ROTXL ROTXL.B Rd 1
+ROTXR ROTXR.B Rd 1
+RTE RTE   2 2 1
+RTS RTS   2 1 1
+Instruction Branch Stack Byte Data Word Data Internal
+Instruction Mnemonic Fetch Addr. Read Operation Access Access Operation
+IJ K L M N
+129
+===== PDFPAGE 140 =====
+SHAL SHAL.B Rd 1
+SHAR SHAR.B Rd 1
+SHLL SHLL.B Rd 1
+SHLR SHLR.B Rd 1
+SLEEP SLEEP   1
+STC STC CCR, Rd 1
+SUB SUB.B Rs, Rd 1
+SUB.W Rs, Rd 1
+SUBS SUBS.W #1/2, Rd 1
+SUBX SUBX.B #xx:8, Rd 1
+SUBX.B Rs, Rd 1
+XOR XOR.B #xx:8, Rd 1
+XOR.B Rs, Rd 1
+XORC XORC #xx:8, CCR 1
+Notes:
+*1 n:  Initial value in R4L.  The source and destination operands are accessed n + 1 times
+each.
+*2 Data access requires 9 to 16 states.
+Instruction Branch Stack Byte Data Word Data Internal
+Instruction Mnemonic Fetch Addr. Read Operation Access Access Operation
+IJ K L M N
+130
+===== PDFPAGE 141 =====
+H8/300 Programming Manual
+Publication Date: 1st Edition, December 1989
+Published by: Business Planning Division
+Semiconductor & Integrated Circuits
+Hitachi, Ltd.
+Edited by: Technical Documentation Group
+Hitachi Kodaira Semiconductor Co., Ltd.
+Co
+pyright © Hitachi, Ltd., 1989. All rights reserved. Printed in Japan.

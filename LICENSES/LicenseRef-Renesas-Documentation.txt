@@ -1,0 +1,61 @@
+LicenseRef-Renesas-Documentation
+================================
+
+This is not a licence grant. It is a statement of what certain files in this
+repository are, so that an automated scanner and a human reader both get a
+true answer instead of a convenient one.
+
+WHAT IT COVERS
+
+  spec/H8-300-programming-manual.pdf        H8/300 Programming Manual, ADE-602-025 Rev.1.0
+  spec/H8-300H-software-manual.pdf          H8/300H Series Software Manual, REJ09B0213-0300
+  spec/H8S-2600-2000-software-manual.pdf    H8S/2600, H8S/2000 Series Software Manual, REJ09B0139-0400
+  spec/H8SX-software-manual.pdf             H8SX Family Software Manual, REJ09B0102-0400
+  spec/H8-compiler-assembler-v7-manual.pdf  H8S, H8/300 Series C/C++ Compiler, Assembler,
+                                            Optimizing Linkage Editor User's Manual, REJ10J2039-0100
+
+  spec/*.txt                                plain-text dumps of the above, produced with
+                                            pypdf so that the encodings can be grepped
+
+WHO OWNS IT
+
+  Renesas Electronics Corporation (originally Hitachi, Ltd. / Renesas
+  Technology Corp.). Extracting the text of a document does not create a new
+  work, so the .txt dumps are Renesas' on exactly the same terms as the PDFs
+  they were made from.
+
+  Nothing about these files is the copyright of the h8-asm project or of
+  Matthew Jackson, and this repository's MIT licence does not apply to them and
+  is not offered for them. The MIT licence in LICENSES/MIT.txt covers the
+  h8-asm source, tests, examples, documentation and CI configuration, and
+  stops there.
+
+WHY THEY ARE HERE
+
+  h8-asm encodes and decodes H8 instructions. Every encoding claim it makes is a
+  claim about what these documents say, and a claim like that is only worth
+  anything if the reader can check it. They are kept in the tree so that
+  checking is a grep rather than a download — see spec/README.md.
+
+  They are reference material for developing and reviewing this crate, not a
+  component of it: Cargo.toml's `exclude` keeps spec/ out of the published
+  .crate (enforced by the `package` job in .github/workflows/qa.yml).
+
+IF YOU WANT THESE DOCUMENTS
+
+  Get them from Renesas, who publish them for free:
+
+    https://www.renesas.com/en/document/gde/h8300-programming-manual
+    https://www.renesas.com/en/document/mah/h8300h-series-software-manual
+    https://www.renesas.com/en/document/mah/h8s2600-series-h8s2000-series-software-manual
+    https://www.renesas.com/en/document/mas/h8sx-family-software-manual
+    https://www.renesas.com/us/en/document/mat/h8s-h8300-series-cc-compiler-package-ver700-users-manual
+
+  Renesas' own terms govern what you may then do with them. If Renesas would
+  prefer these copies not be mirrored here, they should be removed from the
+  repository: open an issue at https://github.com/MattJackson/h8-asm/issues and
+  they will be, and the section numbers cited throughout the source are enough
+  to keep every claim checkable without them.
+
+Renesas and H8 are trademarks of Renesas Electronics Corporation. This project
+is not affiliated with, endorsed by, or sponsored by Renesas.

@@ -1,0 +1,45 @@
+version = 1
+
+# REUSE (https://reuse.software) licensing declarations for h8-asm. Same shape
+# as thumb-asm's REUSE.toml, which carries the full reasoning for each block.
+
+# First-party manifests, tool configuration, prose and CI.
+[[annotations]]
+path = [
+    "Cargo.toml",
+    "Cargo.lock",
+    "clippy.toml",
+    "rustfmt.toml",
+    ".gitignore",
+    "README.md",
+    "CHANGELOG.md",
+    "KICKOFF.md",
+    "docs/**",
+    ".github/**",
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Matthew Jackson <dev4@getbusbar.com>"
+SPDX-License-Identifier = "MIT"
+
+# The crate itself. `closest`: an inline SPDX header, once added, takes over.
+[[annotations]]
+path = ["src/**", "tests/**", "examples/**"]
+precedence = "closest"
+SPDX-FileCopyrightText = "2026 Matthew Jackson <dev4@getbusbar.com>"
+SPDX-License-Identifier = "MIT"
+
+# spec/, part one: the Markdown there is ours (reading a spec and describing
+# what you implemented is first-party work).
+[[annotations]]
+path = ["spec/*.md"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Matthew Jackson <dev4@getbusbar.com>"
+SPDX-License-Identifier = "MIT"
+
+# spec/, part two: Renesas' manuals and their text dumps. NOT OURS.
+# See LICENSES/LicenseRef-Renesas-Documentation.txt.
+[[annotations]]
+path = ["spec/*.pdf", "spec/*.txt"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Renesas Electronics Corporation"
+SPDX-License-Identifier = "LicenseRef-Renesas-Documentation"
