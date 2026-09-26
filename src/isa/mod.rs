@@ -8,6 +8,8 @@ pub mod decode;
 pub mod disasm;
 pub mod encode;
 mod length;
+pub mod sx_disasm;
+pub mod sx_encode;
 mod sx_length;
 pub mod sx_semantic;
 

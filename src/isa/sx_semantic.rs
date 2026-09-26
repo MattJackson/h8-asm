@@ -9,6 +9,27 @@ use crate::{Mode, Target};
 /// The supported H8SX instruction meanings.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum SxInstruction {
+    /// Load an immediate byte into a byte register.
+    MoveByteImmediate {
+        /// Destination byte-register code.
+        register: u8,
+        /// Immediate byte.
+        immediate: u8,
+    },
+    /// Load a byte from a 16-bit absolute address into a byte register.
+    LoadByteAbsolute16 {
+        /// The absolute 16-bit memory address.
+        address: u16,
+        /// Destination byte-register code.
+        register: u8,
+    },
+    /// Store a byte register at a 16-bit absolute address.
+    StoreByteAbsolute16 {
+        /// The absolute 16-bit memory address.
+        address: u16,
+        /// Source byte-register code.
+        register: u8,
+    },
     /// Compare an immediate byte with a byte register (A r imm).
     CompareByteImmediate {
         /// Destination byte-register code.
@@ -71,6 +92,27 @@ pub fn decode(bytes: &[u8], target: Target, _mode: Mode) -> Option<SxDecoded> {
     let hi = *bytes.first()?;
     let lo = *bytes.get(1)?;
     let (instruction, len) = match (hi, lo) {
+        (0xf0..=0xff, imm) => (
+            SxInstruction::MoveByteImmediate {
+                register: hi & 15,
+                immediate: imm,
+            },
+            2,
+        ),
+        (0x6a, 0x00..=0x0f) => (
+            SxInstruction::LoadByteAbsolute16 {
+                address: u16::from_be_bytes([*bytes.get(2)?, *bytes.get(3)?]),
+                register: lo & 15,
+            },
+            4,
+        ),
+        (0x6a, 0x80..=0x8f) => (
+            SxInstruction::StoreByteAbsolute16 {
+                address: u16::from_be_bytes([*bytes.get(2)?, *bytes.get(3)?]),
+                register: lo & 15,
+            },
+            4,
+        ),
         (0xa0..=0xaf, imm) => (
             SxInstruction::CompareByteImmediate {
                 register: hi & 15,

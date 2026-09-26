@@ -246,6 +246,43 @@ pub(super) fn recognize(bytes: &[u8]) -> Option<usize> {
         first if first >> 8 == 0x7a && (first & 0x00f0) < 0x70 => {
             Some(if first & 8 == 0 { 6 } else { 4 })
         }
+        // EEPMOV.B/W have fixed two-word encodings (§2.4).
+        0x7b5c | 0x7bd4 => {
+            if word(bytes, 2)? == 0x598f {
+                Some(4)
+            } else {
+                None
+            }
+        }
+        // Basic immediate and register-selected bit operations on
+        // @ERn and @aa:8. The first word selects the memory operand;
+        // the second carries a bit index or byte-register field in
+        // bits 7..4 (H8SX §2.4 bit-operation rows).
+        first if matches!(first >> 8, 0x7c..=0x7f) => {
+            let memory_form = match first >> 8 {
+                0x7c | 0x7d => first & 0x008f == 0,
+                0x7e | 0x7f => true,
+                _ => unreachable!(),
+            };
+            if !memory_form {
+                return None;
+            }
+            let second = word(bytes, 2)?;
+            let opcode = second >> 8;
+            let bit_index_only = second & 0x008f == 0;
+            let valid = if matches!(first >> 8, 0x7c | 0x7e) {
+                matches!(opcode, 0x73..=0x77) && bit_index_only
+                    || opcode == 0x63 && second & 0x000f == 0
+            } else {
+                matches!(opcode, 0x70..=0x72) && bit_index_only
+                    || matches!(opcode, 0x60..=0x62 | 0x67) && second & 0x000f == 0
+            };
+            if valid {
+                Some(4)
+            } else {
+                None
+            }
+        }
         // Eight immediate-byte/register rows: ADD, ADDX, CMP, SUBX,
         // OR, XOR, AND and MOV (H8SX §2.4 Table 2.2). The high nibble
         // selects the operation, the next nibble a byte register, and

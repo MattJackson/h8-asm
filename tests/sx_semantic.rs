@@ -45,6 +45,39 @@ fn ud04_dispatch_control_flow() {
 }
 
 #[test]
+fn ud04_absolute_byte_accesses() {
+    let target = Target::H8SX;
+    let mode = Mode::Maximum;
+    assert_eq!(
+        decode(&[0x6a, 0x08, 0x2c, 0x24], target, mode)
+            .unwrap()
+            .instruction,
+        SxInstruction::LoadByteAbsolute16 {
+            address: 0x2c24,
+            register: 8,
+        }
+    );
+    assert_eq!(
+        decode(&[0x6a, 0x88, 0x2c, 0x24], target, mode)
+            .unwrap()
+            .instruction,
+        SxInstruction::StoreByteAbsolute16 {
+            address: 0x2c24,
+            register: 8,
+        }
+    );
+    assert!(decode(&[0x6a, 0x08, 0x2c], target, mode).is_none());
+    assert!(decode(&[0x6a, 0x18, 0x2c, 0x24], target, mode).is_none());
+    assert_eq!(
+        decode(&[0xf8, 0xf1], target, mode).unwrap().instruction,
+        SxInstruction::MoveByteImmediate {
+            register: 8,
+            immediate: 0xf1,
+        }
+    );
+}
+
+#[test]
 fn strict_refusal_and_signed_displacements() {
     let t = Target::H8SX;
     let m = Mode::Maximum;

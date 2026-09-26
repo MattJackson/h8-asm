@@ -194,3 +194,12 @@ assembles, links to resolve PC-relative relocations, and compares the final
 The linker step matters: comparing unresolved object bytes would give a
 false result for branches. This does not cover the other semantic or
 length-only families.
+
+`tests/binutils_sx_assemble_back.rs` repeats that exact-byte check for the
+current H8SX semantic subset, translating Renesas `$` and `H'` to GNU gas
+`.` and `0x`. Using binutils 2.47 with the `h8300sxelf` linker emulation,
+all 10,369 supported two-byte words and 140 representative four-byte forms
+match. The four-byte cases include every Bcc condition, signed branch
+boundaries, absolute-address extremes, and every byte-register code for the
+supported absolute move form. This does not establish conformance for other
+H8SX instructions or for all four-byte operand combinations.

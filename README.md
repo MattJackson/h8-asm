@@ -16,8 +16,9 @@ dependencies beyond `std`.
 
 **Pre-alpha.** `isa::insn_len` recognizes instruction lengths through H8S and
 selected H8SX families. A typed H8/300 decoder, disassembler and encoder
-cover 2,692 two-byte encodings; a separate H8SX decoder covers selected
-control flow and byte comparisons. Relocation and detour installation are
+cover 2,692 two-byte encodings; a separate H8SX decoder, disassembler, and
+encoder cover selected control flow, byte immediates, and absolute byte moves.
+Relocation and detour installation are
 not implemented. The coverage map and limits are in
 [`spec/H8-ISA.md`](spec/H8-ISA.md). The build-out plan is in
 [`KICKOFF.md`](KICKOFF.md), and the manuals every encoding will be checked
@@ -27,7 +28,9 @@ The H8/300 semantic subset has an independent assemble-back check: its 2,692
 decoded words render as Renesas assembly, are assembled and linked with GNU
 binutils 2.47, and reproduce the original bytes exactly. Opt-in tests also
 compare all 65,536 first words per target against binutils with a zero-filled
-suffix. Those probes are narrower than full ISA conformance.
+suffix. A second assemble-back test matches all 10,369 semantically decoded
+H8SX two-byte words and 140 selected four-byte forms against binutils 2.47.
+Those probes are narrower than full ISA conformance.
 
 ## Say what you are patching
 

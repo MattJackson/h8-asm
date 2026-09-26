@@ -271,6 +271,18 @@ matching recognized lengths, 7,357 rejected by both, 724 binutils-only,
 and no crate-only or accepted-length disagreements. The encoder and
 disassembler remain limited to the small H8/300 semantic subset.
 
+Further integration (2026-09-26): the narrow H8SX semantic decoder now has
+matching disassembler and encoder support. All 10,369 semantically decoded
+two-byte words pass decode/length/encode consistency, and GNU binutils 2.47
+assembles their rendered text back to exact bytes. Another 140 four-byte
+cases pass the same oracle. The four-byte subset includes branch boundaries,
+all Bcc conditions, direct jump/call address extremes, and absolute byte
+moves across all byte-register codes. H8SX length recognition additionally
+covers selected `7b` EEPMOV and `7c`–`7f` memory-bit forms, which require a
+nonzero second opcode word; the zero-suffix first-word census is unchanged.
+The semantic and conformance coverage remains narrow relative to the full
+H8SX tables.
+
 Planning estimate, made at this checkpoint: 1–3 weeks of focused work for
 reliable length recognition across all five targets, and 8–16 weeks for the
 full six-phase scope. These are rough effort estimates, not release dates.
