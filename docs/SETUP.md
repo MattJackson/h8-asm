@@ -41,8 +41,10 @@ publisher. Prepare and verify the final crate first, authenticate with cargo
 login locally, and publish the reviewed 0.5.0 artifact. Never put the token in
 a chat, issue, commit or log.
 
-After the first publication, open the crate's Trusted Publishing settings and
-add this GitHub publisher:
+The supplied token cannot manage Trusted Publishing: the configuration API
+returned HTTP 403 (insufficient permissions). Publication uses the environment
+token; OIDC is not claimed configured. After the first publication, use an owner
+session or a token with Trusted Publishing permission to add this GitHub publisher:
 
 | Field | Value |
 |---|---|
@@ -56,7 +58,9 @@ CRATES_IO_TRUSTED_PUBLISHING=true to select OIDC. Until that setting is enabled,
 the workflow uses the environment token, including for the first publication.
 
 The release workflow re-runs full QA and checks the registry, git tag and
-GitHub Release before taking any missing step. It can finish tagging and
+GitHub Release before taking any missing step. Completed releases are no-ops;
+incomplete tagged releases must resume from their original commit. The package
+must byte-match the immutable registry artifact before signing or attestation. It can finish tagging and
 release creation after the authenticated bootstrap without republishing the
 crate. Its dry-run mode performs verification without publishing. A non-main
 dispatch runs verification only. No successful publication is claimed yet.
