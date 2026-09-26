@@ -16,7 +16,9 @@ pub(super) fn recognize(bytes: &[u8]) -> Option<usize> {
         // ADD.B Rs,Rd and MOV.B Rs,Rd; both register fields occupy a
         // nibble. MOV.B @aa:8,Rd and MOV.B Rs,@aa:8 use one nibble for
         // the byte register and one byte for the address (H8SX §2.4).
-        first if matches!(first >> 8, 0x08 | 0x0c | 0x20..=0x3f) => Some(2),
+        first if matches!(first >> 8, 0x08 | 0x0c | 0x0e | 0x14..=0x16 | 0x18 | 0x1c | 0x1e | 0x20..=0x3f) => {
+            Some(2)
+        }
         // Word register pairs use full four-bit R/E register fields:
         // ADD, MOV, CMP, SUB, OR, XOR, AND (H8SX §2.4 Table 2.2).
         first if matches!(first >> 8, 0x09 | 0x0d | 0x19 | 0x1d | 0x64..=0x66) => Some(2),
@@ -25,6 +27,11 @@ pub(super) fn recognize(bytes: &[u8]) -> Option<usize> {
         first if matches!(first >> 8, 0x0a | 0x0f | 0x1a | 0x1f) && first & 0x0088 == 0x0080 => {
             Some(2)
         }
+        // MOV.B/W register-indirect, post-increment/pre-decrement, and
+        // 16-bit displacement forms. Bit 7 selects transfer direction;
+        // the remaining nibbles are register fields (H8SX §2.4).
+        first if matches!(first >> 8, 0x68 | 0x69 | 0x6c | 0x6d) => Some(2),
+        first if matches!(first >> 8, 0x6e | 0x6f) => Some(4),
         // H8SX §2.4 Bcc: d:8 occupies seven bits and bit 0 is zero.
         // 40xx with bit 0 set is instead BRA/S, which has a delay slot
         // (§2.2.24) but is still one two-byte instruction.

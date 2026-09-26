@@ -183,8 +183,8 @@ LLVM→binutils as you go, rather than copying and "fixing later".
 Phase 1 remains in progress. `src/isa/length.rs` recognizes lengths through
 H8S; `src/isa/sx_length.rs` recognizes H8SX NOP/SLEEP/RTS/RTE, selected
 direct branches (including BRA/S), JMP/JSR absolute, register and vector
-forms, all byte-immediate register and byte
-absolute-move rows, selected word/long register pairs, the seven word- and
+forms, register-indirect MOV.B/W rows, all byte-immediate register and byte
+absolute-move rows, byte register pairs, selected word/long register pairs, the seven word- and
 seven long-immediate register rows,
 the RTS/L and RTE/L register-range rows, and the ADD.B 32-bit source displacement
 family with several destination addressing modes. The full §2.4 table establishes
