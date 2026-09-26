@@ -11,6 +11,7 @@ path = [
     "clippy.toml",
     "rustfmt.toml",
     ".gitignore",
+    ".gitattributes",
     "README.md",
     "CHANGELOG.md",
     "CONTRIBUTING.md",

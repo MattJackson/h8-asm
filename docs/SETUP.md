@@ -38,7 +38,16 @@ and no action needed:
 
 ---
 
-## 1. crates.io Trusted Publishing — blocks the next release
+## 1. crates.io first publication and Trusted Publishing
+
+As of this build-out, h8-asm has no published version and the local session
+has no cargo publishing credential. The first publication requires an
+authenticated owner: crates.io's [Trusted Publishing rollout](https://blog.rust-lang.org/2025/07/11/crates-io-development-update-2025-07/)
+requires the first release to be published manually before attaching a
+publisher. This bootstrap must not be mistaken for an already configured
+OIDC release path. Prepare and verify the final crate first, authenticate
+locally with cargo login, publish the approved first version, then configure
+the publisher below. Never paste the token into an issue, commit or log.
 
 Without this, `release.yml` has no way to authenticate and the publish step
 fails. There is no long-lived token anywhere in this repository by design:
@@ -156,3 +165,20 @@ them close criteria noted as Unmet in the questionnaire:
 - **Dependabot security updates** are disabled on the repository. Harmless
   today — the crate has zero dependencies — and `.github/dependabot.yml` already
   keeps the GitHub Actions pins fresh, which is the only third-party code here.
+
+
+## Recorded setup progress (2026-09-26)
+
+- Public GitHub repository created at MattJackson/h8-asm; origin configured.
+- Development sources pushed to dev, which is the temporary default branch.
+- Private vulnerability reporting enabled. Workflow default permissions are
+  read-only and workflow review approval is disabled.
+- dev rejects force pushes and deletion and requires linear history, including
+  for administrators. It allows ordinary development pushes.
+- qa/main promotion protection, final release and third-party account setup
+  remain in progress. Do not infer activation from a README badge placeholder.
+- Local packaging, MSRV, source coverage and REUSE checks pass; hosted checks
+  and mutation audit are tracked separately in ROADMAP.md.
+
+Publishing/account authentication is the remaining external prerequisite.
+The browser integration suggested during setup is not confirmed connected.

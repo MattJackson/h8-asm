@@ -12,9 +12,9 @@
 # annoying — having just changed something Scorecard grades and wanting to see
 # the new score now.
 #
-# Scorecard only publishes results for runs on the default branch, so the
-# schedule below runs against main. A dispatch from another branch will still
-# analyse, but the published score is always main's.
+# Scorecard publishes results for the repository's current default branch.
+# During the initial build-out that is dev; after release it will be main.
+# Dispatch from the current default branch when verifying publication.
 #
 # Actions are pinned to a full commit SHA with the readable ref in a trailing
 # comment; see dev.yml's header for why a tag is not an identity. Refresh a pin

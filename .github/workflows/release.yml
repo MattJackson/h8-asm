@@ -17,7 +17,10 @@
 # Authentication is crates.io Trusted Publishing: GitHub mints a short-lived
 # OIDC token for this specific workflow, crates.io exchanges it for a ~30
 # minute publish token, and no long-lived secret ever sits in this repository.
-# crates.io has to be told to trust this workflow before the first release:
+# Bootstrap: crates.io requires an authenticated first publication before
+# a Trusted Publisher can be attached. See docs/SETUP.md. This workflow
+# handles subsequent OIDC publication and idempotent tag/release completion.
+# After the first package exists, configure trust as follows:
 #
 #   1. Sign in to https://crates.io as an owner of the `h8-asm` crate.
 #   2. Go to https://crates.io/crates/h8-asm/settings

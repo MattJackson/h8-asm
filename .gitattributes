@@ -1,0 +1,4 @@
+src/isa/sx_table_data.rs linguist-generated=true
+spec/*.jsonl linguist-generated=true
+tests/data/*.bin binary
+spec/*.pdf binary
