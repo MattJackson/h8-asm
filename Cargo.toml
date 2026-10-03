@@ -6,7 +6,7 @@ edition = "2021"
 # inline format-string captures (`format!("{x}")`) need 1.58.0. Raise it only on
 # purpose, and say why here.
 rust-version = "1.58"
-authors = ["Matthew Jackson <dev4@getbusbar.com>"]
+authors = ["Matthew Jackson <matthew@pq.io>"]
 description = "A Renesas H8 family (H8/300, H8/300H, H8S, H8SX) decoder, disassembler, assembler and detour installer in pure safe Rust, checked against Renesas' own software manuals."
 license = "MIT"
 repository = "https://github.com/MattJackson/h8-asm"
