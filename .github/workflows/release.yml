@@ -294,7 +294,7 @@ jobs:
         if: steps.state.outputs.tagged == 'false' && env.DRY_RUN != 'true'
         run: |
           set -euo pipefail
-          git -c user.name="h8-asm release" -c user.email="dev4@getbusbar.com" \
+          git -c user.name="h8-asm release" -c user.email="matthew@pq.io" \
             tag -a "v${VERSION}" -m "v${VERSION}"
           git -c credential.helper= -c 'credential.helper=!gh auth git-credential' \
             push origin "refs/tags/v${VERSION}"

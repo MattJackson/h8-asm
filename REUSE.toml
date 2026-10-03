@@ -26,14 +26,14 @@ path = [
     ".github/**",
 ]
 precedence = "aggregate"
-SPDX-FileCopyrightText = "2026 Matthew Jackson <dev4@getbusbar.com>"
+SPDX-FileCopyrightText = "2026 Matthew Jackson <matthew@pq.io>"
 SPDX-License-Identifier = "MIT"
 
 # The crate itself. `closest`: an inline SPDX header, once added, takes over.
 [[annotations]]
 path = ["src/**", "tests/**", "examples/**"]
 precedence = "closest"
-SPDX-FileCopyrightText = "2026 Matthew Jackson <dev4@getbusbar.com>"
+SPDX-FileCopyrightText = "2026 Matthew Jackson <matthew@pq.io>"
 SPDX-License-Identifier = "MIT"
 
 # spec/, part one: the Markdown there is ours (reading a spec and describing
@@ -41,7 +41,7 @@ SPDX-License-Identifier = "MIT"
 [[annotations]]
 path = ["spec/*.md"]
 precedence = "aggregate"
-SPDX-FileCopyrightText = "2026 Matthew Jackson <dev4@getbusbar.com>"
+SPDX-FileCopyrightText = "2026 Matthew Jackson <matthew@pq.io>"
 SPDX-License-Identifier = "MIT"
 
 # spec/, part two: Renesas' manuals and their text dumps. NOT OURS.
